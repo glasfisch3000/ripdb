@@ -1,7 +1,7 @@
 import Fluent
 import struct Foundation.UUID
 
-final class Location: Model, @unchecked Sendable {
+final class Location: Model, Sendable {
     static let schema = "locations"
     
     @ID(key: .id)
