@@ -9,15 +9,19 @@ final class Location: Model, @unchecked Sendable {
 
     @Field(key: "name")
     var name: String
+    
+    @Field(key: "capacity")
+    var capacity: UInt64?
 
     init() { }
 
-    init(id: UUID? = nil, name: String) {
+    init(id: UUID? = nil, name: String, capacity: UInt64?) {
         self.id = id
         self.name = name
+        self.capacity = capacity
     }
     
     func toDTO() -> LocationDTO {
-        LocationDTO(id: self.id, name: self.name)
+        LocationDTO(id: self.id, name: self.name, capacity: self.capacity)
     }
 }
