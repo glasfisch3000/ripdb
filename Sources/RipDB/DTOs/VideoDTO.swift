@@ -5,7 +5,9 @@ struct VideoDTO: Content {
     var id: UUID?
     var name: String
     var type: VideoType
+    
     var project: ProjectDTO?
+    var files: [FileDTO]?
     
     func toModel() -> Video {
         Video(id: self.id,

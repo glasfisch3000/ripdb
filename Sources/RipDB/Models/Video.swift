@@ -32,6 +32,7 @@ final class Video: Model, Sendable {
         VideoDTO(id: self.id,
                  name: self.name,
                  type: self.type,
-                 project: self.project.toDTO())
+                 project: self.$project.value?.toDTO(),
+                 files: self.$files.value?.map { $0.toDTO() })
     }
 }

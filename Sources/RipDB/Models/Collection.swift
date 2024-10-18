@@ -21,6 +21,8 @@ final class CollectionModel: Model, Sendable {
     }
     
     func toDTO() -> CollectionDTO {
-        CollectionDTO(id: self.id, name: self.name)
+        CollectionDTO(id: self.id,
+                      name: self.name,
+                      projects: self.$projects.value?.map { $0.toDTO() })
     }
 }

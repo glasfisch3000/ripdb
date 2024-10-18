@@ -44,7 +44,7 @@ final class File: Model, Sendable {
                 is3D: self.is3D,
                 size: self.size,
                 contentHashSHA256: self.contentHashSHA256,
-                location: self.location.toDTO(),
-                video: self.video.toDTO())
+                location: self.$location.value?.toDTO(),
+                video: self.$video.value?.toDTO())
     }
 }

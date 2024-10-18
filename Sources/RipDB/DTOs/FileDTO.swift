@@ -7,6 +7,7 @@ struct FileDTO: Content {
     var is3D: Bool
     var size: UInt64
     var contentHashSHA256: Data
+    
     var location: LocationDTO?
     var video: VideoDTO?
     

@@ -38,6 +38,7 @@ final class Project: Model, Sendable {
                    name: self.name,
                    type: self.type,
                    releaseDate: self.releaseDate,
-                   collection: self.collection?.toDTO())
+                   collection: self.$collection.value??.toDTO(),
+                   videos: self.$videos.value?.map { $0.toDTO() })
     }
 }

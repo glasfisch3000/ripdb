@@ -6,7 +6,9 @@ struct ProjectDTO: Content {
     var name: String
     var type: ProjectType
     var releaseDate: Date
+    
     var collection: CollectionDTO?
+    var videos: [VideoDTO]?
     
     func toModel() -> Project {
         Project(id: self.id,

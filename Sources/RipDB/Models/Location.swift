@@ -12,6 +12,9 @@ final class Location: Model, Sendable {
     
     @Field(key: "capacity")
     var capacity: UInt64?
+    
+    @Children(for: \.$location)
+    var files: [File]
 
     init() { }
 
@@ -22,6 +25,9 @@ final class Location: Model, Sendable {
     }
     
     func toDTO() -> LocationDTO {
-        LocationDTO(id: self.id, name: self.name, capacity: self.capacity)
+        LocationDTO(id: self.id,
+                    name: self.name,
+                    capacity: self.capacity,
+                    files: self.$files.value?.map { $0.toDTO() })
     }
 }
