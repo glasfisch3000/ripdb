@@ -25,7 +25,7 @@ struct FilesList: AsyncParsableCommand {
         @ArgumentParser.Option(name: [.long, .customShort("V")])
         var video: UUID?
         
-        @ArgumentParser.Option(name: [.long, .customShort("V")])
+        @ArgumentParser.Option(name: [.long, .customShort("l")])
         var location: UUID?
         
         @ArgumentParser.Flag(name: .customLong("3d"), inversion: .prefixedNo, exclusivity: .exclusive)
