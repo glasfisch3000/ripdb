@@ -6,7 +6,7 @@ public func readAppConfig(path: FilePath?) async throws -> AppConfig {
     let filePath = if let path = path {
         path
     } else {
-        try await FileSystem.shared.currentWorkingDirectory.appending("zokadictionary-config.yaml")
+        try await FileSystem.shared.currentWorkingDirectory.appending("ripdb-config.yaml")
     }
     
     guard let size = try await FileSystem.shared.info(forFileAt: filePath)?.size else {
