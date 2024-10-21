@@ -32,6 +32,24 @@ struct FilesList: AsyncParsableCommand {
         var is3D: Bool?
     }
     
+    enum SortOption: String, ExpressibleByArgument {
+        case res
+        case size
+        case is3d
+    }
+    
+    enum SortOrder: String, ExpressibleByArgument {
+        case ascending
+        case descending
+        
+        var databaseDirection: DatabaseQuery.Sort.Direction {
+            switch self {
+            case .ascending: .ascending
+            case .descending: .descending
+            }
+        }
+    }
+    
     // TODO: sorting options
     
     @ArgumentParser.Option(name: [.short, .customLong("env")])
@@ -45,6 +63,12 @@ struct FilesList: AsyncParsableCommand {
     
     @ArgumentParser.OptionGroup(title: "Filtering Options")
     private var filterOptions: FilterOptions
+    
+    @ArgumentParser.Option(name: [.customShort("S"), .customLong("sort")])
+    private var sortOptions: [SortOption] = []
+    
+    @ArgumentParser.Option(name: [.long])
+    private var sortOrder: SortOrder = .ascending
     
     init() { }
     
@@ -85,6 +109,14 @@ struct FilesList: AsyncParsableCommand {
         
         if let is3D = filterOptions.is3D {
             query = query.filter(\File.$is3D == is3D)
+        }
+        
+        for sortOption in sortOptions {
+            query = switch sortOption {
+            case .res: query.sort(\.$resolution, sortOrder.databaseDirection)
+            case .size: query.sort(\.$size, sortOrder.databaseDirection)
+            case .is3d: query.sort(\.$is3D, sortOrder.databaseDirection)
+            }
         }
         
         let files = try await query
