@@ -59,23 +59,23 @@ struct LocationsList: AsyncParsableCommand {
         
         do {
             try await configureDB(app, config)
+            
+            var query = Location.query(on: app.db)
+            
+            if let search = filterOptions.search {
+                query = query.filter(\.$name =~ search)
+            }
+            
+            let locations = try await query
+                .range(lower: 0, upper: filterOptions.limit == 0 ? nil : Int(filterOptions.limit))
+                .all()
+                .map { $0.toDTO() }
+            print(try outputFormat.format(locations))
         } catch {
             app.logger.report(error: error)
             try? await app.asyncShutdown()
             throw error
         }
-        
-        var query = Location.query(on: app.db)
-        
-        if let search = filterOptions.search {
-            query = query.filter(\.$name =~ search)
-        }
-        
-        let locations = try await query
-            .range(lower: 0, upper: filterOptions.limit == 0 ? nil : Int(filterOptions.limit))
-            .all()
-            .map { $0.toDTO() }
-        print(try outputFormat.format(locations))
         
         try await app.asyncShutdown()
     }

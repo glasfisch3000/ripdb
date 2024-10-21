@@ -50,24 +50,24 @@ struct LocationsDelete: AsyncParsableCommand {
         
         do {
             try await configureDB(app, config)
+            
+            var deleted: [LocationDTO] = []
+            
+            for locationID in locationIDs {
+                if let location = try await Location.find(locationID, on: app.db) {
+                    try await location.delete(on: app.db)
+                    deleted.append(location.toDTO())
+                } else {
+                    print("location not found for id \(locationID)")
+                }
+            }
+            
+            print("deleted locations:" + (try outputFormat.format(deleted)))
         } catch {
             app.logger.report(error: error)
             try? await app.asyncShutdown()
             throw error
         }
-        
-        var deleted: [LocationDTO] = []
-        
-        for locationID in locationIDs {
-            if let location = try await Location.find(locationID, on: app.db) {
-                try await location.delete(on: app.db)
-                deleted.append(location.toDTO())
-            } else {
-                print("location not found for id \(locationID)")
-            }
-        }
-        
-        print("deleted locations:" + (try outputFormat.format(deleted)))
         
         try await app.asyncShutdown()
     }

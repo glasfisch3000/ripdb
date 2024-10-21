@@ -50,24 +50,24 @@ struct VideosDelete: AsyncParsableCommand {
         
         do {
             try await configureDB(app, config)
+            
+            var deleted: [VideoDTO] = []
+            
+            for videoID in videoIDs {
+                if let video = try await Video.find(videoID, on: app.db) {
+                    try await video.delete(on: app.db)
+                    deleted.append(video.toDTO())
+                } else {
+                    print("video not found for id \(videoID)")
+                }
+            }
+            
+            print("deleted videos:" + (try outputFormat.format(deleted)))
         } catch {
             app.logger.report(error: error)
             try? await app.asyncShutdown()
             throw error
         }
-        
-        var deleted: [VideoDTO] = []
-        
-        for videoID in videoIDs {
-            if let video = try await Video.find(videoID, on: app.db) {
-                try await video.delete(on: app.db)
-                deleted.append(video.toDTO())
-            } else {
-                print("video not found for id \(videoID)")
-            }
-        }
-        
-        print("deleted videos:" + (try outputFormat.format(deleted)))
         
         try await app.asyncShutdown()
     }

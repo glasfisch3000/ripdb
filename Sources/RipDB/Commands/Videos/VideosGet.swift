@@ -50,26 +50,26 @@ struct VideosGet: AsyncParsableCommand {
         
         do {
             try await configureDB(app, config)
+            
+            let video = try await Video.find(videoID, on: app.db)
+            try await video?.$project.load(on: app.db)
+            try await video?.$files.load(on: app.db)
+            try await video?.$files.value?
+                .map { $0.$location.load(on: app.db) }
+                .flatten(on: app.eventLoopGroup.next())
+                .get()
+            
+            if let video = video?.toDTO() {
+                print(try outputFormat.format(video))
+            } else {
+                print("video not found for id \(videoID)")
+            }
         } catch {
             app.logger.report(error: error)
             try? await app.asyncShutdown()
             throw error
         }
         
-        let video = try await Video.find(videoID, on: app.db)
-        try await video?.$project.load(on: app.db)
-        try await video?.$files.load(on: app.db)
-        try await video?.$files.value?
-            .map { $0.$location.load(on: app.db) }
-            .flatten(on: app.eventLoopGroup.next())
-            .get()
-        
         try await app.asyncShutdown()
-        
-        if let video = video?.toDTO() {
-            print(try outputFormat.format(video))
-        } else {
-            print("video not found for id \(videoID)")
-        }
     }
 }

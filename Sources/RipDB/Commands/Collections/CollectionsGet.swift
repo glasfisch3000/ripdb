@@ -50,21 +50,21 @@ struct CollectionsGet: AsyncParsableCommand {
         
         do {
             try await configureDB(app, config)
+            
+            let collection = try await CollectionModel.find(collectionID, on: app.db)
+            try await collection?.$projects.load(on: app.db)
+            
+            if let collection = collection?.toDTO() {
+                print(try outputFormat.format(collection))
+            } else {
+                print("collection not found for id \(collectionID)")
+            }
         } catch {
             app.logger.report(error: error)
             try? await app.asyncShutdown()
             throw error
         }
         
-        let collection = try await CollectionModel.find(collectionID, on: app.db)
-        try await collection?.$projects.load(on: app.db)
-        
         try await app.asyncShutdown()
-        
-        if let collection = collection?.toDTO() {
-            print(try outputFormat.format(collection))
-        } else {
-            print("collection not found for id \(collectionID)")
-        }
     }
 }

@@ -50,24 +50,24 @@ struct CollectionsDelete: AsyncParsableCommand {
         
         do {
             try await configureDB(app, config)
+            
+            var deleted: [CollectionDTO] = []
+            
+            for collectionID in collectionIDs {
+                if let collection = try await CollectionModel.find(collectionID, on: app.db) {
+                    try await collection.delete(on: app.db)
+                    deleted.append(collection.toDTO())
+                } else {
+                    print("collection not found for id \(collectionID)")
+                }
+            }
+            
+            print("deleted collections:" + (try outputFormat.format(deleted)))
         } catch {
             app.logger.report(error: error)
             try? await app.asyncShutdown()
             throw error
         }
-        
-        var deleted: [CollectionDTO] = []
-        
-        for collectionID in collectionIDs {
-            if let collection = try await CollectionModel.find(collectionID, on: app.db) {
-                try await collection.delete(on: app.db)
-                deleted.append(collection.toDTO())
-            } else {
-                print("collection not found for id \(collectionID)")
-            }
-        }
-        
-        print("deleted collections:" + (try outputFormat.format(deleted)))
         
         try await app.asyncShutdown()
     }

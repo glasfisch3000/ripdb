@@ -59,23 +59,23 @@ struct VideosList: AsyncParsableCommand {
         
         do {
             try await configureDB(app, config)
+            
+            var query = Video.query(on: app.db)
+            
+            if let search = filterOptions.search {
+                query = query.filter(\.$name =~ search)
+            }
+            
+            let videos = try await query
+                .range(lower: 0, upper: filterOptions.limit == 0 ? nil : Int(filterOptions.limit))
+                .all()
+                .map { $0.toDTO() }
+            print(try outputFormat.format(videos))
         } catch {
             app.logger.report(error: error)
             try? await app.asyncShutdown()
             throw error
         }
-        
-        var query = Video.query(on: app.db)
-        
-        if let search = filterOptions.search {
-            query = query.filter(\.$name =~ search)
-        }
-        
-        let videos = try await query
-            .range(lower: 0, upper: filterOptions.limit == 0 ? nil : Int(filterOptions.limit))
-            .all()
-            .map { $0.toDTO() }
-        print(try outputFormat.format(videos))
         
         try await app.asyncShutdown()
     }

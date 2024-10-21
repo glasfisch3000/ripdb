@@ -50,24 +50,24 @@ struct ProjectsDelete: AsyncParsableCommand {
         
         do {
             try await configureDB(app, config)
+            
+            var deleted: [ProjectDTO] = []
+            
+            for projectID in projectIDs {
+                if let project = try await Project.find(projectID, on: app.db) {
+                    try await project.delete(on: app.db)
+                    deleted.append(project.toDTO())
+                } else {
+                    print("project not found for id \(projectID)")
+                }
+            }
+            
+            print("deleted projects:" + (try outputFormat.format(deleted)))
         } catch {
             app.logger.report(error: error)
             try? await app.asyncShutdown()
             throw error
         }
-        
-        var deleted: [ProjectDTO] = []
-        
-        for projectID in projectIDs {
-            if let project = try await Project.find(projectID, on: app.db) {
-                try await project.delete(on: app.db)
-                deleted.append(project.toDTO())
-            } else {
-                print("project not found for id \(projectID)")
-            }
-        }
-        
-        print("deleted projects:" + (try outputFormat.format(deleted)))
         
         try await app.asyncShutdown()
     }

@@ -50,23 +50,23 @@ struct FilesGet: AsyncParsableCommand {
         
         do {
             try await configureDB(app, config)
+            
+            let file = try await File.find(fileID, on: app.db)
+            try await file?.$location.load(on: app.db)
+            try await file?.$video.load(on: app.db)
+            try await file?.$video.value?.$project.load(on: app.db)
+            
+            if let file = file?.toDTO() {
+                print(try outputFormat.format(file))
+            } else {
+                print("file not found for id \(fileID)")
+            }
         } catch {
             app.logger.report(error: error)
             try? await app.asyncShutdown()
             throw error
         }
         
-        let file = try await File.find(fileID, on: app.db)
-        try await file?.$location.load(on: app.db)
-        try await file?.$video.load(on: app.db)
-        try await file?.$video.value?.$project.load(on: app.db)
-        
         try await app.asyncShutdown()
-        
-        if let file = file?.toDTO() {
-            print(try outputFormat.format(file))
-        } else {
-            print("file not found for id \(fileID)")
-        }
     }
 }

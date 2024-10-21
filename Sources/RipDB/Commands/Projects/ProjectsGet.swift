@@ -50,22 +50,22 @@ struct ProjectsGet: AsyncParsableCommand {
         
         do {
             try await configureDB(app, config)
+            
+            let project = try await Project.find(projectID, on: app.db)
+            try await project?.$collection.load(on: app.db)
+            try await project?.$videos.load(on: app.db)
+            
+            if let project = project?.toDTO() {
+                print(try outputFormat.format(project))
+            } else {
+                print("project not found for id \(projectID)")
+            }
         } catch {
             app.logger.report(error: error)
             try? await app.asyncShutdown()
             throw error
         }
         
-        let project = try await Project.find(projectID, on: app.db)
-        try await project?.$collection.load(on: app.db)
-        try await project?.$videos.load(on: app.db)
-        
         try await app.asyncShutdown()
-        
-        if let project = project?.toDTO() {
-            print(try outputFormat.format(project))
-        } else {
-            print("project not found for id \(projectID)")
-        }
     }
 }

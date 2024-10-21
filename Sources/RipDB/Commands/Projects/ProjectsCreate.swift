@@ -64,17 +64,17 @@ struct ProjectsCreate: AsyncParsableCommand {
         
         do {
             try await configureDB(app, config)
+            
+            let project = Project(id: nil, name: self.project.name, type: self.project.type, releaseDate: try self.project.releaseDate.toDate(), collectionID: self.project.collection)
+            try await project.create(on: app.db)
+            
+            print(try outputFormat.format(project.toDTO()))
         } catch {
             app.logger.report(error: error)
             try? await app.asyncShutdown()
             throw error
         }
         
-        let project = Project(id: nil, name: self.project.name, type: self.project.type, releaseDate: try self.project.releaseDate.toDate(), collectionID: self.project.collection)
-        try await project.create(on: app.db)
-        
         try await app.asyncShutdown()
-        
-        print(try outputFormat.format(project.toDTO()))
     }
 }

@@ -50,24 +50,24 @@ struct FilesDelete: AsyncParsableCommand {
         
         do {
             try await configureDB(app, config)
+            
+            var deleted: [FileDTO] = []
+            
+            for fileID in fileIDs {
+                if let file = try await File.find(fileID, on: app.db) {
+                    try await file.delete(on: app.db)
+                    deleted.append(file.toDTO())
+                } else {
+                    print("file not found for id \(fileID)")
+                }
+            }
+            
+            print("deleted files:" + (try outputFormat.format(deleted)))
         } catch {
             app.logger.report(error: error)
             try? await app.asyncShutdown()
             throw error
         }
-        
-        var deleted: [FileDTO] = []
-        
-        for fileID in fileIDs {
-            if let file = try await File.find(fileID, on: app.db) {
-                try await file.delete(on: app.db)
-                deleted.append(file.toDTO())
-            } else {
-                print("file not found for id \(fileID)")
-            }
-        }
-        
-        print("deleted files:" + (try outputFormat.format(deleted)))
         
         try await app.asyncShutdown()
     }

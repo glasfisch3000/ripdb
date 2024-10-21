@@ -55,17 +55,17 @@ struct CollectionsCreate: AsyncParsableCommand {
         
         do {
             try await configureDB(app, config)
+            
+            let collection = CollectionModel(id: nil, name: self.collection.name)
+            try await collection.create(on: app.db)
+            
+            print(try outputFormat.format(collection.toDTO()))
         } catch {
             app.logger.report(error: error)
             try? await app.asyncShutdown()
             throw error
         }
         
-        let collection = CollectionModel(id: nil, name: self.collection.name)
-        try await collection.create(on: app.db)
-        
         try await app.asyncShutdown()
-        
-        print(try outputFormat.format(collection.toDTO()))
     }
 }

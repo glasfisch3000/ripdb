@@ -91,41 +91,41 @@ struct FilesList: AsyncParsableCommand {
         
         do {
             try await configureDB(app, config)
+            
+            var query = File.query(on: app.db)
+            
+            if let videoID = filterOptions.video {
+                query = query.filter(\File.$video.$id == videoID)
+            }
+            
+            if let locationID = filterOptions.location {
+                query = query.filter(\File.$location.$id == locationID)
+            }
+            
+            if let is3D = filterOptions.is3D {
+                query = query.filter(\File.$is3D == is3D)
+            }
+            
+            for sortOption in sortOptions {
+                query = switch sortOption {
+                case .res: query.sort(\.$resolution, sortOrder.databaseDirection)
+                case .size: query.sort(\.$size, sortOrder.databaseDirection)
+                case .is3d: query.sort(\.$is3D, sortOrder.databaseDirection)
+                }
+            }
+            
+            let files = try await query
+                .with(\.$location)
+                .with(\.$video)
+                .range(lower: 0, upper: filterOptions.limit == 0 ? nil : Int(filterOptions.limit))
+                .all()
+                .map { $0.toDTO() }
+            print(try outputFormat.format(files))
         } catch {
             app.logger.report(error: error)
             try? await app.asyncShutdown()
             throw error
         }
-        
-        var query = File.query(on: app.db)
-        
-        if let videoID = filterOptions.video {
-            query = query.filter(\File.$video.$id == videoID)
-        }
-        
-        if let locationID = filterOptions.location {
-            query = query.filter(\File.$location.$id == locationID)
-        }
-        
-        if let is3D = filterOptions.is3D {
-            query = query.filter(\File.$is3D == is3D)
-        }
-        
-        for sortOption in sortOptions {
-            query = switch sortOption {
-            case .res: query.sort(\.$resolution, sortOrder.databaseDirection)
-            case .size: query.sort(\.$size, sortOrder.databaseDirection)
-            case .is3d: query.sort(\.$is3D, sortOrder.databaseDirection)
-            }
-        }
-        
-        let files = try await query
-            .with(\.$location)
-            .with(\.$video)
-            .range(lower: 0, upper: filterOptions.limit == 0 ? nil : Int(filterOptions.limit))
-            .all()
-            .map { $0.toDTO() }
-        print(try outputFormat.format(files))
         
         try await app.asyncShutdown()
     }

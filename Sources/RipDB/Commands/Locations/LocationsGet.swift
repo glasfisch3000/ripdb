@@ -50,25 +50,25 @@ struct LocationsGet: AsyncParsableCommand {
         
         do {
             try await configureDB(app, config)
+            
+            let location = try await Location.find(locationID, on: app.db)
+            try await location?.$files.load(on: app.db)
+            try await location?.$files.value?
+                .map { $0.$video.load(on: app.db) }
+                .flatten(on: app.eventLoopGroup.next())
+                .get()
+            
+            if let location = location?.toDTO() {
+                print(try outputFormat.format(location))
+            } else {
+                print("location not found for id \(locationID)")
+            }
         } catch {
             app.logger.report(error: error)
             try? await app.asyncShutdown()
             throw error
         }
         
-        let location = try await Location.find(locationID, on: app.db)
-        try await location?.$files.load(on: app.db)
-        try await location?.$files.value?
-            .map { $0.$video.load(on: app.db) }
-            .flatten(on: app.eventLoopGroup.next())
-            .get()
-        
         try await app.asyncShutdown()
-        
-        if let location = location?.toDTO() {
-            print(try outputFormat.format(location))
-        } else {
-            print("location not found for id \(locationID)")
-        }
     }
 }

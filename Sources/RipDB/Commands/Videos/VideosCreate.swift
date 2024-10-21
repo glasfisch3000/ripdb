@@ -61,17 +61,17 @@ struct VideosCreate: AsyncParsableCommand {
         
         do {
             try await configureDB(app, config)
+            
+            let video = Video(id: nil, name: self.video.name, type: self.video.type, projectID: self.video.project)
+            try await video.create(on: app.db)
+            
+            print(try outputFormat.format(video.toDTO()))
         } catch {
             app.logger.report(error: error)
             try? await app.asyncShutdown()
             throw error
         }
         
-        let video = Video(id: nil, name: self.video.name, type: self.video.type, projectID: self.video.project)
-        try await video.create(on: app.db)
-        
         try await app.asyncShutdown()
-        
-        print(try outputFormat.format(video.toDTO()))
     }
 }

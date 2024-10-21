@@ -58,17 +58,17 @@ struct LocationsCreate: AsyncParsableCommand {
         
         do {
             try await configureDB(app, config)
+            
+            let location = Location(id: nil, name: self.location.name, capacity: self.location.capacity)
+            try await location.create(on: app.db)
+            
+            print(try outputFormat.format(location.toDTO()))
         } catch {
             app.logger.report(error: error)
             try? await app.asyncShutdown()
             throw error
         }
         
-        let location = Location(id: nil, name: self.location.name, capacity: self.location.capacity)
-        try await location.create(on: app.db)
-        
         try await app.asyncShutdown()
-        
-        print(try outputFormat.format(location.toDTO()))
     }
 }

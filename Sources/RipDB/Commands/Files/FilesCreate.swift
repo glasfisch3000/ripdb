@@ -70,23 +70,23 @@ struct FilesCreate: AsyncParsableCommand {
         
         do {
             try await configureDB(app, config)
+            
+            let file = File(id: nil,
+                            resolution: self.file.resolution,
+                            is3D: self.file.is3D,
+                            size: self.file.filesize,
+                            contentHashSHA256: self.file.contentHashSHA256,
+                            locationID: self.file.location,
+                            videoID: self.file.video)
+            try await file.create(on: app.db)
+            
+            print(try outputFormat.format(file.toDTO()))
         } catch {
             app.logger.report(error: error)
             try? await app.asyncShutdown()
             throw error
         }
         
-        let file = File(id: nil,
-                        resolution: self.file.resolution,
-                        is3D: self.file.is3D,
-                        size: self.file.filesize,
-                        contentHashSHA256: self.file.contentHashSHA256,
-                        locationID: self.file.location,
-                        videoID: self.file.video)
-        try await file.create(on: app.db)
-        
         try await app.asyncShutdown()
-        
-        print(try outputFormat.format(file.toDTO()))
     }
 }
