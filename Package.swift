@@ -16,6 +16,7 @@ let package = Package(
         .package(url: "https://github.com/vapor/fluent-postgres-driver.git", from: "2.8.0"),
         .package(url: "https://github.com/vapor/leaf.git", from: "4.3.0"),
         .package(url: "https://github.com/apple/swift-nio.git", from: "2.65.0"),
+        .package(url: "https://github.com/jpsim/Yams.git", from: "5.1.3"),
     ],
     targets: [
         .executableTarget(
@@ -28,6 +29,7 @@ let package = Package(
                 .product(name: "Vapor", package: "vapor"),
                 .product(name: "NIOCore", package: "swift-nio"),
                 .product(name: "NIOPosix", package: "swift-nio"),
+                .product(name: "Yams", package: "Yams"),
             ],
             swiftSettings: swiftSettings
         ),
@@ -38,4 +40,5 @@ let package = Package(
 var swiftSettings: [SwiftSetting] { [
     .enableUpcomingFeature("DisableOutwardActorInference"),
     .enableExperimentalFeature("StrictConcurrency"),
+    .enableUpcomingFeature("BareSlashRegexLiterals"),
 ] }

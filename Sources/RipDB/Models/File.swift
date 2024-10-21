@@ -1,6 +1,5 @@
 import Fluent
-import struct Foundation.Data
-import struct Foundation.UUID
+import Foundation
 
 final class File: Model, Sendable {
     static let schema = "files"

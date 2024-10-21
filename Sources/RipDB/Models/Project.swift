@@ -1,6 +1,5 @@
 import Fluent
-import struct Foundation.Date
-import struct Foundation.UUID
+import Foundation
 
 final class Project: Model, Sendable {
     static let schema = "projects"

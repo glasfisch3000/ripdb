@@ -1,5 +1,5 @@
 import Fluent
-import struct Foundation.UUID
+import Foundation
 
 final class Location: Model, Sendable {
     static let schema = "locations"
