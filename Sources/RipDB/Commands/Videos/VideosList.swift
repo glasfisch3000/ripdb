@@ -20,7 +20,7 @@ struct VideosList: AsyncParsableCommand {
     
     struct FilterOptions: ParsableArguments {
         @ArgumentParser.Option(name: [.long, .customShort("L")]) // TODO: add description, 0 = no limit
-        var limit: UInt = 0
+        var limit: UInt = 100
         
         @ArgumentParser.Option(name: [.long, .customShort("S")])
         var search: String?
