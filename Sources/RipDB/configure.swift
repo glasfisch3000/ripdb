@@ -13,6 +13,12 @@ public func configureDB(_ app: Application, _ config: AppConfig) async throws {
             database: config.database.database
         )), as: .psql
     )
+    
+    app.migrations.add(CreateLocation())
+    app.migrations.add(CreateCollection())
+    app.migrations.add(CreateProject())
+    app.migrations.add(CreateVideo())
+    app.migrations.add(CreateFile())
 }
 
 func configureRoutes(_ app: Application) throws {
