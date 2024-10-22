@@ -1,4 +1,4 @@
-// swift-tools-version:6.0
+// swift-tools-version:5.9
 import PackageDescription
 
 let package = Package(
@@ -27,14 +27,12 @@ let package = Package(
                 .product(name: "FluentPostgresDriver", package: "fluent-postgres-driver"),
                 .product(name: "Leaf", package: "leaf"),
                 .product(name: "Vapor", package: "vapor"),
-                .product(name: "NIOCore", package: "swift-nio"),
-                .product(name: "NIOPosix", package: "swift-nio"),
+                .product(name: "_NIOFileSystem", package: "swift-nio"),
                 .product(name: "Yams", package: "Yams"),
             ],
             swiftSettings: swiftSettings
         ),
-    ],
-    swiftLanguageModes: [.v5]
+    ]
 )
 
 var swiftSettings: [SwiftSetting] { [
