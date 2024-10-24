@@ -22,7 +22,7 @@ struct LocationsCreate: AsyncParsableCommand {
         var name: String
         
         @ArgumentParser.Option(name: [.customShort("C"), .long])
-        var capacity: UInt64?
+        var capacity: ParsableFileSize?
     }
     
     @ArgumentParser.Option(name: [.short, .customLong("env")])
@@ -59,7 +59,7 @@ struct LocationsCreate: AsyncParsableCommand {
         do {
             try await configureDB(app, config)
             
-            let location = Location(id: nil, name: self.location.name, capacity: self.location.capacity)
+            let location = Location(id: nil, name: self.location.name, capacity: self.location.capacity?.bytes)
             try await location.create(on: app.db)
             
             print(try outputFormat.format(location.toDTO()))

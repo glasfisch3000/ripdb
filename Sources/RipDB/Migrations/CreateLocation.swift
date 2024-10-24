@@ -5,7 +5,7 @@ struct CreateLocation: AsyncMigration {
         try await database.schema("locations")
             .id()
             .field("name", .string, .required)
-            .field("capacity", .uint64)
+            .field("capacity", .double)
             .create()
     }
 

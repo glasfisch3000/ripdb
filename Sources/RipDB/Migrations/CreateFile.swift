@@ -13,7 +13,7 @@ struct CreateFile: AsyncMigration {
             .id()
             .field("resolution", fileResolution, .required)
             .field("is_3d", .bool, .required)
-            .field("size", .uint64, .required)
+            .field("size", .double, .required)
             .field("content_hash_sha256", .data, .required)
             .field("video", .uuid, .required, .references("videos", "id"))
             .field("location", .uuid, .required, .references("locations", "id"))

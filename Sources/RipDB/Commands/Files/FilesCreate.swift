@@ -22,7 +22,7 @@ struct FilesCreate: AsyncParsableCommand {
         var resolution: FileResolution
         
         @ArgumentParser.Option(name: [.long, .customShort("S")])
-        var filesize: UInt64
+        var filesize: ParsableFileSize
         
         @ArgumentParser.Option(name: .customLong("sha256"))
         var contentHashSHA256: Data
@@ -74,7 +74,7 @@ struct FilesCreate: AsyncParsableCommand {
             let file = File(id: nil,
                             resolution: self.file.resolution,
                             is3D: self.file.is3D,
-                            size: self.file.filesize,
+                            size: self.file.filesize.bytes,
                             contentHashSHA256: self.file.contentHashSHA256,
                             locationID: self.file.location,
                             videoID: self.file.video)
