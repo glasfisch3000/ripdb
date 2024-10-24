@@ -25,7 +25,7 @@ struct ProjectsCreate: AsyncParsableCommand {
         var type: ProjectType
         
         @ArgumentParser.Option(name: [.customShort("D"), .customLong("date")])
-        var releaseDate: ReleaseDate
+        var releaseDate: ParsableReleaseDate
         
         @ArgumentParser.Option(name: [.long, .customShort("C")])
         var collection: UUID?

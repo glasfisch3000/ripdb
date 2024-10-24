@@ -1,7 +1,7 @@
 import ArgumentParser
 import Foundation
 
-struct ReleaseDate: ExpressibleByArgument {
+struct ParsableReleaseDate: ExpressibleByArgument {
     var year: UInt
     var month: UInt
     var day: UInt
@@ -28,7 +28,7 @@ struct ReleaseDate: ExpressibleByArgument {
     }
 }
 
-extension ReleaseDate {
+extension ParsableReleaseDate {
     struct DateConversionError: Error, CustomStringConvertible {
         init() { }
         
