@@ -62,7 +62,7 @@ struct VideosDelete: AsyncParsableCommand {
                 }
             }
             
-            print("deleted videos:" + (try outputFormat.format(deleted)))
+            print("deleted videos:\n" + (try outputFormat.format(deleted)))
         } catch {
             app.logger.report(error: error)
             try? await app.asyncShutdown()

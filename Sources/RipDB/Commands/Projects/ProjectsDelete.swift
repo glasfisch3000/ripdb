@@ -62,7 +62,7 @@ struct ProjectsDelete: AsyncParsableCommand {
                 }
             }
             
-            print("deleted projects:" + (try outputFormat.format(deleted)))
+            print("deleted projects:\n" + (try outputFormat.format(deleted)))
         } catch {
             app.logger.report(error: error)
             try? await app.asyncShutdown()

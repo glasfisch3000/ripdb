@@ -62,7 +62,7 @@ struct FilesDelete: AsyncParsableCommand {
                 }
             }
             
-            print("deleted files:" + (try outputFormat.format(deleted)))
+            print("deleted files:\n" + (try outputFormat.format(deleted)))
         } catch {
             app.logger.report(error: error)
             try? await app.asyncShutdown()

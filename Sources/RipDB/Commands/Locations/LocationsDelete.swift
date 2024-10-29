@@ -62,7 +62,7 @@ struct LocationsDelete: AsyncParsableCommand {
                 }
             }
             
-            print("deleted locations:" + (try outputFormat.format(deleted)))
+            print("deleted locations:\n" + (try outputFormat.format(deleted)))
         } catch {
             app.logger.report(error: error)
             try? await app.asyncShutdown()
