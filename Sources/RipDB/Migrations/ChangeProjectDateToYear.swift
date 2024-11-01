@@ -15,5 +15,3 @@ struct ChangeProjectDateToYear: AsyncMigration {
             .update()
     }
 }
-
-// DB8320CE-5839-4BD4-8D11-5E5E2918931A
