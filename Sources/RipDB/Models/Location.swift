@@ -11,14 +11,14 @@ final class Location: Model, Sendable {
     var name: String
     
     @Field(key: "capacity")
-    var capacity: Double?
+    var capacity: Int?
     
     @Children(for: \.$location)
     var files: [File]
 
     init() { }
 
-    init(id: UUID? = nil, name: String, capacity: Double?) {
+    init(id: UUID? = nil, name: String, capacity: Int?) {
         self.id = id
         self.name = name
         self.capacity = capacity

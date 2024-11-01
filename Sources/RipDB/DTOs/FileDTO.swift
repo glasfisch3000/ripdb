@@ -5,7 +5,7 @@ struct FileDTO: Content {
     var id: UUID?
     var resolution: FileResolution
     var is3D: Bool
-    var size: Double
+    var size: Int
     var contentHashSHA256: Data
     
     var location: LocationDTO?

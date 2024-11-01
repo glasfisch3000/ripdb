@@ -4,7 +4,7 @@ import Vapor
 struct LocationDTO: Content {
     var id: UUID?
     var name: String
-    var capacity: Double?
+    var capacity: Int?
     
     var files: [FileDTO]?
     

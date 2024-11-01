@@ -1,46 +1,46 @@
 import ArgumentParser
 
 struct ParsableFileSize: ExpressibleByArgument {
-    var bytes: Double
+    var bytes: Int
     
-    init(bytes: Double) {
+    init(bytes: Int) {
         self.bytes = bytes
     }
     
-    static func bytes(_ bytes: Double) -> Self {
+    static func bytes(_ bytes: Int) -> Self {
         Self(bytes: bytes)
     }
     
     static func kiloBytes(_ kb: Double) -> Self {
-        Self(bytes: kb * 1000)
+        Self(bytes: Int((kb * 1000).rounded()))
     }
     
     static func kibiBytes(_ kib: Double) -> Self {
-        Self(bytes: kib * 1024)
+        Self(bytes: Int((kib * 1024).rounded()))
     }
     
     static func megaBytes(_ mb: Double) -> Self {
-        Self(bytes: mb * 1000 * 1000)
+        Self(bytes: Int((mb * 1000 * 1000).rounded()))
     }
     
     static func mebiBytes(_ mib: Double) -> Self {
-        Self(bytes: mib * 1024 * 1024)
+        Self(bytes: Int((mib * 1024 * 1024).rounded()))
     }
     
     static func gigaBytes(_ gb: Double) -> Self {
-        Self(bytes: gb * 1000 * 1000 * 1000)
+        Self(bytes: Int((gb * 1000 * 1000 * 1000).rounded()))
     }
     
     static func gibiBytes(_ gib: Double) -> Self {
-        Self(bytes: gib * 1024 * 1024 * 1024)
+        Self(bytes: Int((gib * 1024 * 1024 * 1024).rounded()))
     }
     
     static func teraBytes(_ tb: Double) -> Self {
-        Self(bytes: tb * 1000 * 1000 * 1000 * 1000)
+        Self(bytes: Int((tb * 1000 * 1000 * 1000 * 1000).rounded()))
     }
     
     static func tebiBytes(_ tib: Double) -> Self {
-        Self(bytes: tib * 1024 * 1024 * 1024 * 1024)
+        Self(bytes: Int((tib * 1024 * 1024 * 1024 * 1024).rounded()))
     }
     
     init?(argument: String) {
@@ -54,7 +54,11 @@ struct ParsableFileSize: ExpressibleByArgument {
         }
         
         switch match.output.magnitude?.lowercased() {
-        case .none, "b", "byte", "bytes": self = .bytes(factor)
+        case .none, "b", "byte", "bytes":
+            guard let bytes = Int(match.output.factor) else {
+                return nil
+            }
+            self.bytes = bytes
         case "kb":  self = .kiloBytes(factor)
         case "kib": self = .kibiBytes(factor)
         case "mb":  self = .megaBytes(factor)

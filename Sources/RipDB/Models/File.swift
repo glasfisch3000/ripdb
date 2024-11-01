@@ -14,7 +14,7 @@ final class File: Model, Sendable {
     var is3D: Bool
     
     @Field(key: "size")
-    var size: Double
+    var size: Int
     
     @Field(key: "content_hash_sha256")
     var contentHashSHA256: Data
@@ -27,7 +27,7 @@ final class File: Model, Sendable {
     
     init() { }
 
-    init(id: UUID? = nil, resolution: FileResolution, is3D: Bool, size: Double, contentHashSHA256: Data, locationID: Location.IDValue?, videoID: Video.IDValue?) {
+    init(id: UUID? = nil, resolution: FileResolution, is3D: Bool, size: Int, contentHashSHA256: Data, locationID: Location.IDValue?, videoID: Video.IDValue?) {
         self.id = id
         self.resolution = resolution
         self.is3D = is3D
