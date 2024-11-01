@@ -24,8 +24,8 @@ struct ProjectsCreate: AsyncParsableCommand {
         @ArgumentParser.Option(name: [.long, .customShort("T")])
         var type: ProjectType
         
-        @ArgumentParser.Option(name: [.customShort("D"), .customLong("date")])
-        var releaseDate: ParsableReleaseDate
+        @ArgumentParser.Option(name: [.customShort("D"), .customLong("year")])
+        var releaseYear: Int
         
         @ArgumentParser.Option(name: [.long, .customShort("C")])
         var collection: UUID?
@@ -65,7 +65,7 @@ struct ProjectsCreate: AsyncParsableCommand {
         do {
             try await configureDB(app, config)
             
-            let project = Project(id: nil, name: self.project.name, type: self.project.type, releaseDate: try self.project.releaseDate.toDate(), collectionID: self.project.collection)
+            let project = Project(id: nil, name: self.project.name, type: self.project.type, releaseYear: self.project.releaseYear, collectionID: self.project.collection)
             try await project.create(on: app.db)
             
             print(try outputFormat.format(project.toDTO()))

@@ -19,6 +19,7 @@ public func configureDB(_ app: Application, _ config: AppConfig) async throws {
     app.migrations.add(CreateProject())
     app.migrations.add(CreateVideo())
     app.migrations.add(CreateFile())
+    app.migrations.add(ChangeProjectDateToYear())
 }
 
 func configureRoutes(_ app: Application) throws {

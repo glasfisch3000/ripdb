@@ -13,8 +13,8 @@ final class Project: Model, Sendable {
     @Enum(key: "type")
     var type: ProjectType
     
-    @Field(key: "release_date")
-    var releaseDate: Date
+    @Field(key: "release_year")
+    var releaseYear: Int
     
     @OptionalParent(key: "collection")
     var collection: CollectionModel?
@@ -24,11 +24,11 @@ final class Project: Model, Sendable {
 
     init() { }
 
-    init(id: UUID? = nil, name: String, type: ProjectType, releaseDate: Date, collectionID: CollectionModel.IDValue?) {
+    init(id: UUID? = nil, name: String, type: ProjectType, releaseYear: Int, collectionID: CollectionModel.IDValue?) {
         self.id = id
         self.name = name
         self.type = type
-        self.releaseDate = releaseDate
+        self.releaseYear = releaseYear
         if let collectionID = collectionID { self.$collection.id = collectionID }
     }
     
@@ -36,7 +36,7 @@ final class Project: Model, Sendable {
         ProjectDTO(id: self.id,
                    name: self.name,
                    type: self.type,
-                   releaseDate: self.releaseDate,
+                   releaseYear: self.releaseYear,
                    collection: self.$collection.value??.toDTO(),
                    videos: self.$videos.value?.map { $0.toDTO() })
     }

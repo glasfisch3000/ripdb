@@ -5,7 +5,7 @@ struct ProjectDTO: Content {
     var id: UUID?
     var name: String
     var type: ProjectType
-    var releaseDate: Date
+    var releaseYear: Int
     
     var collection: CollectionDTO?
     var videos: [VideoDTO]?
@@ -14,7 +14,7 @@ struct ProjectDTO: Content {
         Project(id: self.id,
                 name: self.name,
                 type: self.type,
-                releaseDate: self.releaseDate,
+                releaseYear: self.releaseYear,
                 collectionID: self.collection?.id)
     }
 }
