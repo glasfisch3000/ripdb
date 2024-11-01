@@ -21,7 +21,7 @@ struct FilesCreate: AsyncParsableCommand {
         @ArgumentParser.Option(name: [.long, .customShort("R")])
         var resolution: FileResolution
         
-        @ArgumentParser.Option(name: [.long, .customShort("S")])
+        @ArgumentParser.Option(name: [.customLong("size"), .customShort("S")])
         var filesize: ParsableFileSize
         
         @ArgumentParser.Option(name: .customLong("sha256"))
