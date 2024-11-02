@@ -1,0 +1,65 @@
+#extend("master"):
+  #export("title"):
+    Location: #(location.name)
+  #endexport
+  
+  #export("headline"):
+    Location: #(location.name)
+  #endexport
+  
+  #export("body"):
+    <table class="object-properties">
+      <tr>
+        <th>UUID</th>
+        <td>#(location.id)</td>
+      </tr>
+      <tr>
+        <th>Capacity</th>
+        #if(location.capacity):
+          #if(location.capacity >= 10000000000000): <td>#(location.capacity/1000000000000) TB</td>
+          #elseif(location.capacity >= 10000000): <td>#(location.capacity/1000000000) GB</td>
+          #elseif(location.capacity >= 10000000): <td>#(location.capacity/1000000) MB</td>
+          #elseif(location.capacity >= 10000): <td>#(location.capacity/1000) KB</td>
+          #else: <td>#(location.capacity) Bytes</td> #endif
+        #else: <td class="no-value">Unspecified</td> #endif
+      </tr>
+    </table>
+    
+    <h2 class="section-headline">Files</h2>
+    #if(count(location.files) > 0):
+      <ul class="object-children">
+      #for(file in location.files):
+        <li>
+          <h3 class="subsection-headline">#(file.video.name) <span class="secondary">#(file.video.project.name)</span></h3>
+          <table class="object-properties">
+            <tr>
+              <th>UUID</th>
+              <td><a href="/files/#(file.id)">#(file.id)</a></td>
+            </tr>
+            <tr>
+              <th>Resolution</th>
+              <td>#(file.resolution) #if(file.is3D): (3D) #endif</td>
+            </tr>
+            <tr>
+              <th>File Size</th>
+              <td>
+                #if(file.size >= 10000000000000): #(file.size/1000000000000) TB
+                #elseif(file.size >= 10000000000): #(file.size/1000000000) GB
+                #elseif(file.size >= 10000000): #(file.size/1000000) MB
+                #elseif(file.size >= 10000): #(file.size/1000) KB
+                #else: #(file.size) Bytes #endif
+              </td>
+            </tr>
+            <tr>
+              <th>Content Hash (SHA256)</th>
+              <td>#(file.contentHashSHA256)</td>
+            </tr>
+          </table>
+        </li>
+      #endfor
+      </ul>
+    #else:
+      <p class="no-value">There are no files at this location.</p>
+    #endif
+  #endexport
+#endextend

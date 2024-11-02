@@ -1,0 +1,66 @@
+#extend("master"):
+  #export("title"):
+    File: #(file.id) (#(file.video.name) – #(file.video.project.name))
+  #endexport
+  
+  #export("headline"):
+    File: #(file.id)
+  #endexport
+  
+  #export("body"):
+    <table class="object-properties">
+      <tr>
+        <th>UUID</th>
+        <td>#(file.id)</td>
+      </tr>
+      <tr>
+        <th>Resolution</th>
+        <td>#(file.resolution) #if(file.is3D): (3D) #endif</td>
+      </tr>
+      <tr>
+        <th>File Size</th>
+        <td>
+          #if(file.size >= 10000000000000): #(file.size/1000000000000) TB
+          #elseif(file.size >= 10000000000): #(file.size/1000000000) GB
+          #elseif(file.size >= 10000000): #(file.size/1000000) MB
+          #elseif(file.size >= 10000): #(file.size/1000) KB
+          #else: #(file.size) Bytes #endif
+        </td>
+      </tr>
+      <tr>
+        <th>Content Hash (SHA256)</th>
+        <td>#(file.contentHashSHA256)</td>
+      </tr>
+    </table>
+    
+    <h2 class="section-headline">Video: #(file.video.name) <span class="secondary">#(file.video.project.name)</span></h2>
+    <table class="object-properties">
+      <tr>
+        <th>UUID</th>
+        <td>#(file.video.id)</td>
+      </tr>
+      <tr>
+        <th>Video Type</th>
+        <td>#(file.video.type)</td>
+      </tr>
+    </table>
+    
+    <h2 class="section-headline">Location: #(file.location.name)</h2>
+    <table class="object-properties">
+      <tr>
+        <th>UUID</th>
+        <td><a href="/locations/#(file.location.id)">#(file.location.id)</a></td>
+      </tr>
+      <tr>
+        <th>Capacity</th>
+        #if(file.location.capacity):
+          #if(file.location.capacity >= 10000000000000): <td>#(file.location.capacity/1000000000000) TB</td>
+          #elseif(file.location.capacity >= 10000000): <td>#(file.location.capacity/1000000000) GB</td>
+          #elseif(file.location.capacity >= 10000000): <td>#(file.location.capacity/1000000) MB</td>
+          #elseif(file.location.capacity >= 10000): <td>#(file.location.capacity/1000) KB</td>
+          #else: <td>#(file.location.capacity) Bytes</td> #endif
+        #else: <td class="no-value">Unspecified</td> #endif
+      </tr>
+    </table>
+  #endexport
+#endextend

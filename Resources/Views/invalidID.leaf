@@ -1,0 +1,13 @@
+#extend("master"):
+  #export("title"):
+    Unknown #(type)
+  #endexport
+  
+  #export("headline"):
+    Unknown #(type)
+  #endexport
+  
+  #export("body"):
+    Invalid ID for type #capitalized(type).
+  #endexport
+#endextend

@@ -1,0 +1,36 @@
+body {
+  margin: 0px;
+  color: #eee;
+  background: #111;
+  font-family: "Courier";
+}
+
+header {
+  color: #303bdd;
+  font-weight: bold;
+  background: #1a1a1a;
+}
+
+.no-value {
+  color: #bbb;
+}
+
+.secondary {
+  color: #888;
+}
+
+.object-properties th {
+  font-weight: bold;
+}
+
+.object-properties td,th {
+  background: #222;
+}
+
+a {
+  color: #303bdd;
+}
+
+a::visited {
+  color: #303bdd;
+}

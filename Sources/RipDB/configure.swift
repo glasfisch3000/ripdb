@@ -2,6 +2,7 @@ import NIOSSL
 import Fluent
 import FluentPostgresDriver
 import Vapor
+import Leaf
 
 public func configureDB(_ app: Application, _ config: AppConfig) async throws {
     app.databases.use(
@@ -24,8 +25,12 @@ public func configureDB(_ app: Application, _ config: AppConfig) async throws {
 }
 
 func configureRoutes(_ app: Application) throws {
-    // uncomment to serve files from /Public folder
-    // app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
+    app.views.use(.leaf)
+    
+    let fileMiddleware = FileMiddleware(publicDirectory: app.directory.publicDirectory, advancedETagComparison: true)
+    app.middleware.use(fileMiddleware)
+    
+    try app.register(collection: APIController())
     
     app.get { req async in
         "It works!"

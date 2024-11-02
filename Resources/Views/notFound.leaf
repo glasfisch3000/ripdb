@@ -1,0 +1,13 @@
+#extend("master"):
+  #export("title"):
+    #capitalized(type) #(id)
+  #endexport
+  
+  #export("headline"):
+    #capitalized(type) #(id)
+  #endexport
+  
+  #export("body"):
+    #capitalized(type) not found for ID #(id).
+  #endexport
+#endextend
