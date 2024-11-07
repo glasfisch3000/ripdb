@@ -31,6 +31,11 @@ struct APIController: RouteCollection {
         var project: ProjectDTO.WithHexHash
     }
     
+    struct CollectionContext: Codable {
+        var id: UUID
+        var collection: CollectionDTO.WithHexHash
+    }
+    
     func boot(routes: any RoutesBuilder) throws {
         let locations = routes.grouped("locations")
         locations.get(":id", use: locationsGet(request:))
@@ -43,6 +48,9 @@ struct APIController: RouteCollection {
         
         let projects = routes.grouped("projects")
         projects.get(":id", use: projectsGet(request:))
+        
+        let collections = routes.grouped("collections")
+        collections.get(":id", use: collectionsGet(request:))
     }
     
     @Sendable
@@ -123,5 +131,21 @@ struct APIController: RouteCollection {
         
         let context = ProjectContext(id: id, project: project.toDTO().toHexHash())
         return try await req.view.render("project", context)
+    }
+    
+    @Sendable
+    func collectionsGet(request req: Request) async throws -> View {
+        guard let id = req.parameters.get("id", as: UUID.self) else {
+            return try await req.view.render("invalidID", InvalidIDContext(type: "collection"))
+        }
+        
+        guard let collection = try await CollectionModel.find(id, on: req.db) else {
+            return try await req.view.render("notFound", NotFoundContext(type: "collection", id: id))
+        }
+        
+        try await collection.$projects.load(on: req.db)
+        
+        let context = CollectionContext(id: id, collection: collection.toDTO().toHexHash())
+        return try await req.view.render("collection", context)
     }
 }

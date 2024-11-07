@@ -1,0 +1,41 @@
+#extend("master"):
+  #export("title"):
+    Collection: #(collection.name)
+  #endexport
+  
+  #export("headline"):
+    Collection: #(collection.name)
+  #endexport
+  
+  #export("body"):
+    <table class="object-properties">
+      <tr>
+        <th>UUID</th>
+        <td>#(collection.id)</td>
+      </tr>
+    </table>
+    
+    <h2 class="section-headline">Projects</h2>
+    #if(count(collection.projects) > 0):
+      <ul class="object-children">
+      #for(project in collection.projects):
+        <li>
+          <h3 class="subsection-headline">#(project.name)</h3>
+          <div class="subsection-subheadline">
+            <span class="boxed">#(project.type)</span>
+            #(project.releaseYear)
+          </div>
+          <table class="object-properties">
+            <tr>
+              <th>UUID</th>
+              <td><a href="/projects/#(project.id)">#(project.id)</a></td>
+            </tr>
+          </table>
+        </li>
+      #endfor
+      </ul>
+    #else:
+      <p class="no-value">There are no projects in this collection.</p>
+    #endif
+  #endexport
+#endextend

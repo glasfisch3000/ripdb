@@ -24,7 +24,7 @@
     <table class="object-properties">
       <tr>
         <th>UUID</th>
-        <td>#(project.collection.id)</td>
+        <td><a href="/collections/#(project.collection.id)">#(project.collection.id)</a></td>
       </tr>
     </table>
     #endif
