@@ -24,7 +24,7 @@ struct ProjectsCreate: AsyncParsableCommand {
         @ArgumentParser.Option(name: [.long, .customShort("T")])
         var type: ProjectType
         
-        @ArgumentParser.Option(name: [.customShort("D"), .customLong("year")])
+        @ArgumentParser.Option(name: [.customShort("Y"), .customLong("year")])
         var releaseYear: Int
         
         @ArgumentParser.Option(name: [.long, .customShort("C")])
