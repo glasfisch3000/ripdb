@@ -1,0 +1,54 @@
+#extend("master"):
+  #export("title"):
+    Project: #(project.name) #if(project.collection): – #(project.collection.name) #endif
+  #endexport
+  
+  #export("headline"):
+    Project: #(project.name)
+  #endexport
+  
+  #export("body"):
+    <table class="object-properties">
+      <tr>
+        <th>UUID</th>
+        <td>#(project.id)</td>
+      </tr>
+      <tr>
+        <th>Project Type</th>
+        <td>#(project.type)</td>
+      </tr>
+    </table>
+    
+    #if(project.collection):
+    <h2 class="section-headline">Collection: #(project.collection.name)</h2>
+    <table class="object-properties">
+      <tr>
+        <th>UUID</th>
+        <td>#(project.collection.id)</td>
+      </tr>
+    </table>
+    #endif
+    
+    <h2 class="section-headline">Videos</h2>
+    #if(count(project.videos) > 0):
+      <ul class="object-children">
+      #for(video in project.videos):
+        <li>
+          <h3 class="subsection-headline">#(video.name)</h3>
+          <div class="subsection-subheadline">
+            <span class="boxed">#(video.type)</span>
+          </div>
+          <table class="object-properties">
+            <tr>
+              <th>UUID</th>
+              <td><a href="/videos/#(video.id)">#(video.id)</a></td>
+            </tr>
+          </table>
+        </li>
+      #endfor
+      </ul>
+    #else:
+      <p class="no-value">There are no videos for this project.</p>
+    #endif
+  #endexport
+#endextend

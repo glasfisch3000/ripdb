@@ -45,7 +45,10 @@
       </tr>
       <tr>
         <th>Project</th>
-        <td>#(file.video.project.name) <span class="secondary">(#(file.video.project.id))</span></td>
+        <td>
+          #(file.video.project.name)
+          <span class="secondary">(<a href="/projects/#(file.video.project.id)">#(file.video.project.id)</a>)</span>
+        </td>
       </tr>
     </table>
     

@@ -26,6 +26,11 @@ struct APIController: RouteCollection {
         var video: VideoDTO.WithHexHash
     }
     
+    struct ProjectContext: Codable {
+        var id: UUID
+        var project: ProjectDTO.WithHexHash
+    }
+    
     func boot(routes: any RoutesBuilder) throws {
         let locations = routes.grouped("locations")
         locations.get(":id", use: locationsGet(request:))
@@ -35,6 +40,9 @@ struct APIController: RouteCollection {
         
         let videos = routes.grouped("videos")
         videos.get(":id", use: videosGet(request:))
+        
+        let projects = routes.grouped("projects")
+        projects.get(":id", use: projectsGet(request:))
     }
     
     @Sendable
@@ -98,5 +106,22 @@ struct APIController: RouteCollection {
         
         let context = VideoContext(id: id, video: video.toDTO().toHexHash())
         return try await req.view.render("video", context)
+    }
+    
+    @Sendable
+    func projectsGet(request req: Request) async throws -> View {
+        guard let id = req.parameters.get("id", as: UUID.self) else {
+            return try await req.view.render("invalidID", InvalidIDContext(type: "project"))
+        }
+        
+        guard let project = try await Project.find(id, on: req.db) else {
+            return try await req.view.render("notFound", NotFoundContext(type: "project", id: id))
+        }
+        
+        try await project.$collection.load(on: req.db)
+        try await project.$videos.load(on: req.db)
+        
+        let context = ProjectContext(id: id, project: project.toDTO().toHexHash())
+        return try await req.view.render("project", context)
     }
 }
