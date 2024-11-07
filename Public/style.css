@@ -34,3 +34,19 @@ a {
 a::visited {
   color: #303bdd;
 }
+
+.boxed {
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-top: 0.5px;
+  padding-bottom: 1px;
+  border: 0.7px solid #eee;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 95%;
+}
+
+.secondary .boxed, .secondary.boxed {
+  border-width: 1px;
+  border-color: #888;
+}

@@ -17,9 +17,24 @@ main {
   padding-left: 5px;
 }
 
+.section-headline:has(~ .section-subheadline) {
+  margin-bottom: 5px;
+}
+
 .subsection-headline {
   margin-top: 0px;
   margin-bottom: 5px;
+}
+
+.section-subheadline {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  padding-left: 5px;
+}
+
+.subsection-subheadline {
+  margin-top: 5px;
+  margin-bottom: 10px;
 }
 
 ul.object-children {
@@ -61,8 +76,4 @@ table.object-properties tr > :last-child {
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
   padding-right: 8px;
-}
-
-.secondary::before {
-  content: "– ";
 }

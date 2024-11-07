@@ -33,15 +33,19 @@
       </tr>
     </table>
     
-    <h2 class="section-headline">Video: #(file.video.name) <span class="secondary">#(file.video.project.name)</span></h2>
+    <h2 class="section-headline">Video: #(file.video.name)</h2>
+    <div class="section-subheadline">
+      <span class="boxed">#(file.video.type)</span>
+      #(file.video.project.name)
+    </div>
     <table class="object-properties">
       <tr>
         <th>UUID</th>
-        <td>#(file.video.id)</td>
+        <td><a href="/videos/#(file.video.id)">#(file.video.id)</a></td>
       </tr>
       <tr>
-        <th>Video Type</th>
-        <td>#(file.video.type)</td>
+        <th>Project</th>
+        <td>#(file.video.project.name) <span class="secondary">(#(file.video.project.id))</span></td>
       </tr>
     </table>
     

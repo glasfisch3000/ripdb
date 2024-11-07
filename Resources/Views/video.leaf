@@ -1,36 +1,42 @@
 #extend("master"):
   #export("title"):
-    Location: #(location.name)
+    Video: #(video.name) – #(video.project.name)
   #endexport
   
   #export("headline"):
-    Location: #(location.name)
+    Video: #(video.name)
   #endexport
   
   #export("body"):
     <table class="object-properties">
       <tr>
         <th>UUID</th>
-        <td>#(location.id)</td>
+        <td>#(video.id)</td>
       </tr>
       <tr>
-        <th>Capacity</th>
-        #if(location.capacity):
-          #if(location.capacity >= 10000000000000): <td>#(location.capacity/1000000000000) TB</td>
-          #elseif(location.capacity >= 10000000): <td>#(location.capacity/1000000000) GB</td>
-          #elseif(location.capacity >= 10000000): <td>#(location.capacity/1000000) MB</td>
-          #elseif(location.capacity >= 10000): <td>#(location.capacity/1000) KB</td>
-          #else: <td>#(location.capacity) Bytes</td> #endif
-        #else: <td class="no-value">Unspecified</td> #endif
+        <th>Video Type</th>
+        <td>#(video.type)</td>
+      </tr>
+    </table>
+    
+    <h2 class="section-headline">Project: #(video.project.name)</h2>
+    <div class="section-subheadline">
+      <span class="boxed">#(video.project.type)</span>
+      #(video.project.releaseYear)
+    </div>
+    <table class="object-properties">
+      <tr>
+        <th>UUID</th>
+        <td>#(video.project.id)</td>
       </tr>
     </table>
     
     <h2 class="section-headline">Files</h2>
-    #if(count(location.files) > 0):
+    #if(count(video.files) > 0):
       <ul class="object-children">
-      #for(file in location.files):
+      #for(file in video.files):
         <li>
-          <h3 class="subsection-headline">#(file.video.name) <span class="secondary"> – #(file.video.project.name)</span></h3>
+          <h3 class="subsection-headline">#(file.location.name)</h3>
           <div class="subsection-subheadline">
             <span class="boxed">#(file.resolution)</span>
             #if(file.is3D): <span class="boxed">3D</span> #endif
@@ -46,17 +52,10 @@
               <td><a href="/files/#(file.id)">#(file.id)</a></td>
             </tr>
             <tr>
-              <th>Video</th>
+              <th>Location</th>
               <td>
-                #(file.video.name)
-                <span class="secondary">(<a href="/videos/#(file.video.id)">#(file.video.id)</a>)</span>
-              </td>
-            </tr>
-            <tr>
-              <th>Project</th>
-              <td>
-                #(file.video.project.name)
-                <span class="secondary">(#(file.video.project.id))</span>
+                #(file.location.name)
+                <span class="secondary">(<a href="/locations/#(file.location.id)">#(file.location.id)</a>)</span>
               </td>
             </tr>
             <tr>
@@ -68,7 +67,7 @@
       #endfor
       </ul>
     #else:
-      <p class="no-value">There are no files at this location.</p>
+      <p class="no-value">There are no files for this video.</p>
     #endif
   #endexport
 #endextend

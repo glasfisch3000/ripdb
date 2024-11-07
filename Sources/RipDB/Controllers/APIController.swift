@@ -21,12 +21,20 @@ struct APIController: RouteCollection {
         var file: FileDTO.WithHexHash
     }
     
+    struct VideoContext: Codable {
+        var id: UUID
+        var video: VideoDTO.WithHexHash
+    }
+    
     func boot(routes: any RoutesBuilder) throws {
         let locations = routes.grouped("locations")
         locations.get(":id", use: locationsGet(request:))
         
         let files = routes.grouped("files")
         files.get(":id", use: filesGet(request:))
+        
+        let videos = routes.grouped("videos")
+        videos.get(":id", use: videosGet(request:))
     }
     
     @Sendable
@@ -69,5 +77,26 @@ struct APIController: RouteCollection {
         
         let context = FileContext(id: id, file: file.toDTO().toHexHash())
         return try await req.view.render("file", context)
+    }
+    
+    @Sendable
+    func videosGet(request req: Request) async throws -> View {
+        guard let id = req.parameters.get("id", as: UUID.self) else {
+            return try await req.view.render("invalidID", InvalidIDContext(type: "video"))
+        }
+        
+        guard let video = try await Video.find(id, on: req.db) else {
+            return try await req.view.render("notFound", NotFoundContext(type: "video", id: id))
+        }
+        
+        try await video.$project.load(on: req.db)
+        _ = try await video.$files.get(on: req.db).get().map { file in
+            file.$location.load(on: req.db)
+        }
+        .flatten(on: req.eventLoop)
+        .get()
+        
+        let context = VideoContext(id: id, video: video.toDTO().toHexHash())
+        return try await req.view.render("video", context)
     }
 }
