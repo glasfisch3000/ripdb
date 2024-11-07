@@ -71,3 +71,34 @@ struct ParsableFileSize: ExpressibleByArgument {
         }
     }
 }
+
+extension ParsableFileSize {
+    enum Optional: ExpressibleByArgument {
+        case none
+        case some(ParsableFileSize)
+        
+        init?(argument: String) {
+            if argument.lowercased() == "none" {
+                self = .none
+            } else if let filesize = ParsableFileSize(argument: argument) {
+                self = .some(filesize)
+            } else {
+                return nil
+            }
+        }
+        
+        var collapsed: ParsableFileSize? {
+            switch self {
+            case .none: nil
+            case .some(let value): value
+            }
+        }
+        
+        var bytes: Int? {
+            switch self {
+            case .none: nil
+            case .some(let value): value.bytes
+            }
+        }
+    }
+}

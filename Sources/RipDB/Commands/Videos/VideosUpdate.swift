@@ -2,10 +2,10 @@ import ArgumentParser
 import Vapor
 import NIOFileSystem
 
-struct LocationsCreate: AsyncParsableCommand {
+struct VideosUpdate: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
-        commandName: "create",
-        abstract: "Add a new location to the database.",
+        commandName: "update",
+        abstract: "Update a video's attributes.",
 //        usage: <#T##String?#>,
 //        discussion: <#T##String#>,
         version: "0.0.0",
@@ -17,12 +17,15 @@ struct LocationsCreate: AsyncParsableCommand {
         aliases: []
     )
     
-    struct LocationOptionGroup: ParsableArguments {
-        @ArgumentParser.Argument
-        var name: String
+    struct VideoOptionGroup: ParsableArguments {
+        @ArgumentParser.Option(name: [.long, .customShort("N")])
+        var name: String?
         
-        @ArgumentParser.Option(name: [.customShort("C"), .long])
-        var capacity: ParsableFileSize.Optional?
+        @ArgumentParser.Option(name: [.long, .customShort("T")])
+        var type: VideoType?
+        
+        @ArgumentParser.Option(name: [.long, .customShort("P")])
+        var project: UUID?
     }
     
     @ArgumentParser.Option(name: [.short, .customLong("env")])
@@ -34,8 +37,11 @@ struct LocationsCreate: AsyncParsableCommand {
     @ArgumentParser.Option(name: [.customShort("f"), .customLong("format")])
     private var outputFormat: OutputFormat = .yaml
     
-    @ArgumentParser.OptionGroup(title: "Location Options")
-    private var location: LocationOptionGroup
+    @ArgumentParser.Argument
+    private var videoID: UUID
+    
+    @ArgumentParser.OptionGroup(title: "Update Options")
+    private var videoOptions: VideoOptionGroup
     
     init() { }
     
@@ -59,10 +65,28 @@ struct LocationsCreate: AsyncParsableCommand {
         do {
             try await configureDB(app, config)
             
-            let location = Location(id: nil, name: self.location.name, capacity: self.location.capacity?.bytes)
-            try await location.create(on: app.db)
+            guard let video = try await Video.find(videoID, on: app.db) else {
+                throw UpdateError.videoNotFound(videoID)
+            }
             
-            print(try outputFormat.format(location.toDTO()))
+            if let name = videoOptions.name {
+                video.name = name
+            }
+            
+            if let type = videoOptions.type {
+                video.type = type
+            }
+            
+            if let projectID = videoOptions.project {
+                guard try await Project.find(projectID, on: app.db) != nil else {
+                    throw UpdateError.projectNotFound(projectID)
+                }
+                video.$project.id = projectID
+            }
+            
+            try await video.update(on: app.db)
+            
+            print(try outputFormat.format(video.toDTO()))
         } catch {
             app.logger.report(error: error)
             try? await app.asyncShutdown()

@@ -2,10 +2,10 @@ import ArgumentParser
 import Vapor
 import NIOFileSystem
 
-struct LocationsCreate: AsyncParsableCommand {
+struct CollectionsUpdate: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
-        commandName: "create",
-        abstract: "Add a new location to the database.",
+        commandName: "update",
+        abstract: "Update a collection's attributes.",
 //        usage: <#T##String?#>,
 //        discussion: <#T##String#>,
         version: "0.0.0",
@@ -17,12 +17,9 @@ struct LocationsCreate: AsyncParsableCommand {
         aliases: []
     )
     
-    struct LocationOptionGroup: ParsableArguments {
-        @ArgumentParser.Argument
-        var name: String
-        
-        @ArgumentParser.Option(name: [.customShort("C"), .long])
-        var capacity: ParsableFileSize.Optional?
+    struct CollectionOptionGroup: ParsableArguments {
+        @ArgumentParser.Option(name: [.long, .customShort("N")])
+        var name: String?
     }
     
     @ArgumentParser.Option(name: [.short, .customLong("env")])
@@ -34,8 +31,11 @@ struct LocationsCreate: AsyncParsableCommand {
     @ArgumentParser.Option(name: [.customShort("f"), .customLong("format")])
     private var outputFormat: OutputFormat = .yaml
     
-    @ArgumentParser.OptionGroup(title: "Location Options")
-    private var location: LocationOptionGroup
+    @ArgumentParser.Argument
+    private var collectionID: UUID
+    
+    @ArgumentParser.OptionGroup(title: "Update Options")
+    private var collectionOptions: CollectionOptionGroup
     
     init() { }
     
@@ -59,10 +59,17 @@ struct LocationsCreate: AsyncParsableCommand {
         do {
             try await configureDB(app, config)
             
-            let location = Location(id: nil, name: self.location.name, capacity: self.location.capacity?.bytes)
-            try await location.create(on: app.db)
+            guard let collection = try await CollectionModel.find(collectionID, on: app.db) else {
+                throw UpdateError.collectionNotFound(collectionID)
+            }
             
-            print(try outputFormat.format(location.toDTO()))
+            if let name = collectionOptions.name {
+                collection.name = name
+            }
+            
+            try await collection.update(on: app.db)
+            
+            print(try outputFormat.format(collection.toDTO()))
         } catch {
             app.logger.report(error: error)
             try? await app.asyncShutdown()

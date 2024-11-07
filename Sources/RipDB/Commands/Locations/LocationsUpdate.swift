@@ -2,10 +2,10 @@ import ArgumentParser
 import Vapor
 import NIOFileSystem
 
-struct LocationsCreate: AsyncParsableCommand {
+struct LocationsUpdate: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
-        commandName: "create",
-        abstract: "Add a new location to the database.",
+        commandName: "update",
+        abstract: "Update a location's attributes.",
 //        usage: <#T##String?#>,
 //        discussion: <#T##String#>,
         version: "0.0.0",
@@ -18,10 +18,10 @@ struct LocationsCreate: AsyncParsableCommand {
     )
     
     struct LocationOptionGroup: ParsableArguments {
-        @ArgumentParser.Argument
-        var name: String
+        @ArgumentParser.Option(name: [.long, .customShort("N")])
+        var name: String?
         
-        @ArgumentParser.Option(name: [.customShort("C"), .long])
+        @ArgumentParser.Option(name: [.long, .customShort("C")])
         var capacity: ParsableFileSize.Optional?
     }
     
@@ -34,8 +34,11 @@ struct LocationsCreate: AsyncParsableCommand {
     @ArgumentParser.Option(name: [.customShort("f"), .customLong("format")])
     private var outputFormat: OutputFormat = .yaml
     
-    @ArgumentParser.OptionGroup(title: "Location Options")
-    private var location: LocationOptionGroup
+    @ArgumentParser.Argument
+    private var locationID: UUID
+    
+    @ArgumentParser.OptionGroup(title: "Update Options")
+    private var locationOptions: LocationOptionGroup
     
     init() { }
     
@@ -59,8 +62,19 @@ struct LocationsCreate: AsyncParsableCommand {
         do {
             try await configureDB(app, config)
             
-            let location = Location(id: nil, name: self.location.name, capacity: self.location.capacity?.bytes)
-            try await location.create(on: app.db)
+            guard let location = try await Location.find(locationID, on: app.db) else {
+                throw UpdateError.locationNotFound(locationID)
+            }
+            
+            if let name = locationOptions.name {
+                location.name = name
+            }
+            
+            if let capacity = locationOptions.capacity {
+                location.capacity = capacity.bytes
+            }
+            
+            try await location.update(on: app.db)
             
             print(try outputFormat.format(location.toDTO()))
         } catch {
