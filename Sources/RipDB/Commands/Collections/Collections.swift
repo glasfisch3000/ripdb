@@ -10,7 +10,7 @@ struct Collections: AsyncParsableCommand {
 //        discussion: <#T##String#>,
         version: "0.0.0",
         shouldDisplay: true,
-        subcommands: [CollectionsList.self, CollectionsGet.self, CollectionsCreate.self, CollectionsDelete.self],
+        subcommands: [CollectionsList.self, CollectionsGet.self, CollectionsCreate.self, CollectionsUpdate.self, CollectionsDelete.self],
         groupedSubcommands: [],
         defaultSubcommand: nil,
         helpNames: .shortAndLong,

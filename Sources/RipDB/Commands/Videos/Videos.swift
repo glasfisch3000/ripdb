@@ -10,7 +10,7 @@ struct Videos: AsyncParsableCommand {
 //        discussion: <#T##String#>,
         version: "0.0.0",
         shouldDisplay: true,
-        subcommands: [VideosList.self, VideosGet.self, VideosCreate.self, VideosDelete.self],
+        subcommands: [VideosList.self, VideosGet.self, VideosCreate.self, VideosUpdate.self, VideosDelete.self],
         groupedSubcommands: [],
         defaultSubcommand: nil,
         helpNames: .shortAndLong,

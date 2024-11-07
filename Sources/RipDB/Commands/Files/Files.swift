@@ -10,7 +10,7 @@ struct Files: AsyncParsableCommand {
 //        discussion: <#T##String#>,
         version: "0.0.0",
         shouldDisplay: true,
-        subcommands: [FilesList.self, FilesGet.self, FilesCreate.self, FilesDelete.self],
+        subcommands: [FilesList.self, FilesGet.self, FilesCreate.self, FilesUpdate.self, FilesDelete.self],
         groupedSubcommands: [],
         defaultSubcommand: nil,
         helpNames: .shortAndLong,

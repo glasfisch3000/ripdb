@@ -10,7 +10,7 @@ struct Locations: AsyncParsableCommand {
 //        discussion: <#T##String#>,
         version: "0.0.0",
         shouldDisplay: true,
-        subcommands: [LocationsList.self, LocationsGet.self, LocationsCreate.self, LocationsDelete.self],
+        subcommands: [LocationsList.self, LocationsGet.self, LocationsCreate.self, LocationsUpdate.self, LocationsDelete.self],
         groupedSubcommands: [],
         defaultSubcommand: nil,
         helpNames: .shortAndLong,

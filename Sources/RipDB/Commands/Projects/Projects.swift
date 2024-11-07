@@ -10,7 +10,7 @@ struct Projects: AsyncParsableCommand {
 //        discussion: <#T##String#>,
         version: "0.0.0",
         shouldDisplay: true,
-        subcommands: [ProjectsList.self, ProjectsGet.self, ProjectsCreate.self, ProjectsDelete.self],
+        subcommands: [ProjectsList.self, ProjectsGet.self, ProjectsCreate.self, ProjectsUpdate.self, ProjectsDelete.self],
         groupedSubcommands: [],
         defaultSubcommand: nil,
         helpNames: .shortAndLong,
