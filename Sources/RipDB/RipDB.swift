@@ -11,7 +11,7 @@ struct RipDB: AsyncParsableCommand {
         shouldDisplay: true,
         subcommands: [Serve.self, Routes.self, Migrate.self],
         groupedSubcommands: [
-            CommandGroup(name: "Database", subcommands: [Collections.self, Projects.self, Videos.self, Files.self, Locations.self])
+            CommandGroup(name: "Database", subcommands: [Collections.self, Projects.self, Videos.self, Files.self, Locations.self, Cum.self])
         ],
         defaultSubcommand: nil,
         helpNames: .shortAndLong,
