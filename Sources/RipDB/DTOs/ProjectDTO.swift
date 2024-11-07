@@ -1,7 +1,7 @@
 import Fluent
 import Vapor
 
-struct ProjectDTO: Content {
+struct ProjectDTO: Sendable, Content {
     var id: UUID?
     var name: String
     var type: ProjectType
@@ -29,7 +29,7 @@ struct ProjectDTO: Content {
 }
 
 extension ProjectDTO {
-    struct WithHexHash: Content {
+    struct WithHexHash: Sendable, Content {
         var id: UUID?
         var name: String
         var type: ProjectType

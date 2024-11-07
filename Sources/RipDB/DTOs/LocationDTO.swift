@@ -1,7 +1,7 @@
 import Fluent
 import Vapor
 
-struct LocationDTO: Content {
+struct LocationDTO: Sendable, Content {
     var id: UUID?
     var name: String
     var capacity: Int?
@@ -21,7 +21,7 @@ struct LocationDTO: Content {
 }
 
 extension LocationDTO {
-    struct WithHexHash: Content {
+    struct WithHexHash: Sendable, Content {
         var id: UUID?
         var name: String
         var capacity: Int?

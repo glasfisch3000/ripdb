@@ -1,7 +1,7 @@
 import Fluent
 import Vapor
 
-struct FileDTO: Content {
+struct FileDTO: Sendable, Content {
     var id: UUID?
     var resolution: FileResolution
     var is3D: Bool
@@ -33,7 +33,7 @@ struct FileDTO: Content {
 }
 
 extension FileDTO {
-    struct WithHexHash: Content {
+    struct WithHexHash: Sendable, Content {
         var id: UUID?
         var resolution: FileResolution
         var is3D: Bool

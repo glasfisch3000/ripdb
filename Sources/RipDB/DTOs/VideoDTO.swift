@@ -1,7 +1,7 @@
 import Fluent
 import Vapor
 
-struct VideoDTO: Content {
+struct VideoDTO: Sendable, Content {
     var id: UUID?
     var name: String
     var type: VideoType
@@ -26,7 +26,7 @@ struct VideoDTO: Content {
 }
 
 extension VideoDTO {
-    struct WithHexHash: Content {
+    struct WithHexHash: Sendable, Content {
         var id: UUID?
         var name: String
         var type: VideoType
