@@ -27,8 +27,8 @@ struct FileDTO: Content {
                     is3D: self.is3D,
                     size: self.size,
                     contentHashSHA256: self.contentHashSHA256.hexEncodedString(uppercase: false),
-                    location: self.location,
-                    video: self.video)
+                    location: self.location?.toHexHash(),
+                    video: self.video?.toHexHash())
     }
 }
 
@@ -40,7 +40,7 @@ extension FileDTO {
         var size: Int
         var contentHashSHA256: String
         
-        var location: LocationDTO?
-        var video: VideoDTO?
+        var location: LocationDTO.WithHexHash?
+        var video: VideoDTO.WithHexHash?
     }
 }
