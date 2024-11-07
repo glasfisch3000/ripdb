@@ -28,7 +28,7 @@ struct FilesCreate: AsyncParsableCommand {
         var contentHashSHA256: Data
         
         @ArgumentParser.Option(name: .customLong("3d"))
-        var is3D: Bool
+        var is3D: Bool = false
         
         @ArgumentParser.Option(name: [.long, .customShort("L")])
         var location: UUID
