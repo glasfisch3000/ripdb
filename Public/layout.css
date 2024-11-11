@@ -17,7 +17,7 @@ main {
   padding-left: 5px;
 }
 
-.section-headline:has(~ .section-subheadline) {
+.section-headline:has(~ .subheadline, ~ .subsection-headline) {
   margin-bottom: 5px;
 }
 
@@ -26,15 +26,13 @@ main {
   margin-bottom: 5px;
 }
 
-.section-subheadline {
+.subheadline {
   margin-top: 5px;
   margin-bottom: 8px;
-  padding-left: 5px;
 }
 
-.subsection-subheadline {
-  margin-top: 5px;
-  margin-bottom: 8px;
+.section-headline ~ .subsection-headline, .section-headline ~ .subheadline {
+  padding-left: 5px;
 }
 
 ul.object-children {

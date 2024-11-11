@@ -20,7 +20,7 @@
     </table>
     
     #if(project.collection):
-    <h2 class="section-headline">Collection: #(project.collection.name)</h2>
+    <h2 class="section-headline"><span class="secondary">Collection:</span> #(project.collection.name)</h2>
     <table class="object-properties">
       <tr>
         <th>UUID</th>

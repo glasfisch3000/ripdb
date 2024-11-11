@@ -33,8 +33,8 @@
       </tr>
     </table>
     
-    <h2 class="section-headline">Video: #(file.video.name)</h2>
-    <div class="section-subheadline">
+    <h2 class="section-headline"><span class="secondary">Video:</span> #(file.video.name)</h2>
+    <div class="subheadline">
       <span class="boxed">#(file.video.type)</span>
       #(file.video.project.name)
     </div>
@@ -52,7 +52,7 @@
       </tr>
     </table>
     
-    <h2 class="section-headline">Location: #(file.location.name)</h2>
+    <h2 class="section-headline"><span class="secondary">Location:</span> #(file.location.name)</h2>
     <table class="object-properties">
       <tr>
         <th>UUID</th>

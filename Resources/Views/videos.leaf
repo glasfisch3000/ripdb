@@ -13,7 +13,7 @@
       #for(video in videos):
         <li>
           <h3 class="subsection-headline">#(video.name) <span class="secondary"> - #(video.project.name)</span></h3>
-          <div class="subsection-subheadline">
+          <div class="subheadline">
             <span class="boxed">#(video.type)</span>
             <a href="/videos/#(video.id)">#(video.id)</a>
           </div>

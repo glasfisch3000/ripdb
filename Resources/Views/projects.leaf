@@ -13,7 +13,7 @@
       #for(project in projects):
         <li>
           <h3 class="subsection-headline">#(project.name)</h3>
-          <div class="subsection-subheadline">
+          <div class="subheadline">
             <span class="boxed">#(project.type)</span>
             #(project.releaseYear)
             <span class="secondary">(<a href="/projects/#(project.id)">#(project.id)</a>)</span>

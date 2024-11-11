@@ -17,7 +17,7 @@
             #(file.video.name)
             <span class="secondary"> - #(file.video.project.name)</span>
           </h3>
-          <div class="subsection-subheadline">
+          <div class="subheadline">
             <span class="boxed">#(file.resolution)</span>
             #if(file.is3d): <span class="boxed">3D</span> #endif
             

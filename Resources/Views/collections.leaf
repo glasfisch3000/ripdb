@@ -13,7 +13,7 @@
       #for(collection in collections):
         <li>
           <h3 class="subsection-headline">#(collection.name)</h3>
-          <div class="subsection-subheadline">
+          <div class="subheadline">
             <a href="/collections/#(collection.id)">#(collection.id)</a>
           </div>
         </li>

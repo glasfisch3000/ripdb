@@ -31,7 +31,7 @@
       #for(file in location.files):
         <li>
           <h3 class="subsection-headline">#(file.video.name) <span class="secondary"> – #(file.video.project.name)</span></h3>
-          <div class="subsection-subheadline">
+          <div class="subheadline">
             <span class="boxed">#(file.resolution)</span>
             #if(file.is3D): <span class="boxed">3D</span> #endif
             #if(file.size >= 10000000000000): #(file.size/1000000000000) TB
