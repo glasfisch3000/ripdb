@@ -23,12 +23,8 @@
     <div class="subheadline">
       <span class="boxed">#(video.project.type)</span>
       #(video.project.releaseYear)
+      <span class="secondary">(<a href="/projects/#(video.project.id)">#(video.project.id)</a>)</span>
     </div>
-    <table class="object-properties">
-      <tr>
-        <th>UUID</th>
-        <td><a href="/projects/#(video.project.id)">#(video.project.id)</a></td>
-      </tr>
     </table>
     
     <h2 class="section-headline">Files</h2>
@@ -36,8 +32,7 @@
       <ul class="object-children">
       #for(file in video.files):
         <li>
-          <h3 class="subsection-headline">#(file.location.name)</h3>
-          <div class="subheadline">
+          <h3 class="subsection-headline">
             <span class="boxed">#(file.resolution)</span>
             #if(file.is3D): <span class="boxed">3D</span> #endif
             #if(file.size >= 10000000000000): #(file.size/1000000000000) TB
@@ -45,12 +40,12 @@
             #elseif(file.size >= 10000000): #(file.size/1000000) MB
             #elseif(file.size >= 10000): #(file.size/1000) KB
             #else: #(file.size) Bytes #endif
+            <span class="secondary"> – #(file.location.name)</span>
+          </h3>
+          <div class="subheadline">
+            <span class="secondary">(<a href="/files/#(file.id)">#(file.id)</a>)</span>
           </div>
           <table class="object-properties">
-            <tr>
-              <th>UUID</th>
-              <td><a href="/files/#(file.id)">#(file.id)</a></td>
-            </tr>
             <tr>
               <th>Location</th>
               <td>

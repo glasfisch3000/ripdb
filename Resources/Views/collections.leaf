@@ -14,7 +14,7 @@
         <li>
           <h3 class="subsection-headline">#(collection.name)</h3>
           <div class="subheadline">
-            <a href="/collections/#(collection.id)">#(collection.id)</a>
+            <span class="secondary">(<a href="/collections/#(collection.id)">#(collection.id)</a>)</span>
           </div>
         </li>
       #endfor

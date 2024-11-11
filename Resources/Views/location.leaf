@@ -39,12 +39,9 @@
             #elseif(file.size >= 10000000): #(file.size/1000000) MB
             #elseif(file.size >= 10000): #(file.size/1000) KB
             #else: #(file.size) Bytes #endif
+            <span class="secondary">(<a href="/files/#(file.id)">#(file.id)</a>)</span>
           </div>
           <table class="object-properties">
-            <tr>
-              <th>UUID</th>
-              <td><a href="/files/#(file.id)">#(file.id)</a></td>
-            </tr>
             <tr>
               <th>Video</th>
               <td>

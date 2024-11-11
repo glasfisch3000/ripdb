@@ -21,12 +21,9 @@
     
     #if(project.collection):
     <h2 class="section-headline"><span class="secondary">Collection:</span> #(project.collection.name)</h2>
-    <table class="object-properties">
-      <tr>
-        <th>UUID</th>
-        <td><a href="/collections/#(project.collection.id)">#(project.collection.id)</a></td>
-      </tr>
-    </table>
+    <div class="subheadline">
+      <span class="secondary">(<a href="/collections/#(project.collection.id)">#(project.collection.id)</a>)</span>
+    </div>
     #endif
     
     #if(project.videos.main):
@@ -35,12 +32,9 @@
       #for(video in project.videos.main):
       <li>
         <h3 class="subsection-headline">#(video.name)</h3>
-        <table class="object-properties">
-          <tr>
-            <th>UUID</th>
-            <td><a href="/videos/#(video.id)">#(video.id)</a></td>
-          </tr>
-        </table>
+        <div class="subheadline">
+          <span class="secondary">(<a href="/videos/#(video.id)">#(video.id)</a>)</span>
+        </div>
       </li>
       #endfor
     </ul>

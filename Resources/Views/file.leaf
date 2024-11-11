@@ -36,13 +36,9 @@
     <h2 class="section-headline"><span class="secondary">Video:</span> #(file.video.name)</h2>
     <div class="subheadline">
       <span class="boxed">#(file.video.type)</span>
-      #(file.video.project.name)
+      <span class="secondary">(<a href="/videos/#(file.video.id)">#(file.video.id)</a>)</span>
     </div>
     <table class="object-properties">
-      <tr>
-        <th>UUID</th>
-        <td><a href="/videos/#(file.video.id)">#(file.video.id)</a></td>
-      </tr>
       <tr>
         <th>Project</th>
         <td>
@@ -53,21 +49,15 @@
     </table>
     
     <h2 class="section-headline"><span class="secondary">Location:</span> #(file.location.name)</h2>
-    <table class="object-properties">
-      <tr>
-        <th>UUID</th>
-        <td><a href="/locations/#(file.location.id)">#(file.location.id)</a></td>
-      </tr>
-      <tr>
-        <th>Capacity</th>
-        #if(file.location.capacity):
-          #if(file.location.capacity >= 10000000000000): <td>#(file.location.capacity/1000000000000) TB</td>
-          #elseif(file.location.capacity >= 10000000): <td>#(file.location.capacity/1000000000) GB</td>
-          #elseif(file.location.capacity >= 10000000): <td>#(file.location.capacity/1000000) MB</td>
-          #elseif(file.location.capacity >= 10000): <td>#(file.location.capacity/1000) KB</td>
-          #else: <td>#(file.location.capacity) Bytes</td> #endif
-        #else: <td class="no-value">Unspecified</td> #endif
-      </tr>
-    </table>
+    <div class="subheadline">
+      #if(file.location.capacity):
+        #if(file.location.capacity >= 10000000000000): <td>#(file.location.capacity/1000000000000) TB</td>
+        #elseif(file.location.capacity >= 10000000): <td>#(file.location.capacity/1000000000) GB</td>
+        #elseif(file.location.capacity >= 10000000): <td>#(file.location.capacity/1000000) MB</td>
+        #elseif(file.location.capacity >= 10000): <td>#(file.location.capacity/1000) KB</td>
+        #else: <td>#(file.location.capacity) Bytes</td> #endif
+      #else: <span class="no-value">Capacity unspecified</span> #endif
+      <span class="secondary">(<a href="/locations/#(file.location.id)">#(file.location.id)</a>)</span>
+    </div>
   #endexport
 #endextend

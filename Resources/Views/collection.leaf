@@ -24,13 +24,8 @@
           <div class="subheadline">
             <span class="boxed">#(project.type)</span>
             #(project.releaseYear)
+            <span class="secondary">(<a href="/projects/#(project.id)">#(project.id)</a>)</span>
           </div>
-          <table class="object-properties">
-            <tr>
-              <th>UUID</th>
-              <td><a href="/projects/#(project.id)">#(project.id)</a></td>
-            </tr>
-          </table>
         </li>
       #endfor
       </ul>
