@@ -21,26 +21,26 @@ struct FileDTO: Sendable, Content {
              videoID: self.video?.id)
     }
     
-    func toHexHash() -> Self.WithHexHash {
-        WithHexHash(id: self.id,
-                    resolution: self.resolution,
-                    is3D: self.is3D,
-                    size: self.size,
-                    contentHashSHA256: self.contentHashSHA256.hexEncodedString(uppercase: false),
-                    location: self.location?.toHexHash(),
-                    video: self.video?.toHexHash())
+    func toWebView() -> Self.WebView {
+        WebView(id: self.id,
+                resolution: self.resolution,
+                is3D: self.is3D,
+                size: self.size,
+                contentHashSHA256: self.contentHashSHA256.hexEncodedString(uppercase: false),
+                location: self.location?.toWebView(),
+                video: self.video?.toWebView())
     }
 }
 
 extension FileDTO {
-    struct WithHexHash: Sendable, Content {
+    struct WebView: Sendable, Content {
         var id: UUID?
         var resolution: FileResolution
         var is3D: Bool
         var size: Int
         var contentHashSHA256: String
         
-        var location: LocationDTO.WithHexHash?
-        var video: VideoDTO.WithHexHash?
+        var location: LocationDTO.WebView?
+        var video: VideoDTO.WebView?
     }
 }

@@ -12,48 +12,48 @@ struct APIController: RouteCollection {
     }
     
     struct LocationsListContext: Codable {
-        var locations: [LocationDTO.WithHexHash]
+        var locations: [LocationDTO.WebView]
     }
     
     struct LocationsGetContext: Codable {
         var id: UUID
-        var location: LocationDTO.WithHexHash
+        var location: LocationDTO.WebView
     }
     
     struct FilesListContext: Codable {
-        var files: [FileDTO.WithHexHash]
+        var files: [FileDTO.WebView]
     }
     
     struct FilesGetContext: Codable {
         var id: UUID
-        var file: FileDTO.WithHexHash
+        var file: FileDTO.WebView
     }
     
     struct VideosListContext: Codable {
-        var videos: [VideoDTO.WithHexHash]
+        var videos: [VideoDTO.WebView]
     }
     
     struct VideosGetContext: Codable {
         var id: UUID
-        var video: VideoDTO.WithHexHash
+        var video: VideoDTO.WebView
     }
     
     struct ProjectsListContext: Codable {
-        var projects: [ProjectDTO.WithHexHash]
+        var projects: [ProjectDTO.WebView]
     }
     
     struct ProjectsGetContext: Codable {
         var id: UUID
-        var project: ProjectDTO.WithHexHash
+        var project: ProjectDTO.WebView
     }
     
     struct CollectionsListContext: Codable {
-        var collections: [CollectionDTO.WithHexHash]
+        var collections: [CollectionDTO.WebView]
     }
     
     struct CollectionsGetContext: Codable {
         var id: UUID
-        var collection: CollectionDTO.WithHexHash
+        var collection: CollectionDTO.WebView
     }
     
     func boot(routes: any RoutesBuilder) throws {
@@ -84,7 +84,7 @@ struct APIController: RouteCollection {
             .sort(\.$name)
             .all()
         
-        let context = LocationsListContext(locations: locations.map { $0.toDTO().toHexHash() })
+        let context = LocationsListContext(locations: locations.map { $0.toDTO().toWebView() })
         return try await req.view.render("locations", context)
     }
     
@@ -106,7 +106,7 @@ struct APIController: RouteCollection {
         .flatten(on: req.eventLoop)
         .get()
         
-        let context = LocationsGetContext(id: id, location: location.toDTO().toHexHash())
+        let context = LocationsGetContext(id: id, location: location.toDTO().toWebView())
         return try await req.view.render("location", context)
     }
     
@@ -129,7 +129,7 @@ struct APIController: RouteCollection {
             .sort(\.$size)
             .all()
         
-        let context = FilesListContext(files: files.map { $0.toDTO().toHexHash() })
+        let context = FilesListContext(files: files.map { $0.toDTO().toWebView() })
         return try await req.view.render("files", context)
     }
     
@@ -149,7 +149,7 @@ struct APIController: RouteCollection {
         }
         .get()
         
-        let context = FilesGetContext(id: id, file: file.toDTO().toHexHash())
+        let context = FilesGetContext(id: id, file: file.toDTO().toWebView())
         return try await req.view.render("file", context)
     }
     
@@ -163,7 +163,7 @@ struct APIController: RouteCollection {
             .sort(\.$name)
             .all()
         
-        let context = VideosListContext(videos: videos.map { $0.toDTO().toHexHash() })
+        let context = VideosListContext(videos: videos.map { $0.toDTO().toWebView() })
         return try await req.view.render("videos", context)
     }
     
@@ -184,7 +184,7 @@ struct APIController: RouteCollection {
         .flatten(on: req.eventLoop)
         .get()
         
-        let context = VideosGetContext(id: id, video: video.toDTO().toHexHash())
+        let context = VideosGetContext(id: id, video: video.toDTO().toWebView())
         return try await req.view.render("video", context)
     }
     
@@ -199,7 +199,7 @@ struct APIController: RouteCollection {
             .sort(\.$type)
             .all()
         
-        let context = ProjectsListContext(projects: projects.map { $0.toDTO().toHexHash() })
+        let context = ProjectsListContext(projects: projects.map { $0.toDTO().toWebView() })
         return try await req.view.render("projects", context)
     }
     
@@ -216,7 +216,7 @@ struct APIController: RouteCollection {
         try await project.$collection.load(on: req.db)
         try await project.$videos.load(on: req.db)
         
-        let context = ProjectsGetContext(id: id, project: project.toDTO().toHexHash())
+        let context = ProjectsGetContext(id: id, project: project.toDTO().toWebView())
         return try await req.view.render("project", context)
     }
     
@@ -226,7 +226,7 @@ struct APIController: RouteCollection {
             .sort(\.$name)
             .all()
         
-        let context = CollectionsListContext(collections: collections.map { $0.toDTO().toHexHash() })
+        let context = CollectionsListContext(collections: collections.map { $0.toDTO().toWebView() })
         return try await req.view.render("collections", context)
     }
     
@@ -242,7 +242,7 @@ struct APIController: RouteCollection {
         
         try await collection.$projects.load(on: req.db)
         
-        let context = CollectionsGetContext(id: id, collection: collection.toDTO().toHexHash())
+        let context = CollectionsGetContext(id: id, collection: collection.toDTO().toWebView())
         return try await req.view.render("collection", context)
     }
 }

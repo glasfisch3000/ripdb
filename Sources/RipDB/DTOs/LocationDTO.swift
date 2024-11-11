@@ -12,20 +12,20 @@ struct LocationDTO: Sendable, Content {
         Location(id: self.id, name: self.name, capacity: self.capacity)
     }
     
-    func toHexHash() -> Self.WithHexHash {
-        WithHexHash(id: self.id,
-                    name: self.name,
-                    capacity: self.capacity,
-                    files: self.files?.map { $0.toHexHash() })
+    func toWebView() -> Self.WebView {
+        WebView(id: self.id,
+                name: self.name,
+                capacity: self.capacity,
+                files: self.files?.map { $0.toWebView() })
     }
 }
 
 extension LocationDTO {
-    struct WithHexHash: Sendable, Content {
+    struct WebView: Sendable, Content {
         var id: UUID?
         var name: String
         var capacity: Int?
         
-        var files: [FileDTO.WithHexHash]?
+        var files: [FileDTO.WebView]?
     }
 }

@@ -16,22 +16,22 @@ struct VideoDTO: Sendable, Content {
                 projectID: self.project?.id)
     }
     
-    func toHexHash() -> Self.WithHexHash {
-        WithHexHash(id: self.id,
-                    name: self.name,
-                    type: self.type,
-                    project: self.project?.toHexHash(),
-                    files: self.files?.map { $0.toHexHash() })
+    func toWebView() -> Self.WebView {
+        WebView(id: self.id,
+                name: self.name,
+                type: self.type,
+                project: self.project?.toWebView(),
+                files: self.files?.map { $0.toWebView() })
     }
 }
 
 extension VideoDTO {
-    struct WithHexHash: Sendable, Content {
+    struct WebView: Sendable, Content {
         var id: UUID?
         var name: String
         var type: VideoType
         
-        var project: ProjectDTO.WithHexHash?
-        var files: [FileDTO.WithHexHash]?
+        var project: ProjectDTO.WebView?
+        var files: [FileDTO.WebView]?
     }
 }

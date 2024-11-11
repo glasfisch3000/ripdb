@@ -11,18 +11,18 @@ struct CollectionDTO: Sendable, Content {
         CollectionModel(id: self.id, name: self.name)
     }
     
-    func toHexHash() -> Self.WithHexHash {
-        WithHexHash(id: self.id,
-                    name: self.name,
-                    projects: self.projects?.map { $0.toHexHash() })
+    func toWebView() -> Self.WebView {
+        WebView(id: self.id,
+                name: self.name,
+                projects: self.projects?.map { $0.toWebView() })
     }
 }
 
 extension CollectionDTO {
-    struct WithHexHash: Sendable, Content {
+    struct WebView: Sendable, Content {
         var id: UUID?
         var name: String
         
-        var projects: [ProjectDTO.WithHexHash]?
+        var projects: [ProjectDTO.WebView]?
     }
 }
