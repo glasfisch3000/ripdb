@@ -40,7 +40,8 @@ a::visited {
   padding-right: 4px;
   padding-top: 0.5px;
   padding-bottom: 1px;
-  border: 0.7px solid #eee;
+  color: #000;
+  background-color: #eee;
   border-radius: 4px;
   font-weight: 600;
   font-size: 95%;
