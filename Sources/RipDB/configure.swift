@@ -22,6 +22,7 @@ public func configureDB(_ app: Application, _ config: AppConfig) async throws {
     app.migrations.add(CreateFile())
     app.migrations.add(ChangeProjectDateToYear())
     app.migrations.add(ChangeFilesizeDoubleToInt())
+    app.migrations.add(UniqueLocationName())
 }
 
 func configureRoutes(_ app: Application) throws {
