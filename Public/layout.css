@@ -28,18 +28,18 @@ main {
 
 .section-subheadline {
   margin-top: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   padding-left: 5px;
 }
 
 .subsection-subheadline {
   margin-top: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 ul.object-children {
   margin: 0px;
-  margin-top: 10px;
+  margin-top: 8px;
   margin-bottom: 10px;
 }
 
