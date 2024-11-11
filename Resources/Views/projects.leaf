@@ -1,0 +1,28 @@
+#extend("master"):
+  #export("title"):
+    Projects
+  #endexport
+  
+  #export("headline"):
+    Projects
+  #endexport
+  
+  #export("body"):
+    #if(count(projects) > 0):
+      <ul class="object-children">
+      #for(project in projects):
+        <li>
+          <h3 class="subsection-headline">#(project.name)</h3>
+          <div class="subsection-subheadline">
+            <span class="boxed">#(project.type)</span>
+            #(project.releaseYear)
+            <span class="secondary">(<a href="/projects/#(project.id)">#(project.id)</a>)</span>
+          </div>
+        </li>
+      #endfor
+      </ul>
+    #else:
+      <p class="no-value">No projects found.</p>
+    #endif
+  #endexport
+#endextend

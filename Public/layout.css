@@ -46,6 +46,7 @@ ul.object-children {
 ul.object-children li {
   list-style-image: url(/chevron-right.svg);
   list-style-position: outside;
+  margin-top: 10px;
   padding-left: 8px;
 }
 

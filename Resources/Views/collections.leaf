@@ -1,0 +1,26 @@
+#extend("master"):
+  #export("title"):
+    Collections
+  #endexport
+  
+  #export("headline"):
+    Collections
+  #endexport
+  
+  #export("body"):
+    #if(count(collections) > 0):
+      <ul class="object-children">
+      #for(collection in collections):
+        <li>
+          <h3 class="subsection-headline">#(collection.name)</h3>
+          <div class="subsection-subheadline">
+            <a href="/collections/#(collection.id)">#(collection.id)</a>
+          </div>
+        </li>
+      #endfor
+      </ul>
+    #else:
+      <p class="no-value">No collections found.</p>
+    #endif
+  #endexport
+#endextend

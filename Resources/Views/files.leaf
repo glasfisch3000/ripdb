@@ -1,0 +1,39 @@
+#extend("master"):
+  #export("title"):
+    Files
+  #endexport
+  
+  #export("headline"):
+        Files
+  #endexport
+  
+  #export("body"):
+    #if(count(files) > 0):
+      <ul class="object-children">
+      #for(file in files):
+        <li>
+          <h3 class="subsection-headline">
+            #(file.location.name)<span class="secondary">:</span>
+            #(file.video.name)
+            <span class="secondary"> - #(file.video.project.name)</span>
+          </h3>
+          <div class="subsection-subheadline">
+            <span class="boxed">#(file.resolution)</span>
+            #if(file.is3d): <span class="boxed">3D</span> #endif
+            
+            #if(file.size >= 10000000000000): #(file.size/1000000000000) TB
+            #elseif(file.size >= 10000000000): #(file.size/1000000000) GB
+            #elseif(file.size >= 10000000): #(file.size/1000000) MB
+            #elseif(file.size >= 10000): #(file.size/1000) KB
+            #else: #(file.size) Bytes #endif
+            
+            <span class="secondary">(<a href="/files/#(file.id)">#(file.id)</a>)</span>
+          </div>
+        </li>
+      #endfor
+      </ul>
+    #else:
+      <p class="no-value">No files found.</p>
+    #endif
+  #endexport
+#endextend

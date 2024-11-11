@@ -1,0 +1,27 @@
+#extend("master"):
+  #export("title"):
+    Videos
+  #endexport
+  
+  #export("headline"):
+    Videos
+  #endexport
+  
+  #export("body"):
+    #if(count(videos) > 0):
+      <ul class="object-children">
+      #for(video in videos):
+        <li>
+          <h3 class="subsection-headline">#(video.name) <span class="secondary"> - #(video.project.name)</span></h3>
+          <div class="subsection-subheadline">
+            <span class="boxed">#(video.type)</span>
+            <a href="/videos/#(video.id)">#(video.id)</a>
+          </div>
+        </li>
+      #endfor
+      </ul>
+    #else:
+      <p class="no-value">No videos found.</p>
+    #endif
+  #endexport
+#endextend

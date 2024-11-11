@@ -1,0 +1,33 @@
+#extend("master"):
+  #export("title"):
+    Locations
+  #endexport
+  
+  #export("headline"):
+        Locations
+  #endexport
+  
+  #export("body"):
+    #if(count(locations) > 0):
+      <ul class="object-children">
+      #for(location in locations):
+        <li>
+          <h3 class="subsection-headline">#(location.name)</h3>
+          <div class="subsection-subheadline">
+            #if(location.capacity):
+              #if(location.capacity >= 10000000000000): <td>#(location.capacity/1000000000000) TB</td>
+              #elseif(location.capacity >= 10000000): <td>#(location.capacity/1000000000) GB</td>
+              #elseif(location.capacity >= 10000000): <td>#(location.capacity/1000000) MB</td>
+              #elseif(location.capacity >= 10000): <td>#(location.capacity/1000) KB</td>
+              #else: <td>#(location.capacity) Bytes</td> #endif
+            #else: <span class="no-value">Capacity unspecified</span> #endif
+            <span class="secondary">(<a href="/locations/#(location.id)">#(location.id)</a>)</span>
+          </div>
+        </li>
+      #endfor
+      </ul>
+    #else:
+      <p class="no-value">No locations found.</p>
+    #endif
+  #endexport
+#endextend
