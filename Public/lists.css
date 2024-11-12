@@ -1,0 +1,21 @@
+ul.object-list {
+  margin: 0px;
+  margin-top: 8px;
+  margin-bottom: 10px;
+  padding-left: 40px;
+}
+
+section > ul.object-list {
+  margin-bottom: 0px;
+  padding-left: 30px;
+}
+
+ul.object-list li {
+  list-style-image: url(/chevron-right.svg);
+  list-style-position: outside;
+  padding-left: 8px;
+}
+
+ul.object-list li:not(:first-of-type) {
+  margin-top: 10px;
+}

@@ -6,9 +6,19 @@ body {
 }
 
 header {
-  color: #303bdd;
+  margin-bottom: 12px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 22px;
+  padding-right: 22px;
+  font-size: 30px;
   font-weight: bold;
+  color: #303bdd;
   background: #1a1a1a;
+}
+
+main {
+  margin: 10px;
 }
 
 .no-value {
@@ -17,14 +27,6 @@ header {
 
 .secondary {
   color: #888;
-}
-
-.object-properties th {
-  font-weight: bold;
-}
-
-.object-properties td,th {
-  background: #222;
 }
 
 a {

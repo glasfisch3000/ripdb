@@ -1,0 +1,33 @@
+table.object-properties {
+  margin-left: -2px;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 1.5px 4px;
+}
+
+table.object-properties th {
+  font-weight: bold;
+}
+
+table.object-properties th,td {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 6px;
+  padding-right: 6px;
+  background: #222;
+}
+
+table.object-properties tr > :first-child {
+  width: 25%;
+  max-width: 35%;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  padding-left: 8px;
+  text-align: center;
+}
+
+table.object-properties tr > :last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding-right: 8px;
+}

@@ -1,0 +1,31 @@
+.section-headline {
+  margin-top: 18px;
+  margin-bottom: 10px;
+  padding-left: 5px;
+}
+
+section > .section-headline {
+  margin-top: 0px;
+  padding-left: 0px;
+}
+
+.section-headline:has(~ .subheadline, ~ .subsection-headline) {
+  margin-bottom: 5px;
+}
+
+.subsection-headline {
+  margin-top: 0px;
+  margin-bottom: 3px;
+}
+
+.subheadline {
+  margin-top: 3px;
+}
+
+.subheadline:not(:last-child) {
+  margin-bottom: 8px;
+}
+
+.section-headline ~ .subsection-headline, .section-headline ~ .subheadline {
+  padding-left: 5px;
+}

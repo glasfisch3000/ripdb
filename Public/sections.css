@@ -1,0 +1,16 @@
+.content-flexbox {
+  display: flex;
+}
+
+section {
+  border: 0.8px solid #aaab;
+  border-radius: 10px;
+  padding-left: 12px;
+  padding-right: 15px;
+  padding-top: 8px;
+  padding-bottom: 10px;
+}
+
+.content-flexbox section:not(:last-child) {
+  margin-right: 10px;
+}
