@@ -9,7 +9,7 @@
   
   #export("body"):
     #if(count(locations) > 0):
-      <ul class="object-children">
+      <ul class="object-list">
       #for(location in locations):
         <li>
           <h3 class="subsection-headline">#(location.name)</h3>

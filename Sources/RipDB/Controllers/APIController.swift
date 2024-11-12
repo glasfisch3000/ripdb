@@ -1,7 +1,33 @@
 import Vapor
+import Fluent
 import Leaf
 
 struct APIController: RouteCollection {
+    struct DashboardContext: Codable {
+        enum Item: Codable {
+            case collection(CollectionModel)
+            case project(Project)
+            
+            var name: String {
+                switch self {
+                case .collection(let collection): collection.name
+                case .project(let project): project.name
+                }
+            }
+            
+            func encode(to encoder: any Encoder) throws {
+                var container = encoder.container(keyedBy: CodingKeys.self)
+                switch self {
+                case .collection(let collection): try container.encode(collection, forKey: .collection)
+                case .project(let project): try container.encode(project, forKey: .project)
+                }
+            }
+        }
+        
+        var locations: [LocationDTO.WebView]
+        var items: [Item]
+    }
+    
     struct InvalidIDContext: Codable {
         var type: String
     }
@@ -57,6 +83,8 @@ struct APIController: RouteCollection {
     }
     
     func boot(routes: any RoutesBuilder) throws {
+        routes.get(use: dashboardGet(request:))
+        
         let locations = routes.grouped("locations")
         locations.get(use: locationsList(request:))
         locations.get(":id", use: locationsGet(request:))
@@ -76,6 +104,34 @@ struct APIController: RouteCollection {
         let collections = routes.grouped("collections")
         collections.get(use: collectionsList(request:))
         collections.get(":id", use: collectionsGet(request:))
+    }
+    
+    @Sendable
+    func dashboardGet(request req: Request) async throws -> View {
+        let locationsLimit = 10
+        let itemsLimit = 10
+        
+        let locations = try await Location.query(on: req.db)
+            .sort(\.$name)
+            .limit(locationsLimit)
+            .all()
+        
+        let collections = try await CollectionModel.query(on: req.db)
+            .limit(itemsLimit)
+            .all()
+        
+        let projects = try await Project.query(on: req.db)
+            .filter(\.$collection.$id == nil)
+            .limit(itemsLimit)
+            .all()
+        
+        let items = (collections.map(DashboardContext.Item.collection(_:)) + projects.map(DashboardContext.Item.project(_:)))
+            .sorted(using: KeyPathComparator(\.name))
+            .prefix(itemsLimit)
+        
+        let context = DashboardContext(locations: locations.map { $0.toDTO().toWebView() },
+                                       items: Array(items))
+        return try await req.view.render("dashboard", context)
     }
     
     @Sendable

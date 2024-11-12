@@ -17,7 +17,7 @@
     
     <h2 class="section-headline">Projects</h2>
     #if(count(collection.projects) > 0):
-      <ul class="object-children">
+      <ul class="object-list">
       #for(project in collection.projects):
         <li>
           <h3 class="subsection-headline">#(project.name)</h3>

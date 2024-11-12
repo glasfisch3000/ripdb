@@ -27,7 +27,7 @@
     
     <h2 class="section-headline">Files</h2>
     #if(count(location.files) > 0):
-      <ul class="object-children">
+      <ul class="object-list">
       #for(file in location.files):
         <li>
           <h3 class="subsection-headline">#(file.video.name) <span class="secondary"> – #(file.video.project.name)</span></h3>

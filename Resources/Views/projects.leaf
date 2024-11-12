@@ -9,7 +9,7 @@
   
   #export("body"):
     #if(count(projects) > 0):
-      <ul class="object-children">
+      <ul class="object-list">
       #for(project in projects):
         <li>
           <h3 class="subsection-headline">#(project.name)</h3>

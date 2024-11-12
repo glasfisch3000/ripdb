@@ -32,8 +32,4 @@ func configureRoutes(_ app: Application) throws {
     app.middleware.use(fileMiddleware)
     
     try app.register(collection: APIController())
-    
-    app.get { req async in
-        "It works!"
-    }
 }

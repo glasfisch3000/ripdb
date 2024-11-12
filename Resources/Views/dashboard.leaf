@@ -1,0 +1,67 @@
+#extend("master"):
+  #export("title"):
+    RipDB Rashboard
+  #endexport
+  
+  #export("headline"):
+    Dashboard
+  #endexport
+  
+  #export("body"):
+    <div class="content-flexbox">
+      <section style="flex-grow: 6; width: 0px; min-width: 500px;">
+        <h2 class="section-headline">Items</h2>
+        #if(count(items) > 0):
+          <ul class="object-list">
+            #for(item in items):
+            <li>
+              #if(item.project):
+              <h3 class="subsection-headline">#(item.project.name)</h3>
+              <div class="subheadline">
+                <span class="boxed">#(item.project.type)</span>
+                #(item.project.releaseYear)
+                <span class="secondary">(<a href="/projects/#(item.project.id)">#(item.project.id)</a>)</span>
+              </div>
+              #elseif(item.collection):
+                <h3 class="subsection-headline"><span class="secondary">Collection:</span> #(item.collection.name)</h3>
+                <div class="subheadline">
+                  <span class="secondary">(<a href="/collections/#(item.collection.id)">#(item.collection.id)</a>)</span>
+                </div>
+              #else:
+              <span class="no-value">Unknown Item</span>
+              #endif
+            </li>
+            #endfor
+          </ul>
+        #else:
+          <p class="no-value">No projects or collections found.</p>
+        #endif
+      </section>
+      
+      <section style="flex-grow: 4; width: 0px; min-width: 300px;">
+        <h2 class="section-headline">Locations</h2>
+        #if(count(locations) > 0):
+        <ul class="object-list">
+        #for(location in locations):
+          <li>
+            <h3 class="subsection-headline">#(location.name)</h3>
+            <div class="subheadline">
+              #if(location.capacity):
+                #if(location.capacity >= 10000000000000): <td>#(location.capacity/1000000000000) TB</td>
+                #elseif(location.capacity >= 10000000): <td>#(location.capacity/1000000000) GB</td>
+                #elseif(location.capacity >= 10000000): <td>#(location.capacity/1000000) MB</td>
+                #elseif(location.capacity >= 10000): <td>#(location.capacity/1000) KB</td>
+                #else: <td>#(location.capacity) Bytes</td> #endif
+              #else: <span class="no-value">Capacity unspecified</span> #endif
+              <span class="secondary">(<a href="/locations/#(location.id)">#(location.id)</a>)</span>
+            </div>
+          </li>
+        #endfor
+        </ul>
+        #else:
+        <p class="no-value">No locations found.</p>
+        #endif
+      </section>
+    </div>
+  #endexport
+#endextend

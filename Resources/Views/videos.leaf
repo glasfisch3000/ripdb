@@ -9,7 +9,7 @@
   
   #export("body"):
     #if(count(videos) > 0):
-      <ul class="object-children">
+      <ul class="object-list">
       #for(video in videos):
         <li>
           <h3 class="subsection-headline">#(video.name) <span class="secondary"> - #(video.project.name)</span></h3>

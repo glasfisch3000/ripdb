@@ -28,7 +28,7 @@
     
     #if(project.videos.main):
     <h2 class="section-headline">Main Videos</h2>
-    <ul class="object-children">
+    <ul class="object-list">
       #for(video in project.videos.main):
       <li>
         <h3 class="subsection-headline">#(video.name)</h3>
@@ -45,7 +45,7 @@
     
     #if(project.videos.episode):
     <h2 class="section-headline">Episodes</h2>
-    <ul class="object-children">
+    <ul class="object-list">
       #for(video in project.videos.episode):
       <li>
         <h3 class="subsection-headline">#(video.name)</h3>
@@ -65,7 +65,7 @@
     
     #if(project.videos.extra):
     <h2 class="section-headline">Extras</h2>
-    <ul class="object-children">
+    <ul class="object-list">
       #for(video in project.videos.extra):
       <li>
         <h3 class="subsection-headline">#(video.name)</h3>
@@ -82,7 +82,7 @@
     
     #if(project.videos.trailer):
     <h2 class="section-headline">Trailers</h2>
-    <ul class="object-children">
+    <ul class="object-list">
       #for(video in project.videos.trailer):
       <li>
         <h3 class="subsection-headline">#(video.name)</h3>
@@ -99,7 +99,7 @@
     
     #if(project.videos.advertisement):
     <h2 class="section-headline">Advertisements</h2>
-    <ul class="object-children">
+    <ul class="object-list">
       #for(video in project.videos.advertisement):
       <li>
         <h3 class="subsection-headline">#(video.name)</h3>

@@ -9,7 +9,7 @@
   
   #export("body"):
     #if(count(files) > 0):
-      <ul class="object-children">
+      <ul class="object-list">
       #for(file in files):
         <li>
           <h3 class="subsection-headline">

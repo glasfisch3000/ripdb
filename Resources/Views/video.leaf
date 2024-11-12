@@ -29,7 +29,7 @@
     
     <h2 class="section-headline">Files</h2>
     #if(count(video.files) > 0):
-      <ul class="object-children">
+      <ul class="object-list">
       #for(file in video.files):
         <li>
           <h3 class="subsection-headline">
