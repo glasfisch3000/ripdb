@@ -1,0 +1,78 @@
+body {
+  margin: 0px;
+  
+  color: #eee;
+  background: #111;
+  font-family: "Courier";
+  
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  grid-template-rows: min-content 100%;
+}
+
+.ripdb {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 22px;
+  padding-right: 22px;
+  height: min-content;
+  
+  text-align: center;
+  
+  font-size: 30px;
+  font-weight: bold;
+  color: #303bdd;
+  text-decoration: none;
+  background: #222;
+}
+
+.ripdb:hover {
+  background: #282828;
+}
+
+header {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 22px;
+  padding-right: 22px;
+  
+  font-size: 30px;
+  font-weight: bold;
+  color: #303bdd;
+  background: #1a1a1a;
+}
+
+nav {
+  padding: 10px;
+  background: #1a1a1a;
+  display: block flow;
+}
+
+nav a.button {
+  margin-bottom: 10px;
+  border-radius: 7px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  
+  width: 100%;
+  box-sizing: border-box;
+  display: block;
+  
+  color: #eee;
+  background: #282828;
+  text-decoration: none;
+}
+
+nav a.button.selected {
+  background: #303bdd80;
+}
+
+nav a.button:hover {
+  background: #303bddc0;
+}
+
+main {
+  margin: 15px;
+}

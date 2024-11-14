@@ -3,6 +3,14 @@ import Fluent
 import Leaf
 
 struct APIController: RouteCollection {
+    enum SidebarLocation: String, Codable {
+        case collections
+        case projects
+        case videos
+        case files
+        case locations
+    }
+    
     struct DashboardContext: Codable {
         enum Item: Codable {
             case collection(CollectionModel)
@@ -37,47 +45,57 @@ struct APIController: RouteCollection {
         var id: UUID
     }
     
-    struct LocationsListContext: Codable {
+    struct LocationsListContext: Encodable {
+        let sidebarLocation: SidebarLocation = .locations
         var locations: [LocationDTO.WebView]
     }
     
-    struct LocationsGetContext: Codable {
+    struct LocationsGetContext: Encodable {
+        let sidebarLocation: SidebarLocation = .locations
         var id: UUID
         var location: LocationDTO.WebView
     }
     
-    struct FilesListContext: Codable {
+    struct FilesListContext: Encodable {
+        let sidebarLocation: SidebarLocation = .files
         var files: [FileDTO.WebView]
     }
     
-    struct FilesGetContext: Codable {
+    struct FilesGetContext: Encodable {
+        let sidebarLocation: SidebarLocation = .files
         var id: UUID
         var file: FileDTO.WebView
     }
     
-    struct VideosListContext: Codable {
+    struct VideosListContext: Encodable {
+        let sidebarLocation: SidebarLocation = .videos
         var videos: [VideoDTO.WebView]
     }
     
-    struct VideosGetContext: Codable {
+    struct VideosGetContext: Encodable {
+        let sidebarLocation: SidebarLocation = .videos
         var id: UUID
         var video: VideoDTO.WebView
     }
     
-    struct ProjectsListContext: Codable {
+    struct ProjectsListContext: Encodable {
+        let sidebarLocation: SidebarLocation = .projects
         var projects: [ProjectDTO.WebView]
     }
     
-    struct ProjectsGetContext: Codable {
+    struct ProjectsGetContext: Encodable {
+        let sidebarLocation: SidebarLocation = .projects
         var id: UUID
         var project: ProjectDTO.WebView
     }
     
-    struct CollectionsListContext: Codable {
+    struct CollectionsListContext: Encodable {
+        let sidebarLocation: SidebarLocation = .collections
         var collections: [CollectionDTO.WebView]
     }
     
-    struct CollectionsGetContext: Codable {
+    struct CollectionsGetContext: Encodable {
+        let sidebarLocation: SidebarLocation = .collections
         var id: UUID
         var collection: CollectionDTO.WebView
     }

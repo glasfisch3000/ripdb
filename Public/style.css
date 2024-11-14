@@ -1,26 +1,3 @@
-body {
-  margin: 0px;
-  color: #eee;
-  background: #111;
-  font-family: "Courier";
-}
-
-header {
-  margin-bottom: 12px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 22px;
-  padding-right: 22px;
-  font-size: 30px;
-  font-weight: bold;
-  color: #303bdd;
-  background: #1a1a1a;
-}
-
-main {
-  margin: 10px;
-}
-
 .no-value {
   color: #888;
 }

@@ -3,18 +3,27 @@
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/page-layout.css">
+  <link rel="stylesheet" href="/sections.css">
+  <link rel="stylesheet" href="/headings.css">
   <link rel="stylesheet" href="/tables.css">
   <link rel="stylesheet" href="/lists.css">
-  <link rel="stylesheet" href="/headings.css">
-  <link rel="stylesheet" href="/sections.css">
   #import("head")
   <title>#import("title")</title>
 </head>
 
 <body>
+  <a href="/" class="ripdb">RipDB</a>
   <header>
     #import("headline")
   </header>
+  <nav>
+    <a href="/collections" class="button #if(sidebarLocation == "collections"): selected #endif">Collections</a>
+    <a href="/projects" class="button #if(sidebarLocation == "projects"): selected #endif">Projects</a>
+    <a href="/videos" class="button #if(sidebarLocation == "videos"): selected #endif">Videos</a>
+    <a href="/files" class="button #if(sidebarLocation == "files"): selected #endif">Files</a>
+    <a href="/locations" class="button #if(sidebarLocation == "locations"): selected #endif">Locations</a>
+  </nav>
   <main>
     #import("body")
   </main>
