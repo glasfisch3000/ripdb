@@ -27,7 +27,7 @@
     #endif
     
     #if(project.videos.main):
-    <h2 class="section-headline">Main Videos</h2>
+    <h2 class="section-headline"><span class="secondary">Main Videos</span></h2>
     <ul class="object-list">
       #for(video in project.videos.main):
       <li>
@@ -39,12 +39,12 @@
       #endfor
     </ul>
     #elseif(project.type == "movie"):
-      <h2 class="section-headline">Main Videos</h2>
+      <h2 class="section-headline"><span class="secondary">Main Videos</span></h2>
       <p class="no-value">There are no main videos for this movie.</p>
     #endif
     
     #if(project.videos.episode):
-    <h2 class="section-headline">Episodes</h2>
+    <h2 class="section-headline"><span class="secondary">Episodes</span></h2>
     <ul class="object-list">
       #for(video in project.videos.episode):
       <li>
@@ -59,12 +59,12 @@
       #endfor
     </ul>
     #elseif(project.type == "season"):
-      <h2 class="section-headline">Episodes</h2>
+      <h2 class="section-headline"><span class="secondary">Episodes</span></h2>
       <p class="no-value">There are no episodes for this season.</p>
     #endif
     
     #if(project.videos.extra):
-    <h2 class="section-headline">Extras</h2>
+    <h2 class="section-headline"><span class="secondary">Extras</span></h2>
     <ul class="object-list">
       #for(video in project.videos.extra):
       <li>
@@ -81,7 +81,7 @@
     #endif
     
     #if(project.videos.trailer):
-    <h2 class="section-headline">Trailers</h2>
+    <h2 class="section-headline"><span class="secondary">Trailers</span></h2>
     <ul class="object-list">
       #for(video in project.videos.trailer):
       <li>
@@ -98,7 +98,7 @@
     #endif
     
     #if(project.videos.advertisement):
-    <h2 class="section-headline">Advertisements</h2>
+    <h2 class="section-headline"><span class="secondary">Advertisements</span></h2>
     <ul class="object-list">
       #for(video in project.videos.advertisement):
       <li>

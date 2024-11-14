@@ -25,7 +25,7 @@
       </tr>
     </table>
     
-    <h2 class="section-headline">Files</h2>
+    <h2 class="section-headline"><span class="secondary">Files</span></h2>
     #if(count(location.files) > 0):
       <ul class="object-list">
       #for(file in location.files):
