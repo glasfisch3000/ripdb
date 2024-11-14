@@ -8,56 +8,62 @@
   #endexport
   
   #export("body"):
-    <table class="object-properties">
-      <tr>
-        <th>UUID</th>
-        <td>#(file.id)</td>
-      </tr>
-      <tr>
-        <th>Resolution</th>
-        <td>#(file.resolution) #if(file.is3D): (3D) #endif</td>
-      </tr>
-      <tr>
-        <th>File Size</th>
-        <td>
-          #if(file.size >= 10000000000000): #(file.size/1000000000000) TB
-          #elseif(file.size >= 10000000000): #(file.size/1000000000) GB
-          #elseif(file.size >= 10000000): #(file.size/1000000) MB
-          #elseif(file.size >= 10000): #(file.size/1000) KB
-          #else: #(file.size) Bytes #endif
-        </td>
-      </tr>
-      <tr>
-        <th>Content Hash (SHA256)</th>
-        <td>#(file.contentHashSHA256)</td>
-      </tr>
-    </table>
+    <section class="no-border">
+      <table class="object-properties">
+        <tr>
+          <th>UUID</th>
+          <td>#(file.id)</td>
+        </tr>
+        <tr>
+          <th>Resolution</th>
+          <td>#(file.resolution) #if(file.is3D): (3D) #endif</td>
+        </tr>
+        <tr>
+          <th>File Size</th>
+          <td>
+            #if(file.size >= 10000000000000): #(file.size/1000000000000) TB
+            #elseif(file.size >= 10000000000): #(file.size/1000000000) GB
+            #elseif(file.size >= 10000000): #(file.size/1000000) MB
+            #elseif(file.size >= 10000): #(file.size/1000) KB
+            #else: #(file.size) Bytes #endif
+          </td>
+        </tr>
+        <tr>
+          <th>Content Hash (SHA256)</th>
+          <td>#(file.contentHashSHA256)</td>
+        </tr>
+      </table>
+    </section>
     
-    <h2 class="section-headline"><span class="secondary">Video:</span> #(file.video.name)</h2>
-    <div class="subheadline">
-      <span class="boxed">#(file.video.type)</span>
-      <span class="secondary">(<a href="/videos/#(file.video.id)">#(file.video.id)</a>)</span>
-    </div>
-    <table class="object-properties">
-      <tr>
-        <th>Project</th>
-        <td>
-          #(file.video.project.name)
-          <span class="secondary">(<a href="/projects/#(file.video.project.id)">#(file.video.project.id)</a>)</span>
-        </td>
-      </tr>
-    </table>
+    <section style="flex-grow: 1">
+      <h2 class="section-headline"><span class="secondary">Video:</span> #(file.video.name)</h2>
+      <div class="subheadline">
+        <span class="boxed">#(file.video.type)</span>
+        <span class="secondary">(<a href="/videos/#(file.video.id)">#(file.video.id)</a>)</span>
+      </div>
+      <table class="object-properties">
+        <tr>
+          <th>Project</th>
+          <td>
+            #(file.video.project.name)
+            <span class="secondary">(<a href="/projects/#(file.video.project.id)">#(file.video.project.id)</a>)</span>
+          </td>
+        </tr>
+      </table>
+    </section>
     
-    <h2 class="section-headline"><span class="secondary">Location:</span> #(file.location.name)</h2>
-    <div class="subheadline">
-      #if(file.location.capacity):
-        #if(file.location.capacity >= 10000000000000): <td>#(file.location.capacity/1000000000000) TB</td>
-        #elseif(file.location.capacity >= 10000000): <td>#(file.location.capacity/1000000000) GB</td>
-        #elseif(file.location.capacity >= 10000000): <td>#(file.location.capacity/1000000) MB</td>
-        #elseif(file.location.capacity >= 10000): <td>#(file.location.capacity/1000) KB</td>
-        #else: <td>#(file.location.capacity) Bytes</td> #endif
-      #else: <span class="no-value">Capacity unspecified</span> #endif
-      <span class="secondary">(<a href="/locations/#(file.location.id)">#(file.location.id)</a>)</span>
-    </div>
+    <section style="flex-grow: 1">
+      <h2 class="section-headline"><span class="secondary">Location:</span> #(file.location.name)</h2>
+      <div class="subheadline">
+        #if(file.location.capacity):
+          #if(file.location.capacity >= 10000000000000): <td>#(file.location.capacity/1000000000000) TB</td>
+          #elseif(file.location.capacity >= 10000000): <td>#(file.location.capacity/1000000000) GB</td>
+          #elseif(file.location.capacity >= 10000000): <td>#(file.location.capacity/1000000) MB</td>
+          #elseif(file.location.capacity >= 10000): <td>#(file.location.capacity/1000) KB</td>
+          #else: <td>#(file.location.capacity) Bytes</td> #endif
+        #else: <span class="no-value">Capacity unspecified</span> #endif
+        <span class="secondary">(<a href="/locations/#(file.location.id)">#(file.location.id)</a>)</span>
+      </div>
+    </section>
   #endexport
 #endextend

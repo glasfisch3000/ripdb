@@ -26,6 +26,6 @@ section > .section-headline {
   margin-bottom: 8px;
 }
 
-.section-headline ~ .subsection-headline, .section-headline ~ .subheadline {
+:not(section) > .section-headline ~ :is(.subsection-headline, .subheadline) {
   padding-left: 5px;
 }

@@ -8,61 +8,67 @@
   #endexport
   
   #export("body"):
-    <table class="object-properties">
-      <tr>
-        <th>UUID</th>
-        <td>#(video.id)</td>
-      </tr>
-      <tr>
-        <th>Video Type</th>
-        <td>#(video.type)</td>
-      </tr>
-    </table>
+    <section class="no-border">
+      <table class="object-properties">
+        <tr>
+          <th>UUID</th>
+          <td>#(video.id)</td>
+        </tr>
+        <tr>
+          <th>Video Type</th>
+          <td>#(video.type)</td>
+        </tr>
+      </table>
+    </section>
     
-    <h2 class="section-headline"><span class="secondary">Project:</span> #(video.project.name)</h2>
-    <div class="subheadline">
-      <span class="boxed">#(video.project.type)</span>
-      #(video.project.releaseYear)
-      <span class="secondary">(<a href="/projects/#(video.project.id)">#(video.project.id)</a>)</span>
-    </div>
-    </table>
+    <section>
+      <h2 class="section-headline"><span class="secondary">Project:</span> #(video.project.name)</h2>
+      <div class="subheadline">
+        <span class="boxed">#(video.project.type)</span>
+        #(video.project.releaseYear)
+        <span class="secondary">(<a href="/projects/#(video.project.id)">#(video.project.id)</a>)</span>
+      </div>
+      </table>
+    </section>
     
-    <h2 class="section-headline"><span class="secondary">Files</span></h2>
-    #if(count(video.files) > 0):
-      <ul class="object-list">
-      #for(file in video.files):
-        <li>
-          <h3 class="subsection-headline">
-            <span class="boxed">#(file.resolution)</span>
-            #if(file.is3D): <span class="boxed">3D</span> #endif
-            #if(file.size >= 10000000000000): #(file.size/1000000000000) TB
-            #elseif(file.size >= 10000000000): #(file.size/1000000000) GB
-            #elseif(file.size >= 10000000): #(file.size/1000000) MB
-            #elseif(file.size >= 10000): #(file.size/1000) KB
-            #else: #(file.size) Bytes #endif
-            <span class="secondary"> – #(file.location.name)</span>
-          </h3>
-          <div class="subheadline">
-            <span class="secondary">(<a href="/files/#(file.id)">#(file.id)</a>)</span>
-          </div>
-          <table class="object-properties">
-            <tr>
-              <th>Location</th>
-              <td>
-                #(file.location.name)
-                <span class="secondary">(<a href="/locations/#(file.location.id)">#(file.location.id)</a>)</span>
-              </td>
-            </tr>
-            <tr>
-              <th>Content Hash (SHA256)</th>
-              <td>#(file.contentHashSHA256)</td>
-            </tr>
-          </table>
-        </li>
-      #endfor
-      </ul>
-    #else:
-      <p class="no-value">There are no files for this video.</p>
-    #endif
+    <section>
+      <h2 class="section-headline"><span class="secondary">Files</span></h2>
+      #if(count(video.files) > 0):
+        <ul class="object-list">
+        #for(file in video.files):
+          <li>
+            <h3 class="subsection-headline">
+              <span class="boxed">#(file.resolution)</span>
+              #if(file.is3D): <span class="boxed">3D</span> #endif
+              #if(file.size >= 10000000000000): #(file.size/1000000000000) TB
+              #elseif(file.size >= 10000000000): #(file.size/1000000000) GB
+              #elseif(file.size >= 10000000): #(file.size/1000000) MB
+              #elseif(file.size >= 10000): #(file.size/1000) KB
+              #else: #(file.size) Bytes #endif
+              <span class="secondary"> – #(file.location.name)</span>
+            </h3>
+            <div class="subheadline">
+              <span class="secondary">(<a href="/files/#(file.id)">#(file.id)</a>)</span>
+            </div>
+            <table class="object-properties">
+              <tr>
+                <th>Location</th>
+                <td>
+                  #(file.location.name)
+                  <span class="secondary">(<a href="/locations/#(file.location.id)">#(file.location.id)</a>)</span>
+                </td>
+              </tr>
+              <tr>
+                <th>Content Hash (SHA256)</th>
+                <td>#(file.contentHashSHA256)</td>
+              </tr>
+            </table>
+          </li>
+        #endfor
+        </ul>
+      #else:
+        <p class="no-value">There are no files for this video.</p>
+      #endif
+    </section>
   #endexport
 #endextend

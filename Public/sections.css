@@ -2,13 +2,17 @@
   display: flex;
 }
 
-section {
+section:not(.no-border) {
   border: 0.8px solid #aaab;
   border-radius: 10px;
   padding-left: 12px;
   padding-right: 15px;
   padding-top: 5px;
   padding-bottom: 10px;
+}
+
+section:has(.section-headline) {
+  margin-top: 18px;
 }
 
 .content-flexbox section:not(:last-child) {

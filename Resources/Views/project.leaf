@@ -8,110 +8,132 @@
   #endexport
   
   #export("body"):
-    <table class="object-properties">
-      <tr>
-        <th>UUID</th>
-        <td>#(project.id)</td>
-      </tr>
-      <tr>
-        <th>Project Type</th>
-        <td>#(project.type)</td>
-      </tr>
-    </table>
+    <section class="no-border">
+      <table class="object-properties">
+        <tr>
+          <th>UUID</th>
+          <td>#(project.id)</td>
+        </tr>
+        <tr>
+          <th>Project Type</th>
+          <td>#(project.type)</td>
+        </tr>
+      </table>
+    </section>
     
     #if(project.collection):
-    <h2 class="section-headline"><span class="secondary">Collection:</span> #(project.collection.name)</h2>
-    <div class="subheadline">
-      <span class="secondary">(<a href="/collections/#(project.collection.id)">#(project.collection.id)</a>)</span>
+    <section>
+      <h2 class="section-headline"><span class="secondary">Collection:</span> #(project.collection.name)</h2>
+      <div class="subheadline">
+        <span class="secondary">(<a href="/collections/#(project.collection.id)">#(project.collection.id)</a>)</span>
+      </div>
+    </section>
+    #endif
+    
+    <div class="content-flexbox">
+      #if(project.videos.main):
+      <section style="flex-grow: 1">
+        <h2 class="section-headline"><span class="secondary">Main Videos</span></h2>
+        <ul class="object-list">
+          #for(video in project.videos.main):
+          <li>
+            <h3 class="subsection-headline">#(video.name)</h3>
+            <div class="subheadline">
+              <span class="secondary">(<a href="/videos/#(video.id)">#(video.id)</a>)</span>
+            </div>
+          </li>
+          #endfor
+        </ul>
+      </section>
+      #elseif(project.type == "movie"):
+      <section style="flex-grow: 1">
+        <h2 class="section-headline"><span class="secondary">Main Videos</span></h2>
+        <p class="no-value">There are no main videos for this movie.</p>
+      </section>
+      #endif
+      
+      #if(project.videos.episode):
+      <section style="flex-grow: 1">
+        <h2 class="section-headline"><span class="secondary">Episodes</span></h2>
+        <ul class="object-list">
+          #for(video in project.videos.episode):
+          <li>
+            <h3 class="subsection-headline">#(video.name)</h3>
+            <table class="object-properties">
+              <tr>
+                <th>UUID</th>
+                <td><a href="/videos/#(video.id)">#(video.id)</a></td>
+              </tr>
+            </table>
+          </li>
+          #endfor
+        </ul>
+      </section>
+      #elseif(project.type == "season"):
+      <section style="flex-grow: 1">
+        <h2 class="section-headline"><span class="secondary">Episodes</span></h2>
+        <p class="no-value">There are no episodes for this season.</p>
+      </section>
+      #endif
     </div>
-    #endif
     
-    #if(project.videos.main):
-    <h2 class="section-headline"><span class="secondary">Main Videos</span></h2>
-    <ul class="object-list">
-      #for(video in project.videos.main):
-      <li>
-        <h3 class="subsection-headline">#(video.name)</h3>
-        <div class="subheadline">
-          <span class="secondary">(<a href="/videos/#(video.id)">#(video.id)</a>)</span>
-        </div>
-      </li>
-      #endfor
-    </ul>
-    #elseif(project.type == "movie"):
-      <h2 class="section-headline"><span class="secondary">Main Videos</span></h2>
-      <p class="no-value">There are no main videos for this movie.</p>
-    #endif
-    
-    #if(project.videos.episode):
-    <h2 class="section-headline"><span class="secondary">Episodes</span></h2>
-    <ul class="object-list">
-      #for(video in project.videos.episode):
-      <li>
-        <h3 class="subsection-headline">#(video.name)</h3>
-        <table class="object-properties">
-          <tr>
-            <th>UUID</th>
-            <td><a href="/videos/#(video.id)">#(video.id)</a></td>
-          </tr>
-        </table>
-      </li>
-      #endfor
-    </ul>
-    #elseif(project.type == "season"):
-      <h2 class="section-headline"><span class="secondary">Episodes</span></h2>
-      <p class="no-value">There are no episodes for this season.</p>
-    #endif
+    <div class="content-flexbox">
+      #if(project.videos.trailer):
+      <section style="flex-grow: 1">
+        <h2 class="section-headline"><span class="secondary">Trailers</span></h2>
+        <ul class="object-list">
+          #for(video in project.videos.trailer):
+          <li>
+            <h3 class="subsection-headline">#(video.name)</h3>
+            <table class="object-properties">
+              <tr>
+                <th>UUID</th>
+                <td><a href="/videos/#(video.id)">#(video.id)</a></td>
+              </tr>
+            </table>
+          </li>
+          #endfor
+        </ul>
+      </section>
+      #endif
+      
+      #if(project.videos.advertisement):
+      <section style="flex-grow: 1">
+        <h2 class="section-headline"><span class="secondary">Advertisements</span></h2>
+        <ul class="object-list">
+          #for(video in project.videos.advertisement):
+          <li>
+            <h3 class="subsection-headline">#(video.name)</h3>
+            <table class="object-properties">
+              <tr>
+                <th>UUID</th>
+                <td><a href="/videos/#(video.id)">#(video.id)</a></td>
+              </tr>
+            </table>
+          </li>
+          #endfor
+        </ul>
+      </section>
+      #endif
+    </div>
     
     #if(project.videos.extra):
-    <h2 class="section-headline"><span class="secondary">Extras</span></h2>
-    <ul class="object-list">
-      #for(video in project.videos.extra):
-      <li>
-        <h3 class="subsection-headline">#(video.name)</h3>
-        <table class="object-properties">
-          <tr>
-            <th>UUID</th>
-            <td><a href="/videos/#(video.id)">#(video.id)</a></td>
-          </tr>
-        </table>
-      </li>
-      #endfor
-    </ul>
-    #endif
-    
-    #if(project.videos.trailer):
-    <h2 class="section-headline"><span class="secondary">Trailers</span></h2>
-    <ul class="object-list">
-      #for(video in project.videos.trailer):
-      <li>
-        <h3 class="subsection-headline">#(video.name)</h3>
-        <table class="object-properties">
-          <tr>
-            <th>UUID</th>
-            <td><a href="/videos/#(video.id)">#(video.id)</a></td>
-          </tr>
-        </table>
-      </li>
-      #endfor
-    </ul>
-    #endif
-    
-    #if(project.videos.advertisement):
-    <h2 class="section-headline"><span class="secondary">Advertisements</span></h2>
-    <ul class="object-list">
-      #for(video in project.videos.advertisement):
-      <li>
-        <h3 class="subsection-headline">#(video.name)</h3>
-        <table class="object-properties">
-          <tr>
-            <th>UUID</th>
-            <td><a href="/videos/#(video.id)">#(video.id)</a></td>
-          </tr>
-        </table>
-      </li>
-      #endfor
-    </ul>
+    <section>
+      <h2 class="section-headline"><span class="secondary">Extras</span></h2>
+      <ul class="object-list">
+        #for(video in project.videos.extra):
+        <li>
+          <h3 class="subsection-headline">#(video.name)</h3>
+          <table class="object-properties">
+            <tr>
+              <th>UUID</th>
+              <td><a href="/videos/#(video.id)">#(video.id)</a></td>
+            </tr>
+          </table>
+        </li>
+        #endfor
+      </ul>
+    </section>
     #endif
   #endexport
 #endextend
