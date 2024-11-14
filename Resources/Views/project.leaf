@@ -18,6 +18,10 @@
           <th>Project Type</th>
           <td>#(project.type)</td>
         </tr>
+        <tr>
+          <th>Release Year</th>
+          <td>#(project.releaseYear)</td>
+        </tr>
       </table>
     </section>
     
