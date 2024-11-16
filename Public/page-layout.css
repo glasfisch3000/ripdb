@@ -5,6 +5,7 @@ body {
   background: #111;
   font-family: "Courier";
   
+  min-width: 800px;
   min-height: 100vh;
   max-height: 100vh;
   display: grid;
@@ -48,31 +49,6 @@ nav {
   padding: 10px;
   background: #1a1a1a;
   display: block flow;
-}
-
-nav a.button {
-  margin-bottom: 10px;
-  border-radius: 7px;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 7px;
-  padding-bottom: 7px;
-  
-  width: 100%;
-  box-sizing: border-box;
-  display: block;
-  
-  color: #eee;
-  background: #282828;
-  text-decoration: none;
-}
-
-nav a.button.selected {
-  background: #303bdd80;
-}
-
-nav a.button:hover {
-  background: #303bddc0;
 }
 
 main {

@@ -11,7 +11,15 @@ section:not(.no-border) {
   padding-bottom: 10px;
 }
 
-section:has(.section-headline) {
+:not(.content-flexbox) section:not(.no-border) {
+  margin-bottom: 10px;
+}
+
+:not(.content-flexbox) > section:not(.no-border):has(> .section-headline) {
+  margin-top: 18px;
+}
+
+.content-flexbox:has(> section:has(> .section-headline)) {
   margin-top: 18px;
 }
 

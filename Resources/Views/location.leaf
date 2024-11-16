@@ -27,48 +27,50 @@
       </table>
     </section>
     
+    <a href="/locations/#(id)/files" class="button" style="margin-bottom: -8px;">Files at this location</a>
+    
     <section>
-      <h2 class="section-headline"><span class="secondary">Files</span></h2>
-      #if(count(location.files) > 0):
+      <h2 class="section-headline"><span class="secondary">Projects</span></h2>
+      #if(count(projects) > 0):
         <ul class="object-list">
-        #for(file in location.files):
+        #for(project in projects):
           <li>
-            <h3 class="subsection-headline">#(file.video.name) <span class="secondary"> – #(file.video.project.name)</span></h3>
+            <h3 class="subsection-headline">#(project.name)</h3>
             <div class="subheadline">
-              <span class="boxed">#(file.resolution)</span>
-              #if(file.is3D): <span class="boxed">3D</span> #endif
-              #if(file.size >= 10000000000000): #(file.size/1000000000000) TB
-              #elseif(file.size >= 10000000000): #(file.size/1000000000) GB
-              #elseif(file.size >= 10000000): #(file.size/1000000) MB
-              #elseif(file.size >= 10000): #(file.size/1000) KB
-              #else: #(file.size) Bytes #endif
-              <span class="secondary">(<a href="/files/#(file.id)">#(file.id)</a>)</span>
+              <span class="boxed">#(project.type)</span>
+              #(project.releaseYear)
+              <span class="secondary">(<a href="/projects/#(project.id)">#(project.id)</a>)</span>
             </div>
-            <table class="object-properties">
-              <tr>
-                <th>Video</th>
-                <td>
-                  #(file.video.name)
-                  <span class="secondary">(<a href="/videos/#(file.video.id)">#(file.video.id)</a>)</span>
-                </td>
-              </tr>
-              <tr>
-                <th>Project</th>
-                <td>
-                  #(file.video.project.name)
-                  <span class="secondary">(<a href="/projects/#(file.video.project.id)">#(file.video.project.id)</a>)</span>
-                </td>
-              </tr>
-              <tr>
-                <th>Content Hash (SHA256)</th>
-                <td>#(file.contentHashSHA256)</td>
-              </tr>
-            </table>
+            <ul class="object-list">
+            #for(video in project.videos):
+              <li>
+                <h4 class="subsection-headline">#(video.name) <span class="boxed" style="font-size: initial">#(video.type)</span></h4>
+                <ul class="object-list">
+                #for(file in video.files):
+                  <li>
+                    <div class="subheadline">
+                      <span class="boxed">#(file.resolution)</span>
+                      #if(file.is3d): <span class="boxed">3D</span> #endif
+                      
+                      #if(file.size >= 10000000000000): #(file.size/1000000000000) TB
+                      #elseif(file.size >= 10000000000): #(file.size/1000000000) GB
+                      #elseif(file.size >= 10000000): #(file.size/1000000) MB
+                      #elseif(file.size >= 10000): #(file.size/1000) KB
+                      #else: #(file.size) Bytes #endif
+                      
+                      <span class="secondary">(<a href="/files/#(file.id)">#(file.id)</a>)</span>
+                    </div>
+                  </li>
+                #endfor
+                </ul>
+              </li>
+            #endfor
+            </ul>
           </li>
         #endfor
         </ul>
       #else:
-        <p class="no-value">There are no files at this location.</p>
+        <p class="no-value">There are no projects at this location.</p>
       #endif
     </section>
   #endexport

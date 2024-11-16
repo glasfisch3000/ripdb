@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="/headings.css">
   <link rel="stylesheet" href="/tables.css">
   <link rel="stylesheet" href="/lists.css">
+  <link rel="stylesheet" href="/buttons.css">
   #import("head")
   <title>#import("title")</title>
 </head>

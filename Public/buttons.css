@@ -1,0 +1,44 @@
+a.button {
+  margin-bottom: 10px;
+  border-radius: 7px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  
+  width: 100%;
+  box-sizing: border-box;
+  display: block flex;
+  
+  color: #eee;
+  background: #282828;
+  text-decoration: none;
+}
+
+section a.button.trailing {
+  margin-left: auto;
+  margin-right: 0px;
+  margin-top: 10px;
+  margin-bottom: 0px;
+  width: fit-content;
+}
+
+a.button.selected {
+  background: #303bdd80;
+}
+
+a.button:hover {
+  background: #303bddc0;
+}
+
+main a.button:not(:first-child) {
+  margin-top: 18px;
+}
+
+main a.button::after {
+  margin-left: auto;
+  margin-right: 0px;
+  content: url("/chevron-right.svg");
+  font-size: 100%;
+  scale: 1.2;
+}

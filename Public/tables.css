@@ -1,5 +1,4 @@
 table.object-properties {
-  margin-left: -2px;
   width: 100%;
   border-collapse: separate;
   border-spacing: 1.5px 4px;
@@ -17,7 +16,7 @@ table.object-properties th,td {
   background: #222;
 }
 
-table.object-properties tr > :first-child {
+table.object-properties tr > :first-child:not(:last-child) {
   width: 25%;
   max-width: 35%;
   border-top-left-radius: 5px;
