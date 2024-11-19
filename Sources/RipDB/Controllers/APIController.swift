@@ -91,7 +91,7 @@ struct APIController: RouteCollection {
             .sort(\.$size)
             .all()
         
-        var projects: [UUID: APIContext.Locations.Singular.Project] = [:]
+        var projects: [UUID: APIContext.Locations.Singular.ProjectItem] = [:]
         
         for file in query {
             let video = file.video

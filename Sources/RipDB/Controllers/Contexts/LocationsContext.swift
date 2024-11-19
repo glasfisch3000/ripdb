@@ -9,14 +9,14 @@ extension APIContext {
 
 extension APIContext.Locations {
     struct Singular: Encodable {
-        struct Project: Encodable {
+        struct ProjectItem: Encodable {
             var id: UUID
             var name: String
             var type: ProjectType
             var releaseYear: Int
-            var videos: [Singular.Video]
+            var videos: [VideoItem]
             
-            init(id: UUID, name: String, type: ProjectType, releaseYear: Int, videos: [Singular.Video]) {
+            init(id: UUID, name: String, type: ProjectType, releaseYear: Int, videos: [VideoItem]) {
                 self.id = id
                 self.name = name
                 self.type = type
@@ -24,37 +24,37 @@ extension APIContext.Locations {
                 self.videos = videos
             }
             
-            init(from project: ripdb.Project) throws {
+            init(from project: Project) throws {
                 self.id = try project.requireID()
                 self.name = project.name
                 self.type = project.type
                 self.releaseYear = project.releaseYear
-                self.videos = try project.$videos.value?.map(Singular.Video.init(from:)) ?? []
+                self.videos = try project.$videos.value?.map(VideoItem.init(from:)) ?? []
             }
         }
         
-        struct Video: Encodable {
+        struct VideoItem: Encodable {
             var id: UUID
             var name: String
             var type: VideoType
-            var files: [Singular.File]
+            var files: [FileItem]
             
-            init(id: UUID, name: String, type: VideoType, files: [Singular.File]) {
+            init(id: UUID, name: String, type: VideoType, files: [FileItem]) {
                 self.id = id
                 self.name = name
                 self.type = type
                 self.files = files
             }
             
-            init(from video: ripdb.Video) throws {
+            init(from video: Video) throws {
                 self.id = try video.requireID()
                 self.name = video.name
                 self.type = video.type
-                self.files = try video.$files.value?.map(Singular.File.init(from:)) ?? []
+                self.files = try video.$files.value?.map(FileItem.init(from:)) ?? []
             }
         }
         
-        struct File: Encodable {
+        struct FileItem: Encodable {
             var id: UUID
             var resolution: FileResolution
             var is3D: Bool
@@ -69,7 +69,7 @@ extension APIContext.Locations {
                 self.contentHashSHA256 = contentHashSHA256
             }
             
-            init(from file: ripdb.File) throws {
+            init(from file: File) throws {
                 self.id = try file.requireID()
                 self.resolution = file.resolution
                 self.is3D = file.is3D
@@ -81,7 +81,7 @@ extension APIContext.Locations {
         let sidebarLocation: APIContext.SidebarLocation = .locations
         var id: UUID
         var location: LocationDTO.WebView
-        var projects: [Singular.Project]
+        var projects: [ProjectItem]
     }
 }
 
