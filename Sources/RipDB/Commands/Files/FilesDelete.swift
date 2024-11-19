@@ -5,7 +5,7 @@ import NIOFileSystem
 struct FilesDelete: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
         commandName: "delete",
-        abstract: "Delete a video file from the database.",
+        abstract: "Delete files from the database.",
 //        usage: <#T##String?#>,
 //        discussion: <#T##String#>,
         version: "0.0.0",
