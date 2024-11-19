@@ -53,5 +53,5 @@ nav {
 
 main {
   padding: 15px;
-  overflow: scroll;
+  overflow: auto;
 }
