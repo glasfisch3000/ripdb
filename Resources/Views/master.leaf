@@ -15,10 +15,12 @@
 </head>
 
 <body>
-  <a href="/" class="ripdb">RipDB</a>
+  <a href="/" class="ripdb">Rip<span style="color: #f0f">DB</span></a>
+  
   <header>
     #import("headline")
   </header>
+  
   <nav>
     <a href="/collections" class="button #if(sidebarLocation == "collections"): selected #endif">Collections</a>
     <a href="/projects" class="button #if(sidebarLocation == "projects"): selected #endif">Projects</a>
@@ -26,6 +28,7 @@
     <a href="/files" class="button #if(sidebarLocation == "files"): selected #endif">Files</a>
     <a href="/locations" class="button #if(sidebarLocation == "locations"): selected #endif">Locations</a>
   </nav>
+  
   <main>
     #import("body")
   </main>

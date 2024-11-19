@@ -24,25 +24,13 @@ body {
   
   font-size: 30px;
   font-weight: bold;
-  color: #303bdd;
+  color: #5050ff;
   text-decoration: none;
   background: #222;
 }
 
 .ripdb:hover {
   background: #282828;
-}
-
-header {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 22px;
-  padding-right: 22px;
-  
-  font-size: 30px;
-  font-weight: bold;
-  color: #303bdd;
-  background: #1a1a1a;
 }
 
 nav {

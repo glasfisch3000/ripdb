@@ -1,4 +1,4 @@
-a.button {
+.button {
   margin-bottom: 10px;
   border-radius: 7px;
   padding-left: 10px;
@@ -10,12 +10,14 @@ a.button {
   box-sizing: border-box;
   display: block flex;
   
-  color: #eee;
   background: #282828;
-  text-decoration: none;
 }
 
-section a.button.trailing {
+main .button:not(:first-child) {
+  margin-top: 18px;
+}
+
+section .button.trailing {
   margin-left: auto;
   margin-right: 0px;
   margin-top: 10px;
@@ -23,16 +25,9 @@ section a.button.trailing {
   width: fit-content;
 }
 
-a.button.selected {
-  background: #303bdd80;
-}
-
-a.button:hover {
-  background: #303bddc0;
-}
-
-main a.button:not(:first-child) {
-  margin-top: 18px;
+a.button {
+  color: #eee;
+  text-decoration: none;
 }
 
 main a.button::after {
@@ -41,4 +36,16 @@ main a.button::after {
   content: url("/chevron-right.svg");
   font-size: 100%;
   scale: 1.2;
+}
+
+nav .button.selected {
+  background: #5050ff80;
+}
+
+nav .button:hover {
+  background: #ff00ffcc;
+}
+
+main .button:hover {
+  background: #5050ff80;
 }
