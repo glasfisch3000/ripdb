@@ -21,7 +21,7 @@ struct CreateFile: AsyncMigration {
     }
 
     func revert(on database: Database) async throws {
-        try await database.enum("file_resolution").delete()
         try await database.schema("files").delete()
+        try await database.enum("file_resolution").delete()
     }
 }

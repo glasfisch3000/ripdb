@@ -19,7 +19,7 @@ struct CreateVideo: AsyncMigration {
     }
 
     func revert(on database: Database) async throws {
-        try await database.enum("video_type").delete()
         try await database.schema("videos").delete()
+        try await database.enum("video_type").delete()
     }
 }

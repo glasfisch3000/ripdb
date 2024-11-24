@@ -17,7 +17,7 @@ struct CreateProject: AsyncMigration {
     }
 
     func revert(on database: Database) async throws {
-        try await database.enum("project_type").delete()
         try await database.schema("projects").delete()
+        try await database.enum("project_type").delete()
     }
 }
