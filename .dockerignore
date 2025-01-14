@@ -1,2 +1,8 @@
-.build/
-.swiftpm/
+.git
+.github
+.gitattributes
+.gitignore
+.dockerignore
+Dockerfile
+Dockerfile_workflow
+docker-compose.yaml
