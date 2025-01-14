@@ -1,6 +1,7 @@
 import ArgumentParser
 import Vapor
-import NIOFileSystem
+import struct NIOFileSystem.FilePath
+import RipLib
 
 struct LocationsDelete: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
@@ -49,20 +50,20 @@ struct LocationsDelete: AsyncParsableCommand {
         // app.logger.debug("Tried to install SwiftNIO's EventLoopGroup as Swift's global concurrency executor", metadata: ["success": .stringConvertible(executorTakeoverSuccess)])
         
         do {
-            try await configureDB(app, config)
+            try await configureRipDB(app, location: config.database)
             
-            var deleted: [LocationDTO] = []
+            var deleted: [Location] = []
             
             for locationID in locationIDs {
                 if let location = try await Location.find(locationID, on: app.db) {
                     try await location.delete(on: app.db)
-                    deleted.append(location.toDTO())
+                    deleted.append(location)
                 } else {
                     print("location not found for id \(locationID)")
                 }
             }
             
-            print("deleted locations:\n" + (try outputFormat.format(deleted)))
+            print("deleted locations:\n" + (try outputFormat.format(deleted.map { $0.toDTO() })))
         } catch {
             app.logger.report(error: error)
             try? await app.asyncShutdown()

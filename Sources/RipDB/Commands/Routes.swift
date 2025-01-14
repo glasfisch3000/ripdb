@@ -1,6 +1,7 @@
 import ArgumentParser
 import Vapor
-import NIOFileSystem
+import struct NIOFileSystem.FilePath
+import RipDBWebServer
 
 struct Routes: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
@@ -43,7 +44,7 @@ struct Routes: AsyncParsableCommand {
         // app.logger.debug("Tried to install SwiftNIO's EventLoopGroup as Swift's global concurrency executor", metadata: ["success": .stringConvertible(executorTakeoverSuccess)])
         
         do {
-            try configureRoutes(app)
+            try configureRipDBWebServer(app)
             try await app.execute()
         } catch {
             app.logger.report(error: error)

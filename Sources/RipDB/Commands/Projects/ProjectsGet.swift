@@ -1,6 +1,7 @@
 import ArgumentParser
 import Vapor
-import NIOFileSystem
+import struct NIOFileSystem.FilePath
+import RipLib
 
 struct ProjectsGet: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
@@ -49,7 +50,7 @@ struct ProjectsGet: AsyncParsableCommand {
         // app.logger.debug("Tried to install SwiftNIO's EventLoopGroup as Swift's global concurrency executor", metadata: ["success": .stringConvertible(executorTakeoverSuccess)])
         
         do {
-            try await configureDB(app, config)
+            try await configureRipDB(app, location: config.database)
             
             let project = try await Project.find(projectID, on: app.db)
             try await project?.$collection.load(on: app.db)

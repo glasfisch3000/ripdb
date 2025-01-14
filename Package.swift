@@ -24,14 +24,30 @@ let package = Package(
             dependencies: [
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 .product(name: "Fluent", package: "fluent"),
-                .product(name: "FluentPostgresDriver", package: "fluent-postgres-driver"),
-                .product(name: "Leaf", package: "leaf"),
                 .product(name: "Vapor", package: "vapor"),
                 .product(name: "_NIOFileSystem", package: "swift-nio"),
                 .product(name: "Yams", package: "Yams"),
+                .target(name: "RipLib"),
+                .target(name: "RipDBWebServer"),
             ],
             swiftSettings: swiftSettings
         ),
+        .target(
+            name: "RipDBWebServer",
+            dependencies: [
+                .product(name: "Leaf", package: "leaf"),
+                .product(name: "Vapor", package: "vapor"),
+                .target(name: "RipLib"),
+            ]
+        ),
+        .target(
+            name: "RipLib",
+            dependencies: [
+                .product(name: "Vapor", package: "vapor"),
+                .product(name: "Fluent", package: "fluent"),
+                .product(name: "FluentPostgresDriver", package: "fluent-postgres-driver"),
+            ]
+        )
     ]
 )
 

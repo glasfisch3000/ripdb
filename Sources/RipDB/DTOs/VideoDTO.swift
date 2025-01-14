@@ -1,37 +1,21 @@
-import Fluent
-import Vapor
+import struct Foundation.UUID
+import RipLib
 
-struct VideoDTO: Sendable, Content {
-    var id: UUID?
-    var name: String
-    var type: VideoType
-    
-    var project: ProjectDTO?
-    var files: [FileDTO]?
-    
-    func toModel() -> Video {
-        Video(id: self.id,
-                name: self.name,
-                type: self.type,
-                projectID: self.project?.id)
-    }
-    
-    func toWebView() -> Self.WebView {
-        WebView(id: self.id,
-                name: self.name,
-                type: self.type,
-                project: self.project?.toWebView(),
-                files: self.files?.map { $0.toWebView() })
-    }
-}
-
-extension VideoDTO {
-    struct WebView: Sendable, Content {
+extension Video {
+    struct DTO: Sendable, Encodable {
         var id: UUID?
         var name: String
         var type: VideoType
         
-        var project: ProjectDTO.WebView?
-        var files: [FileDTO.WebView]?
+        var project: Project.DTO?
+        var files: [File.DTO]?
+    }
+    
+    func toDTO() -> DTO {
+        DTO(id: self.id,
+            name: self.name,
+            type: self.type,
+            project: self.$project.value?.toDTO(),
+            files: self.$files.value?.map { $0.toDTO() })
     }
 }

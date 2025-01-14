@@ -1,31 +1,19 @@
-import Fluent
-import Vapor
+import struct Foundation.UUID
+import RipLib
 
-struct LocationDTO: Sendable, Content {
-    var id: UUID?
-    var name: String
-    var capacity: Int?
-    
-    var files: [FileDTO]?
-    
-    func toModel() -> Location {
-        Location(id: self.id, name: self.name, capacity: self.capacity)
-    }
-    
-    func toWebView() -> Self.WebView {
-        WebView(id: self.id,
-                name: self.name,
-                capacity: self.capacity,
-                files: self.files?.map { $0.toWebView() })
-    }
-}
-
-extension LocationDTO {
-    struct WebView: Sendable, Content {
+extension Location {
+    struct DTO: Sendable, Encodable {
         var id: UUID?
         var name: String
         var capacity: Int?
         
-        var files: [FileDTO.WebView]?
+        var files: [File.DTO]?
+    }
+    
+    func toDTO() -> DTO {
+        DTO(id: self.id,
+            name: self.name,
+            capacity: self.capacity,
+            files: self.$files.value?.map { $0.toDTO() })
     }
 }

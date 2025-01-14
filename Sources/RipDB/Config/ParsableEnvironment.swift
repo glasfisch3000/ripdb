@@ -1,12 +1,12 @@
 import ArgumentParser
-import Vapor
+import struct Vapor.Environment
 
-enum ParsableEnvironment: String, Codable, ExpressibleByArgument {
+public enum ParsableEnvironment: String, Hashable, Sendable, Codable, ExpressibleByArgument {
     case production
     case development
     case testing
     
-    func makeEnvironment() -> Environment {
+    public func makeEnvironment() -> Environment {
         switch self {
         case .production: .production
         case .development: .development

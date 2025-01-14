@@ -1,28 +1,17 @@
-import Fluent
-import Vapor
+import struct Foundation.UUID
+import RipLib
 
-struct CollectionDTO: Sendable, Content {
-    var id: UUID?
-    var name: String
-    
-    var projects: [ProjectDTO]?
-    
-    func toModel() -> CollectionModel {
-        CollectionModel(id: self.id, name: self.name)
-    }
-    
-    func toWebView() -> Self.WebView {
-        WebView(id: self.id,
-                name: self.name,
-                projects: self.projects?.map { $0.toWebView() })
-    }
-}
-
-extension CollectionDTO {
-    struct WebView: Sendable, Content {
+extension CollectionModel {
+    struct DTO: Sendable, Encodable {
         var id: UUID?
         var name: String
         
-        var projects: [ProjectDTO.WebView]?
+        var projects: [Project.DTO]?
+    }
+    
+    func toDTO() -> DTO {
+        DTO(id: self.id,
+            name: self.name,
+            projects: self.$projects.value?.map { $0.toDTO() })
     }
 }

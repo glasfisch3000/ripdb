@@ -1,7 +1,8 @@
 import ArgumentParser
 import Vapor
 import Fluent
-import NIOFileSystem
+import struct NIOFileSystem.FilePath
+import RipLib
 
 struct FilesList: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
@@ -90,20 +91,20 @@ struct FilesList: AsyncParsableCommand {
         // app.logger.debug("Tried to install SwiftNIO's EventLoopGroup as Swift's global concurrency executor", metadata: ["success": .stringConvertible(executorTakeoverSuccess)])
         
         do {
-            try await configureDB(app, config)
+            try await configureRipDB(app, location: config.database)
             
             var query = File.query(on: app.db)
             
             if let videoID = filterOptions.video {
-                query = query.filter(\File.$video.$id == videoID)
+                query = query.filter(\.$video.$id == videoID)
             }
             
             if let locationID = filterOptions.location {
-                query = query.filter(\File.$location.$id == locationID)
+                query = query.filter(\.$location.$id == locationID)
             }
             
             if let is3D = filterOptions.is3D {
-                query = query.filter(\File.$is3D == is3D)
+                query = query.filter(\.$is3D == is3D)
             }
             
             for sortOption in sortOptions {

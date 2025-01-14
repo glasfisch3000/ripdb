@@ -1,6 +1,4 @@
 import ArgumentParser
-import Vapor
-import NIOFileSystem
 
 struct Files: AsyncParsableCommand {
     static let configuration = CommandConfiguration(

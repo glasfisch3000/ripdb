@@ -1,6 +1,7 @@
 import ArgumentParser
 import Vapor
-import NIOFileSystem
+import struct NIOFileSystem.FilePath
+import RipLib
 
 struct ProjectsDelete: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
@@ -49,20 +50,20 @@ struct ProjectsDelete: AsyncParsableCommand {
         // app.logger.debug("Tried to install SwiftNIO's EventLoopGroup as Swift's global concurrency executor", metadata: ["success": .stringConvertible(executorTakeoverSuccess)])
         
         do {
-            try await configureDB(app, config)
+            try await configureRipDB(app, location: config.database)
             
-            var deleted: [ProjectDTO] = []
+            var deleted: [Project] = []
             
             for projectID in projectIDs {
                 if let project = try await Project.find(projectID, on: app.db) {
                     try await project.delete(on: app.db)
-                    deleted.append(project.toDTO())
+                    deleted.append(project)
                 } else {
                     print("project not found for id \(projectID)")
                 }
             }
             
-            print("deleted projects:\n" + (try outputFormat.format(deleted)))
+            print("deleted projects:\n" + (try outputFormat.format(deleted.map { $0.toDTO() })))
         } catch {
             app.logger.report(error: error)
             try? await app.asyncShutdown()
