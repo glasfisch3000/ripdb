@@ -2,7 +2,7 @@ import Vapor
 import Fluent
 import Leaf
 
-struct APIController: RouteCollection {
+struct WebViewController: RouteCollection {
     func boot(routes: any RoutesBuilder) throws {
         routes.get(use: dashboardGet(request:))
         

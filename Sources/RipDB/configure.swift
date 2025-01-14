@@ -31,5 +31,5 @@ func configureRoutes(_ app: Application) throws {
     let fileMiddleware = FileMiddleware(publicDirectory: app.directory.publicDirectory, advancedETagComparison: true)
     app.middleware.use(fileMiddleware)
     
-    try app.register(collection: APIController())
+    try app.register(collection: WebViewController())
 }
