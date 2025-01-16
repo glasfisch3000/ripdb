@@ -1,16 +1,14 @@
 import struct Foundation.UUID
 import RipLib
 
-extension APIContext {
-    struct Files: Encodable {
-        let sidebarLocation: APIContext.SidebarLocation = .files
-        var files: [File.WebDTO]
-    }
+struct FilesContext: Encodable {
+    let sidebarLocation: SidebarLocation = .files
+    var files: [File.WebDTO]
 }
 
-extension APIContext.Files {
+extension FilesContext {
     struct Singular: Encodable {
-        let sidebarLocation: APIContext.SidebarLocation = .files
+        let sidebarLocation: SidebarLocation = .files
         var id: UUID
         var file: File.WebDTO
     }

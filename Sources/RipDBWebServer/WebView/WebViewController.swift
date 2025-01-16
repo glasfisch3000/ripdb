@@ -48,12 +48,12 @@ struct WebViewController: RouteCollection {
             .limit(itemsLimit)
             .all()
         
-        let items = (collections.map(APIContext.Item.collection(_:)) + projects.map(APIContext.Item.project(_:)))
+        let items = (collections.map(DashboardContext.Item.collection(_:)) + projects.map(DashboardContext.Item.project(_:)))
             .sorted(using: KeyPathComparator(\.name))
             .prefix(itemsLimit)
         
-        let context = APIContext(locations: locations.map { $0.toWebDTO() },
-                                 items: Array(items))
+        let context = DashboardContext(locations: locations.map { $0.toWebDTO() },
+                                       items: Array(items))
         return try await req.view.render("dashboard", context)
     }
     
@@ -63,18 +63,18 @@ struct WebViewController: RouteCollection {
             .sort(\.$name)
             .all()
         
-        let context = APIContext.Locations(locations: locations.map { $0.toWebDTO() })
+        let context = LocationsContext(locations: locations.map { $0.toWebDTO() })
         return try await req.view.render("locations", context)
     }
     
     @Sendable
     func locationsGet(request req: Request) async throws -> View {
         guard let id = req.parameters.get("id", as: UUID.self) else {
-            return try await req.view.render("invalidID", APIContext.InvalidID(type: "location", sidebarLocation: .locations))
+            return try await req.view.render("invalidID", InvalidIDContext(type: "location", sidebarLocation: .locations))
         }
         
         guard let location = try await Location.find(id, on: req.db) else {
-            return try await req.view.render("notFound", APIContext.NotFound(type: "location", id: id, sidebarLocation: .locations))
+            return try await req.view.render("notFound", NotFoundContext(type: "location", id: id, sidebarLocation: .locations))
         }
         
         let query = try await File.query(on: req.db)
@@ -92,7 +92,7 @@ struct WebViewController: RouteCollection {
             .sort(\.$size)
             .all()
         
-        var projects: [UUID: APIContext.Locations.Singular.ProjectItem] = [:]
+        var projects: [UUID: LocationsContext.Singular.ProjectItem] = [:]
         
         for file in query {
             let video = file.video
@@ -120,7 +120,7 @@ struct WebViewController: RouteCollection {
         
         let sorted = projects.values.sorted(using: KeyPathComparator(\.name))
         
-        let context = APIContext.Locations.Singular(id: id,
+        let context = LocationsContext.Singular(id: id,
                                                     location: location.toWebDTO(),
                                                     projects: sorted)
         return try await req.view.render("location", context)
@@ -129,11 +129,11 @@ struct WebViewController: RouteCollection {
     @Sendable
     func locationsGetFiles(request req: Request) async throws -> View {
         guard let id = req.parameters.get("id", as: UUID.self) else {
-            return try await req.view.render("invalidID", APIContext.InvalidID(type: "location", sidebarLocation: .locations))
+            return try await req.view.render("invalidID", InvalidIDContext(type: "location", sidebarLocation: .locations))
         }
         
         guard let location = try await Location.find(id, on: req.db) else {
-            return try await req.view.render("notFound", APIContext.NotFound(type: "location", id: id, sidebarLocation: .locations))
+            return try await req.view.render("notFound", NotFoundContext(type: "location", id: id, sidebarLocation: .locations))
         }
         
         let files = try await File.query(on: req.db)
@@ -144,7 +144,7 @@ struct WebViewController: RouteCollection {
             .sort(\.$size, .descending)
             .all()
         
-        let context = APIContext.Locations.Singular.Files(id: id,
+        let context = LocationsContext.Singular.Files(id: id,
                                                           location: location.toWebDTO(),
                                                           files: files.map { $0.toWebDTO() })
         return try await req.view.render("location-files", context)
@@ -169,18 +169,18 @@ struct WebViewController: RouteCollection {
             .sort(\.$size)
             .all()
         
-        let context = APIContext.Files(files: files.map { $0.toWebDTO() })
+        let context = FilesContext(files: files.map { $0.toWebDTO() })
         return try await req.view.render("files", context)
     }
     
     @Sendable
     func filesGet(request req: Request) async throws -> View {
         guard let id = req.parameters.get("id", as: UUID.self) else {
-            return try await req.view.render("invalidID", APIContext.InvalidID(type: "file", sidebarLocation: .files))
+            return try await req.view.render("invalidID", InvalidIDContext(type: "file", sidebarLocation: .files))
         }
         
         guard let file = try await File.find(id, on: req.db) else {
-            return try await req.view.render("notFound", APIContext.NotFound(type: "file", id: id, sidebarLocation: .files))
+            return try await req.view.render("notFound", NotFoundContext(type: "file", id: id, sidebarLocation: .files))
         }
         
         try await file.$location.load(on: req.db)
@@ -189,7 +189,7 @@ struct WebViewController: RouteCollection {
         }
         .get()
         
-        let context = APIContext.Files.Singular(id: id, file: file.toWebDTO())
+        let context = FilesContext.Singular(id: id, file: file.toWebDTO())
         return try await req.view.render("file", context)
     }
     
@@ -203,18 +203,18 @@ struct WebViewController: RouteCollection {
             .sort(\.$name)
             .all()
         
-        let context = APIContext.Videos(videos: videos.map { $0.toWebDTO() })
+        let context = VideosContext(videos: videos.map { $0.toWebDTO() })
         return try await req.view.render("videos", context)
     }
     
     @Sendable
     func videosGet(request req: Request) async throws -> View {
         guard let id = req.parameters.get("id", as: UUID.self) else {
-            return try await req.view.render("invalidID", APIContext.InvalidID(type: "video", sidebarLocation: .videos))
+            return try await req.view.render("invalidID", InvalidIDContext(type: "video", sidebarLocation: .videos))
         }
         
         guard let video = try await Video.find(id, on: req.db) else {
-            return try await req.view.render("notFound", APIContext.NotFound(type: "video", id: id, sidebarLocation: .videos))
+            return try await req.view.render("notFound", NotFoundContext(type: "video", id: id, sidebarLocation: .videos))
         }
         
         try await video.$project.load(on: req.db)
@@ -224,7 +224,7 @@ struct WebViewController: RouteCollection {
         .flatten(on: req.eventLoop)
         .get()
         
-        let context = APIContext.Videos.Singular(id: id, video: video.toWebDTO())
+        let context = VideosContext.Singular(id: id, video: video.toWebDTO())
         return try await req.view.render("video", context)
     }
     
@@ -239,24 +239,24 @@ struct WebViewController: RouteCollection {
             .sort(\.$type)
             .all()
         
-        let context = APIContext.Projects(projects: projects.map { $0.toWebDTO() })
+        let context = ProjectsContext(projects: projects.map { $0.toWebDTO() })
         return try await req.view.render("projects", context)
     }
     
     @Sendable
     func projectsGet(request req: Request) async throws -> View {
         guard let id = req.parameters.get("id", as: UUID.self) else {
-            return try await req.view.render("invalidID", APIContext.InvalidID(type: "project", sidebarLocation: .projects))
+            return try await req.view.render("invalidID", InvalidIDContext(type: "project", sidebarLocation: .projects))
         }
         
         guard let project = try await Project.find(id, on: req.db) else {
-            return try await req.view.render("notFound", APIContext.NotFound(type: "project", id: id, sidebarLocation: .projects))
+            return try await req.view.render("notFound", NotFoundContext(type: "project", id: id, sidebarLocation: .projects))
         }
         
         try await project.$collection.load(on: req.db)
         try await project.$videos.load(on: req.db)
         
-        let context = APIContext.Projects.Singular(id: id, project: project.toWebDTO())
+        let context = ProjectsContext.Singular(id: id, project: project.toWebDTO())
         return try await req.view.render("project", context)
     }
     
@@ -266,23 +266,23 @@ struct WebViewController: RouteCollection {
             .sort(\.$name)
             .all()
         
-        let context = APIContext.Collections(collections: collections.map { $0.toWebDTO() })
+        let context = CollectionsContext(collections: collections.map { $0.toWebDTO() })
         return try await req.view.render("collections", context)
     }
     
     @Sendable
     func collectionsGet(request req: Request) async throws -> View {
         guard let id = req.parameters.get("id", as: UUID.self) else {
-            return try await req.view.render("invalidID", APIContext.InvalidID(type: "collection", sidebarLocation: .collections))
+            return try await req.view.render("invalidID", InvalidIDContext(type: "collection", sidebarLocation: .collections))
         }
         
         guard let collection = try await CollectionModel.find(id, on: req.db) else {
-            return try await req.view.render("notFound", APIContext.NotFound(type: "collection", id: id, sidebarLocation: .collections))
+            return try await req.view.render("notFound", NotFoundContext(type: "collection", id: id, sidebarLocation: .collections))
         }
         
         try await collection.$projects.load(on: req.db)
         
-        let context = APIContext.Collections.Singular(id: id, collection: collection.toWebDTO())
+        let context = CollectionsContext.Singular(id: id, collection: collection.toWebDTO())
         return try await req.view.render("collection", context)
     }
 }

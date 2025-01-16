@@ -1,6 +1,6 @@
 import RipLib
 
-struct APIContext: Codable {
+struct DashboardContext: Codable {
     enum Item: Codable {
         case collection(CollectionModel)
         case project(Project)
@@ -19,14 +19,6 @@ struct APIContext: Codable {
             case .project(let project): try container.encode(project.toWebDTO(), forKey: .project)
             }
         }
-    }
-    
-    enum SidebarLocation: String, Codable {
-        case collections
-        case projects
-        case videos
-        case files
-        case locations
     }
     
     var locations: [Location.WebDTO]

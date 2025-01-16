@@ -1,16 +1,14 @@
 import struct Foundation.UUID
 import RipLib
 
-extension APIContext {
-    struct Projects: Encodable {
-        let sidebarLocation: APIContext.SidebarLocation = .projects
-        var projects: [Project.WebDTO]
-    }
+struct ProjectsContext: Encodable {
+    let sidebarLocation: SidebarLocation = .projects
+    var projects: [Project.WebDTO]
 }
 
-extension APIContext.Projects {
+extension ProjectsContext {
     struct Singular: Encodable {
-        let sidebarLocation: APIContext.SidebarLocation = .projects
+        let sidebarLocation: SidebarLocation = .projects
         var id: UUID
         var project: Project.WebDTO
     }

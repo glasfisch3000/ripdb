@@ -1,14 +1,12 @@
 import struct Foundation.UUID
 import RipLib
 
-extension APIContext {
-    struct Locations: Encodable {
-        let sidebarLocation: APIContext.SidebarLocation = .locations
-        var locations: [Location.WebDTO]
-    }
+struct LocationsContext: Encodable {
+    let sidebarLocation: SidebarLocation = .locations
+    var locations: [Location.WebDTO]
 }
 
-extension APIContext.Locations {
+extension LocationsContext {
     struct Singular: Encodable {
         struct ProjectItem: Encodable {
             var id: UUID
@@ -79,16 +77,16 @@ extension APIContext.Locations {
             }
         }
         
-        let sidebarLocation: APIContext.SidebarLocation = .locations
+        let sidebarLocation: SidebarLocation = .locations
         var id: UUID
         var location: Location.WebDTO
         var projects: [ProjectItem]
     }
 }
 
-extension APIContext.Locations.Singular {
+extension LocationsContext.Singular {
     struct Files: Encodable {
-        let sidebarLocation: APIContext.SidebarLocation = .locations
+        let sidebarLocation: SidebarLocation = .locations
         var id: UUID
         var location: Location.WebDTO
         var files: [File.WebDTO]
