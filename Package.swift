@@ -28,12 +28,12 @@ let package = Package(
                 .product(name: "_NIOFileSystem", package: "swift-nio"),
                 .product(name: "Yams", package: "Yams"),
                 .target(name: "RipLib"),
-                .target(name: "RipDBWebServer"),
+                .target(name: "RipDBWebView"),
             ],
             swiftSettings: swiftSettings
         ),
         .target(
-            name: "RipDBWebServer",
+            name: "RipDBWebView",
             dependencies: [
                 .product(name: "Leaf", package: "leaf"),
                 .product(name: "Vapor", package: "vapor"),

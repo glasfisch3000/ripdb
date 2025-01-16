@@ -3,7 +3,7 @@ import Vapor
 import struct NIOFileSystem.FilePath
 
 import RipLib
-import RipDBWebServer
+import RipDBWebView
 
 struct Serve: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
@@ -70,7 +70,7 @@ struct Serve: AsyncParsableCommand {
             case nil: break
             }
             
-            try configureRipDBWebServer(app)
+            try configureRipDBWebView(app)
             try await app.execute()
         } catch {
             app.logger.report(error: error)

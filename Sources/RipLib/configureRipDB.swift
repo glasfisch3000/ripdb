@@ -1,10 +1,3 @@
-//
-//  configureRipDB.swift
-//  ripdb
-//
-//  Created by Jakob Danckwerts on 14.01.25.
-//
-
 import class Vapor.Application
 import FluentPostgresDriver
 
