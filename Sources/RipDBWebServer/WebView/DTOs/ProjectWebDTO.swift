@@ -30,6 +30,9 @@ extension Project {
             try container.encodeIfPresent(self.collection, forKey: .collection)
             
             if let videos = self.videos {
+                // because self.videos isn't a String-keyed dict, the default implementation
+                // will produce an array of key-value pairs instead of an actual dictionary
+                
                 var videosContainer = container.nestedContainer(keyedBy: VideoDictCodingKeys.self, forKey: .videos)
                 
                 try videosContainer.encodeIfPresent(videos[.main], forKey: .main)
