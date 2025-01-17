@@ -3,8 +3,8 @@ import Vapor
 import struct NIOFileSystem.FilePath
 import RipLib
 
-struct Migrate: AsyncParsableCommand {
-    static let configuration = CommandConfiguration(
+public struct Migrate: AsyncParsableCommand {
+    public static let configuration = CommandConfiguration(
         commandName: "migrate",
         abstract: "Run or revert database migrations.",
 //        usage: <#T##String?#>,
@@ -27,9 +27,9 @@ struct Migrate: AsyncParsableCommand {
     @ArgumentParser.Flag(name: .long)
     private var revert: Bool = false
     
-    init() { }
+    public init() { }
     
-    func run() async throws {
+    public func run() async throws {
         let config = try await readAppConfig(path: configFile)
         
         let environment = self.environment ?? config.environment

@@ -3,8 +3,8 @@ import Vapor
 import struct NIOFileSystem.FilePath
 import RipLib
 
-struct FilesDelete: AsyncParsableCommand {
-    static let configuration = CommandConfiguration(
+public struct FilesDelete: AsyncParsableCommand {
+    public static let configuration = CommandConfiguration(
         commandName: "delete",
         abstract: "Delete files from the database.",
 //        usage: <#T##String?#>,
@@ -30,9 +30,9 @@ struct FilesDelete: AsyncParsableCommand {
     @ArgumentParser.Argument
     private var fileIDs: [UUID]
     
-    init() { }
+    public init() { }
     
-    func run() async throws {
+    public func run() async throws {
         let config = try await readAppConfig(path: configFile)
         
         let environment = self.environment ?? config.environment

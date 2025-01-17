@@ -4,8 +4,8 @@ import Fluent
 import struct NIOFileSystem.FilePath
 import RipLib
 
-struct LocationsList: AsyncParsableCommand {
-    static let configuration = CommandConfiguration(
+public struct LocationsList: AsyncParsableCommand {
+    public static let configuration = CommandConfiguration(
         commandName: "list",
         abstract: "List locations stored in the database.",
 //        usage: <#T##String?#>,
@@ -39,9 +39,9 @@ struct LocationsList: AsyncParsableCommand {
     @ArgumentParser.OptionGroup(title: "Filtering Options")
     private var filterOptions: FilterOptions
     
-    init() { }
+    public init() { }
     
-    func run() async throws {
+    public func run() async throws {
         let config = try await readAppConfig(path: configFile)
         
         let environment = self.environment ?? config.environment

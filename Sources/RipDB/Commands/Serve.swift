@@ -5,8 +5,8 @@ import struct NIOFileSystem.FilePath
 import RipLib
 import RipDBWebView
 
-struct Serve: AsyncParsableCommand {
-    static let configuration = CommandConfiguration(
+public struct Serve: AsyncParsableCommand {
+    public static let configuration = CommandConfiguration(
         commandName: "serve",
         abstract: "Start running the RipDB server.",
 //        usage: <#T##String?#>,
@@ -40,9 +40,9 @@ struct Serve: AsyncParsableCommand {
     @ArgumentParser.Flag(exclusivity: .exclusive)
     private var migration: MigrationFlag?
     
-    init() { }
+    public init() { }
     
-    func run() async throws {
+    public func run() async throws {
         let config = try await readAppConfig(path: configFile)
         
         let environment = self.environment ?? config.environment

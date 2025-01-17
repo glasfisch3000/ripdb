@@ -3,8 +3,8 @@ import Vapor
 import struct NIOFileSystem.FilePath
 import RipLib
 
-struct LocationsGet: AsyncParsableCommand {
-    static let configuration = CommandConfiguration(
+public struct LocationsGet: AsyncParsableCommand {
+    public static let configuration = CommandConfiguration(
         commandName: "get",
         abstract: "Fetch a location stored in the database.",
 //        usage: <#T##String?#>,
@@ -30,9 +30,9 @@ struct LocationsGet: AsyncParsableCommand {
     @ArgumentParser.Argument
     private var locationID: UUID
     
-    init() { }
+    public init() { }
     
-    func run() async throws {
+    public func run() async throws {
         let config = try await readAppConfig(path: configFile)
         
         let environment = self.environment ?? config.environment

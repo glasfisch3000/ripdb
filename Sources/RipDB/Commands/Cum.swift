@@ -4,8 +4,8 @@ import Fluent
 import struct NIOFileSystem.FilePath
 import RipLib
 
-struct Cum: AsyncParsableCommand {
-    static let configuration = CommandConfiguration(
+public struct Cum: AsyncParsableCommand {
+    public static let configuration = CommandConfiguration(
         commandName: "cum",
         abstract: "Yoink out all database contents",
 //        usage: <#T##String?#>,
@@ -28,9 +28,9 @@ struct Cum: AsyncParsableCommand {
     @ArgumentParser.Option(name: [.customShort("f"), .customLong("format")])
     private var outputFormat: OutputFormat = .yaml
     
-    init() { }
+    public init() { }
     
-    func run() async throws {
+    public func run() async throws {
         let config = try await readAppConfig(path: configFile)
         
         let environment = self.environment ?? config.environment

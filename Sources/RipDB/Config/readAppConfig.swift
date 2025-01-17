@@ -2,7 +2,7 @@ import NIOFileSystem
 import Yams
 import RipLib
 
-public func readAppConfig(path: FilePath?) async throws -> AppConfig {
+func readAppConfig(path: FilePath?) async throws -> AppConfig {
     let filePath = if let path = path {
         path
     } else {
@@ -28,7 +28,7 @@ public func readAppConfig(path: FilePath?) async throws -> AppConfig {
     }
 }
 
-public enum ReadAppConfigError: Error, CustomStringConvertible {
+enum ReadAppConfigError: Error, CustomStringConvertible {
     case fileDoesNotExist(FilePath)
     case fileTooLarge
     case unableToReadFileContents

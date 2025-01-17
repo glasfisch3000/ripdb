@@ -3,8 +3,8 @@ import Vapor
 import struct NIOFileSystem.FilePath
 import RipDBWebView
 
-struct Routes: AsyncParsableCommand {
-    static let configuration = CommandConfiguration(
+public struct Routes: AsyncParsableCommand {
+    public static let configuration = CommandConfiguration(
         commandName: "routes",
         abstract: "Show http server routes.",
 //        usage: <#T##String?#>,
@@ -24,9 +24,9 @@ struct Routes: AsyncParsableCommand {
     @ArgumentParser.Option(name: .shortAndLong)
     private var configFile: FilePath?
     
-    init() { }
+    public init() { }
     
-    func run() async throws {
+    public func run() async throws {
         let config = try await readAppConfig(path: configFile)
         
         let environment = self.environment ?? config.environment

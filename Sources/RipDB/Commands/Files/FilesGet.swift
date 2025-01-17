@@ -3,8 +3,8 @@ import Vapor
 import struct NIOFileSystem.FilePath
 import RipLib
 
-struct FilesGet: AsyncParsableCommand {
-    static let configuration = CommandConfiguration(
+public struct FilesGet: AsyncParsableCommand {
+    public static let configuration = CommandConfiguration(
         commandName: "get",
         abstract: "Fetch a video file stored in the database.",
 //        usage: <#T##String?#>,
@@ -30,9 +30,9 @@ struct FilesGet: AsyncParsableCommand {
     @ArgumentParser.Argument
     private var fileID: UUID
     
-    init() { }
+    public init() { }
     
-    func run() async throws {
+    public func run() async throws {
         let config = try await readAppConfig(path: configFile)
         
         let environment = self.environment ?? config.environment

@@ -1,7 +1,7 @@
 import ArgumentParser
 
-struct Projects: AsyncParsableCommand {
-    static let configuration = CommandConfiguration(
+public struct Projects: AsyncParsableCommand {
+    public static let configuration = CommandConfiguration(
         commandName: "projects",
         abstract: "Work with movie projects.",
 //        usage: <#T##String?#>,
@@ -15,5 +15,5 @@ struct Projects: AsyncParsableCommand {
         aliases: []
     )
     
-    init() { }
+    public init() { }
 }

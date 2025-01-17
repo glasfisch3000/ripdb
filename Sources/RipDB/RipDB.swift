@@ -1,8 +1,8 @@
 import ArgumentParser
 
 @main
-struct RipDB: AsyncParsableCommand {
-    static let configuration = CommandConfiguration(
+public struct RipDB: AsyncParsableCommand {
+    public static let configuration = CommandConfiguration(
         commandName: "ripdb",
 //        abstract: <#T##String#>,
 //        usage: <#T##String?#>,
@@ -18,5 +18,5 @@ struct RipDB: AsyncParsableCommand {
         aliases: []
     )
     
-    init() { }
+    public init() { }
 }
