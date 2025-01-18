@@ -4,6 +4,7 @@ import struct NIOFileSystem.FilePath
 
 import RipLib
 import RipDBWebView
+import RipAPI
 
 public struct Serve: AsyncParsableCommand {
     public static let configuration = CommandConfiguration(
@@ -71,6 +72,7 @@ public struct Serve: AsyncParsableCommand {
             }
             
             try configureRipDBWebView(app)
+            try app.grouped("api").register(collection: APIController())
             try await app.execute()
         } catch {
             app.logger.report(error: error)

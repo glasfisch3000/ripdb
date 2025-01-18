@@ -1,20 +1,20 @@
 import struct Foundation.UUID
 import struct Foundation.Data
-import RipLib
+import protocol Vapor.Content
 
 extension File {
-    struct DTO: Sendable, Encodable {
-        var id: UUID?
-        var resolution: FileResolution
-        var is3D: Bool
-        var size: Int
-        var contentHashSHA256: Data
+    public struct DTO: Sendable, Content {
+        public var id: UUID?
+        public var resolution: FileResolution
+        public var is3D: Bool
+        public var size: Int
+        public var contentHashSHA256: Data
         
-        var location: Location.DTO?
-        var video: Video.DTO?
+        public var location: Location.DTO?
+        public var video: Video.DTO?
     }
     
-    func toDTO() -> DTO {
+    public func toDTO() -> DTO {
         DTO(id: self.id,
             resolution: self.resolution,
             is3D: self.is3D,

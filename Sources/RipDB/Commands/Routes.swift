@@ -1,7 +1,9 @@
 import ArgumentParser
 import Vapor
 import struct NIOFileSystem.FilePath
+
 import RipDBWebView
+import RipAPI
 
 public struct Routes: AsyncParsableCommand {
     public static let configuration = CommandConfiguration(
@@ -45,6 +47,7 @@ public struct Routes: AsyncParsableCommand {
         
         do {
             try configureRipDBWebView(app)
+            try app.grouped("api").register(collection: APIController())
             try await app.execute()
         } catch {
             app.logger.report(error: error)
