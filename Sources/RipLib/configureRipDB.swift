@@ -22,4 +22,5 @@ public func configureRipDB(_ app: Application, location: PostgresDBLocation) asy
     app.migrations.add(ChangeProjectDateToYear())
     app.migrations.add(ChangeFilesizeDoubleToInt())
     app.migrations.add(UniqueLocationName())
+    app.migrations.add(CreateUser())
 }
