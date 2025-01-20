@@ -19,4 +19,6 @@ enum APIError: Error, Encodable {
     enum Constraint: Encodable {
         case location_title_unique(_ title: String)
     }
+    
+    case invalidAuthentication
 }

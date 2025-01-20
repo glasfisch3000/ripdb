@@ -2,6 +2,8 @@ import Vapor
 
 public struct APIController: RouteCollection {
     public func boot(routes: any RoutesBuilder) throws {
+        let routes = routes.grouped(UserBasicAuthenticator())
+        
         let locations = routes.grouped("locations")
         locations.get(use: locationsList(request:))
         locations.post(use: locationsCreate(request:))
