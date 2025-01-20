@@ -6,6 +6,7 @@ enum UpdateError: Error, CustomStringConvertible {
     case videoNotFound(UUID)
     case projectNotFound(UUID)
     case collectionNotFound(UUID)
+    case userNotFound(UUID)
     
     var description: String {
         switch self {
@@ -14,6 +15,7 @@ enum UpdateError: Error, CustomStringConvertible {
         case .videoNotFound(let id): "video not found for id \(id)"
         case .projectNotFound(let id): "project not found for id \(id)"
         case .collectionNotFound(let id): "collection not found for id \(id)"
+        case .userNotFound(let id): "user not found for id \(id)"
         }
     }
 }
