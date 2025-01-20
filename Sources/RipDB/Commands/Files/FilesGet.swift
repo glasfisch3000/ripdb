@@ -52,16 +52,15 @@ public struct FilesGet: AsyncParsableCommand {
         do {
             try await configureRipDB(app, location: config.database)
             
-            let file = try await File.find(fileID, on: app.db)
-            try await file?.$location.load(on: app.db)
-            try await file?.$video.load(on: app.db)
-            try await file?.$video.value?.$project.load(on: app.db)
-            
-            if let file = file?.toDTO() {
-                print(try outputFormat.format(file))
-            } else {
-                print("file not found for id \(fileID)")
+            guard let file = try await File.find(fileID, on: app.db) else {
+                throw DBError.modelNotFound(.file, id: fileID)
             }
+            
+            try await file.$location.load(on: app.db)
+            try await file.$video.load(on: app.db)
+            try await file.$video.value?.$project.load(on: app.db)
+            
+            print(try outputFormat.format(file.toDTO()))
         } catch {
             app.logger.report(error: error)
             try? await app.asyncShutdown()

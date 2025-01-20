@@ -59,7 +59,7 @@ public struct LocationsDelete: AsyncParsableCommand {
                     try await location.delete(on: app.db)
                     deleted.append(location)
                 } else {
-                    print("location not found for id \(locationID)")
+                    print(DBError.modelNotFound(.location, id: locationID))
                 }
             }
             

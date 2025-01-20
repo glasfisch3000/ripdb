@@ -70,7 +70,7 @@ public struct ProjectsUpdate: AsyncParsableCommand {
             try await configureRipDB(app, location: config.database)
             
             guard let project = try await Project.find(projectID, on: app.db) else {
-                throw UpdateError.projectNotFound(projectID)
+                throw DBError.modelNotFound(.project, id: projectID)
             }
             
             if let name = projectOptions.name {
@@ -87,7 +87,7 @@ public struct ProjectsUpdate: AsyncParsableCommand {
             
             if let collectionID = projectOptions.collection {
                 guard try await CollectionModel.find(collectionID, on: app.db) != nil else {
-                    throw UpdateError.collectionNotFound(collectionID)
+                    throw DBError.modelNotFound(.collection, id: collectionID)
                 }
                 project.$collection.id = collectionID
             }

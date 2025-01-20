@@ -2,6 +2,7 @@ import ArgumentParser
 import Vapor
 import struct NIOFileSystem.FilePath
 import RipLib
+import FluentPostgresDriver
 
 public struct LocationsCreate: AsyncParsableCommand {
     public static let configuration = CommandConfiguration(
@@ -61,7 +62,11 @@ public struct LocationsCreate: AsyncParsableCommand {
             try await configureRipDB(app, location: config.database)
             
             let location = Location(id: nil, name: self.location.name, capacity: self.location.capacity?.bytes)
-            try await location.create(on: app.db)
+            do {
+                try await location.create(on: app.db)
+            } catch let error as PSQLError where error.serverInfo?[.sqlState] == "23505" {
+                throw DBError.constraintViolation(.location_name_unique(self.location.name))
+            }
             
             print(try outputFormat.format(location.toDTO()))
         } catch {

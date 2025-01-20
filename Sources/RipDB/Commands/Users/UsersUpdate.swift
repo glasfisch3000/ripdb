@@ -2,6 +2,7 @@ import ArgumentParser
 import Vapor
 import struct NIOFileSystem.FilePath
 import RipLib
+import FluentPostgresDriver
 
 public struct UsersUpdate: AsyncParsableCommand {
     public static let configuration = CommandConfiguration(
@@ -64,7 +65,7 @@ public struct UsersUpdate: AsyncParsableCommand {
             try await configureRipDB(app, location: config.database)
             
             guard let user = try await User.find(userID, on: app.db) else {
-                throw UpdateError.userNotFound(userID)
+                throw DBError.modelNotFound(.user, id: userID)
             }
             
             if let name = userOptions.name {
@@ -75,7 +76,15 @@ public struct UsersUpdate: AsyncParsableCommand {
                 user.password = User.hashPassword(password, salt: user.salt)
             }
             
-            try await user.update(on: app.db)
+            do {
+                try await user.update(on: app.db)
+            } catch let error as PSQLError where error.serverInfo?[.sqlState] == "23505" {
+                if let name = userOptions.name {
+                    throw DBError.constraintViolation(.user_name_unique(name))
+                } else {
+                    throw error
+                }
+            }
             
             print(try outputFormat.format(user.toDTO()))
         } catch {

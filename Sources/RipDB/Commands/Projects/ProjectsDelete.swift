@@ -59,7 +59,7 @@ public struct ProjectsDelete: AsyncParsableCommand {
                     try await project.delete(on: app.db)
                     deleted.append(project)
                 } else {
-                    print("project not found for id \(projectID)")
+                    print(DBError.modelNotFound(.project, id: projectID))
                 }
             }
             

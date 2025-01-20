@@ -59,7 +59,7 @@ public struct CollectionsDelete: AsyncParsableCommand {
                     try await collection.delete(on: app.db)
                     deleted.append(collection)
                 } else {
-                    print("collection not found for id \(collectionID)")
+                    print(DBError.modelNotFound(.collection, id: collectionID))
                 }
             }
             

@@ -67,7 +67,7 @@ public struct VideosUpdate: AsyncParsableCommand {
             try await configureRipDB(app, location: config.database)
             
             guard let video = try await Video.find(videoID, on: app.db) else {
-                throw UpdateError.videoNotFound(videoID)
+                throw DBError.modelNotFound(.video, id: videoID)
             }
             
             if let name = videoOptions.name {
@@ -80,7 +80,7 @@ public struct VideosUpdate: AsyncParsableCommand {
             
             if let projectID = videoOptions.project {
                 guard try await Project.find(projectID, on: app.db) != nil else {
-                    throw UpdateError.projectNotFound(projectID)
+                    throw DBError.modelNotFound(.project, id: projectID)
                 }
                 video.$project.id = projectID
             }

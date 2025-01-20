@@ -61,7 +61,7 @@ public struct CollectionsUpdate: AsyncParsableCommand {
             try await configureRipDB(app, location: config.database)
             
             guard let collection = try await CollectionModel.find(collectionID, on: app.db) else {
-                throw UpdateError.collectionNotFound(collectionID)
+                throw DBError.modelNotFound(.collection, id: collectionID)
             }
             
             if let name = collectionOptions.name {

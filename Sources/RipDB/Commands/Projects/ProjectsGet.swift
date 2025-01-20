@@ -59,7 +59,7 @@ public struct ProjectsGet: AsyncParsableCommand {
             if let project = project?.toDTO() {
                 print(try outputFormat.format(project))
             } else {
-                print("project not found for id \(projectID)")
+                throw DBError.modelNotFound(.project, id: projectID)
             }
         } catch {
             app.logger.report(error: error)

@@ -59,7 +59,7 @@ public struct VideosDelete: AsyncParsableCommand {
                     try await video.delete(on: app.db)
                     deleted.append(video)
                 } else {
-                    print("video not found for id \(videoID)")
+                    print(DBError.modelNotFound(.video, id: videoID))
                 }
             }
             

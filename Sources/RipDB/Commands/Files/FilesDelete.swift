@@ -59,7 +59,7 @@ public struct FilesDelete: AsyncParsableCommand {
                     try await file.delete(on: app.db)
                     deleted.append(file)
                 } else {
-                    print("file not found for id \(fileID)")
+                    print(DBError.modelNotFound(.file, id: fileID))
                 }
             }
             

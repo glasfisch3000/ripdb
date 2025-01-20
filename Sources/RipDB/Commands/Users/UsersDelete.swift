@@ -59,7 +59,7 @@ public struct UsersDelete: AsyncParsableCommand {
                     try await user.delete(on: app.db)
                     deleted.append(user)
                 } else {
-                    print("user not found for id \(userID)")
+                    print(DBError.modelNotFound(.user, id: userID))
                 }
             }
             

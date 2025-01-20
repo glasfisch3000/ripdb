@@ -2,6 +2,7 @@ import ArgumentParser
 import Vapor
 import struct NIOFileSystem.FilePath
 import RipLib
+import FluentPostgresDriver
 
 public struct UsersCreate: AsyncParsableCommand {
     public static let configuration = CommandConfiguration(
@@ -61,7 +62,12 @@ public struct UsersCreate: AsyncParsableCommand {
             try await configureRipDB(app, location: config.database)
             
             let user = User(id: nil, name: self.user.name, password: self.user.password)
-            try await user.create(on: app.db)
+            
+            do {
+                try await user.create(on: app.db)
+            } catch let error as PSQLError where error.serverInfo?[.sqlState] == "23505" {
+                throw DBError.constraintViolation(.user_name_unique(self.user.name))
+            }
             
             print(try outputFormat.format(user.toDTO()))
         } catch {

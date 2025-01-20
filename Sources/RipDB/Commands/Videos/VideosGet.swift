@@ -63,7 +63,7 @@ public struct VideosGet: AsyncParsableCommand {
             if let video = video?.toDTO() {
                 print(try outputFormat.format(video))
             } else {
-                print("video not found for id \(videoID)")
+                throw DBError.modelNotFound(.video, id: videoID)
             }
         } catch {
             app.logger.report(error: error)

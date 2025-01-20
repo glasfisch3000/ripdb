@@ -52,13 +52,11 @@ public struct UsersGet: AsyncParsableCommand {
         do {
             try await configureRipDB(app, location: config.database)
             
-            let user = try await User.find(userID, on: app.db)
-            
-            if let user = user?.toDTO() {
-                print(try outputFormat.format(user))
-            } else {
-                print("user not found for id \(userID)")
+            guard let user = try await User.find(userID, on: app.db) else {
+                throw DBError.modelNotFound(.user, id: userID)
             }
+            
+            print(try outputFormat.format(user.toDTO()))
         } catch {
             app.logger.report(error: error)
             try? await app.asyncShutdown()

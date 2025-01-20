@@ -52,14 +52,13 @@ public struct CollectionsGet: AsyncParsableCommand {
         do {
             try await configureRipDB(app, location: config.database)
             
-            let collection = try await CollectionModel.find(collectionID, on: app.db)
-            try await collection?.$projects.load(on: app.db)
-            
-            if let collection = collection?.toDTO() {
-                print(try outputFormat.format(collection))
-            } else {
-                print("collection not found for id \(collectionID)")
+            guard let collection = try await CollectionModel.find(collectionID, on: app.db) else {
+                throw DBError.modelNotFound(.collection, id: collectionID)
             }
+            
+            try await collection.$projects.load(on: app.db)
+            
+            print(try outputFormat.format(collection.toDTO()))
         } catch {
             app.logger.report(error: error)
             try? await app.asyncShutdown()

@@ -52,18 +52,17 @@ public struct LocationsGet: AsyncParsableCommand {
         do {
             try await configureRipDB(app, location: config.database)
             
-            let location = try await Location.find(locationID, on: app.db)
-            try await location?.$files.load(on: app.db)
-            try await location?.$files.value?
+            guard let location = try await Location.find(locationID, on: app.db) else {
+                throw DBError.modelNotFound(.location, id: locationID)
+            }
+            
+            try await location.$files.load(on: app.db)
+            try await location.$files.value?
                 .map { $0.$video.load(on: app.db) }
                 .flatten(on: app.eventLoopGroup.next())
                 .get()
             
-            if let location = location?.toDTO() {
-                print(try outputFormat.format(location))
-            } else {
-                print("location not found for id \(locationID)")
-            }
+            print(try outputFormat.format(location.toDTO()))
         } catch {
             app.logger.report(error: error)
             try? await app.asyncShutdown()

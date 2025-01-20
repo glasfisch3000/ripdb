@@ -76,7 +76,7 @@ public struct FilesUpdate: AsyncParsableCommand {
             try await configureRipDB(app, location: config.database)
             
             guard let file = try await File.find(fileID, on: app.db) else {
-                throw UpdateError.fileNotFound(fileID)
+                throw DBError.modelNotFound(.file, id: fileID)
             }
             
             if let resolution = fileOptions.resolution {
@@ -97,14 +97,14 @@ public struct FilesUpdate: AsyncParsableCommand {
             
             if let locationID = fileOptions.location {
                 guard try await Location.find(locationID, on: app.db) != nil else {
-                    throw UpdateError.locationNotFound(locationID)
+                    throw DBError.modelNotFound(.location, id: locationID)
                 }
                 file.$location.id = locationID
             }
             
             if let videoID = fileOptions.video {
                 guard try await Video.find(videoID, on: app.db) != nil else {
-                    throw UpdateError.videoNotFound(videoID)
+                    throw DBError.modelNotFound(.video, id: videoID)
                 }
                 file.$video.id = videoID
             }
