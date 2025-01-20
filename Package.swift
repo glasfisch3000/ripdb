@@ -1,10 +1,10 @@
-// swift-tools-version:5.9
+// swift-tools-version:6.0
 import PackageDescription
 
 let package = Package(
     name: "ripdb",
     platforms: [
-       .macOS(.v13)
+       .macOS(.v13),
     ],
     products: [
         .executable(name: "ripdb", targets: ["RipDB"]),
@@ -30,8 +30,7 @@ let package = Package(
                 .target(name: "RipLib"),
                 .target(name: "RipDBWebView"),
                 .target(name: "RipAPI"),
-            ],
-            swiftSettings: swiftSettings
+            ]
         ),
         .target(
             name: "RipDBWebView",
@@ -61,9 +60,3 @@ let package = Package(
         )
     ]
 )
-
-var swiftSettings: [SwiftSetting] { [
-    .enableUpcomingFeature("DisableOutwardActorInference"),
-    .enableExperimentalFeature("StrictConcurrency"),
-    .enableUpcomingFeature("BareSlashRegexLiterals"),
-] }

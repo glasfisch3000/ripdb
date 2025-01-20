@@ -1,7 +1,7 @@
 import Fluent
 import Foundation
 
-public final class CollectionModel: Model, Sendable {
+public final class CollectionModel: Model, @unchecked Sendable {
     public static let schema = "collections"
     
     @ID(key: .id)

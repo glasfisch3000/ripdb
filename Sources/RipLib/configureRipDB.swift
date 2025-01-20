@@ -8,8 +8,10 @@ public func configureRipDB(_ app: Application, location: PostgresDBLocation) asy
             port: Int(location.port),
             username: location.user,
             password: location.password,
-            database: location.database
-        )), as: .psql
+            database: location.database,
+            tls: .prefer(try .init(configuration: .clientDefault))
+        )),
+        as: .psql
     )
     
     app.migrations.add(CreateLocation())
