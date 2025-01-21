@@ -1,6 +1,6 @@
 import Vapor
 import Fluent
-import RipLib
+import RipDB
 
 extension User: Authenticatable { }
 

@@ -1,7 +1,7 @@
 import Vapor
 import Fluent
 import FluentPostgresDriver
-import RipLib
+import RipDB
 
 @Sendable
 func locationsList(request req: Request) async throws(APIError) -> some Content {

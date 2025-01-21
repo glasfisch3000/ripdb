@@ -7,7 +7,7 @@ let package = Package(
        .macOS(.v13),
     ],
     products: [
-        .executable(name: "ripdb", targets: ["RipDB"]),
+        .executable(name: "ripdb", targets: ["RipCLI"]),
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.5.0"),
@@ -20,25 +20,25 @@ let package = Package(
     ],
     targets: [
         .executableTarget(
-            name: "RipDB",
+            name: "RipCLI",
             dependencies: [
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 .product(name: "Fluent", package: "fluent"),
                 .product(name: "Vapor", package: "vapor"),
                 .product(name: "_NIOFileSystem", package: "swift-nio"),
                 .product(name: "Yams", package: "Yams"),
-                .target(name: "RipLib"),
-                .target(name: "RipDBWebView"),
+                .target(name: "RipDB"),
+                .target(name: "RipWebView"),
                 .target(name: "RipAPI"),
             ]
         ),
         .target(
-            name: "RipDBWebView",
+            name: "RipWebView",
             dependencies: [
                 .product(name: "Fluent", package: "fluent"),
                 .product(name: "Leaf", package: "leaf"),
                 .product(name: "Vapor", package: "vapor"),
-                .target(name: "RipLib"),
+                .target(name: "RipDB"),
             ]
         ),
         .target(
@@ -47,11 +47,11 @@ let package = Package(
                 .product(name: "Fluent", package: "fluent"),
                 .product(name: "FluentPostgresDriver", package: "fluent-postgres-driver"),
                 .product(name: "Vapor", package: "vapor"),
-                .target(name: "RipLib"),
+                .target(name: "RipDB"),
             ]
         ),
         .target(
-            name: "RipLib",
+            name: "RipDB",
             dependencies: [
                 .product(name: "Vapor", package: "vapor"),
                 .product(name: "Fluent", package: "fluent"),
