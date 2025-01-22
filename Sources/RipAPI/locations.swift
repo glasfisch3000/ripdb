@@ -27,8 +27,6 @@ func locationsGet(request req: Request) async throws(APIError) -> some Content {
             throw APIError.modelNotFound(type: .location, id: id)
         }
         
-        try await location.$files.load(on: req.db)
-        
         return location.toDTO()
     } catch let error as APIError {
         throw error

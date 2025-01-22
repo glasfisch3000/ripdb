@@ -6,12 +6,12 @@ extension CollectionModel {
         public var id: UUID?
         public var name: String
         
-        public var projects: [Project.DTO]?
+        public var projectIDs: [UUID]?
     }
     
     public func toDTO() -> DTO {
         DTO(id: self.id,
             name: self.name,
-            projects: self.$projects.value?.map { $0.toDTO() })
+            projectIDs: self.$projects.value?.compactMap(\.$id.value))
     }
 }

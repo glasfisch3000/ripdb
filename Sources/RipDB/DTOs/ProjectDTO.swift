@@ -8,8 +8,8 @@ extension Project {
         public var type: ProjectType
         public var releaseYear: Int
         
-        public var collection: CollectionModel.DTO?
-        public var videos: [Video.DTO]?
+        public var collectionID: UUID?
+        public var videoIDs: [UUID]?
     }
     
     public func toDTO() -> DTO {
@@ -17,7 +17,7 @@ extension Project {
             name: self.name,
             type: self.type,
             releaseYear: self.releaseYear,
-            collection: self.$collection.value??.toDTO(),
-            videos: self.$videos.value?.map { $0.toDTO() })
+            collectionID: self.$collection.$id.value?.wrapped,
+            videoIDs: self.$videos.value?.compactMap(\.$id.value))
     }
 }

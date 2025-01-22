@@ -7,15 +7,15 @@ extension Video {
         public var name: String
         public var type: VideoType
         
-        public var project: Project.DTO?
-        public var files: [File.DTO]?
+        public var projectID: UUID?
+        public var fileIDs: [UUID]?
     }
     
     public func toDTO() -> DTO {
         DTO(id: self.id,
             name: self.name,
             type: self.type,
-            project: self.$project.value?.toDTO(),
-            files: self.$files.value?.map { $0.toDTO() })
+            projectID: self.$project.$id.value,
+            fileIDs: self.$files.value?.compactMap(\.$id.value))
     }
 }

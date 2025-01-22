@@ -27,8 +27,6 @@ func collectionsGet(request req: Request) async throws(APIError) -> some Content
             throw APIError.modelNotFound(type: .collection, id: id)
         }
         
-        try await collection.$projects.load(on: req.db)
-        
         return collection.toDTO()
     } catch let error as APIError {
         throw error

@@ -50,6 +50,7 @@ func videosGetFiles(request req: Request) async throws(APIError) -> some Content
         }
         
         let files = try await video.$files.query(on: req.db)
+            .with(\.$location)
             .sort(\.$resolution)
             .sort(\.$is3D)
             .all()

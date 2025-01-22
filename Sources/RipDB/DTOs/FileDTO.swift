@@ -10,8 +10,8 @@ extension File {
         public var size: Int
         public var contentHashSHA256: Data
         
-        public var location: Location.DTO?
-        public var video: Video.DTO?
+        public var locationID: UUID?
+        public var videoID: UUID?
     }
     
     public func toDTO() -> DTO {
@@ -20,7 +20,7 @@ extension File {
             is3D: self.is3D,
             size: self.size,
             contentHashSHA256: self.contentHashSHA256,
-            location: self.$location.value?.toDTO(),
-            video: self.$video.value?.toDTO())
+            locationID: self.$location.$id.value,
+            videoID: self.$video.$id.value)
     }
 }
